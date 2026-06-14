@@ -1,0 +1,2927 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>幻境剧本 · 时空大厅</title>
+
+    <style>
+        /* ==========================================================
+           🎨 视觉皮肤：绝对清透、绝不浑浊的清水级毛玻璃引擎
+           ========================================================== */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg-url: url('https://i.ibb.co/5XJX8vND/Camera-XHS-17812925439631040g00831k2kecci2g105posc29nc8j5jsvd8go.jpg');
+        }
+        html {
+            height: 100%;
+            overflow: hidden;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: none;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            color: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        /* 🌌 动态星光特效背景舱 */
+        #stars { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events: none; z-index: 1; }
+        .star { position: absolute; width: 2px; height: 2px; background: #fff; border-radius: 50%; opacity: 0.3; animation: blink 3s infinite ease-in-out; }
+        @keyframes blink { 0%, 100% { opacity: 0.2; transform: scale(1); } 50% { opacity: 0.9; transform: scale(1.5); } }
+
+        /* ==========================================================
+           🏠 长方形双列卡牌大厅
+           ========================================================== */
+                #lobby-view {
+            overflow-y: auto;
+            height: 100vh;
+            padding: 70px 15px 90px 15px; /* 👈 确保第三个数字是 90px，给底部留足空隙 */
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ✨ 古典浪漫流光头部样式 */
+        .lobby-header {
+            text-align: center;
+            padding: 16px 20px 12px 20px;
+            margin: 0 auto 16px auto;
+            max-width: 600px;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
+            border-radius: 24px;
+            position: relative;
+        }
+        .lobby-header::after {
+            content: "✦ ─── ⚜ ─── ✦";
+            display: block;
+            font-size: 11px;
+            color: rgba(255, 234, 167, 0.35);
+            margin-top: 12px;
+            letter-spacing: 4px;
+        }
+        .lobby-header h1 {
+            font-size: 22px;
+            font-weight: 400;
+            background: linear-gradient(135deg, #fff5cc 0%, #ffeaa7 50%, #d4af37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+            font-family: 'Georgia', 'Kaiti', serif;
+            letter-spacing: 4px;
+            position: relative;
+        }
+        .lobby-header p {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.55);
+            margin-top: 5px;
+            font-family: -apple-system, sans-serif;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .char-card {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px) saturate(110%);
+            -webkit-backdrop-filter: blur(20px) saturate(110%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        .char-card:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.3);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 230px; 
+            object-fit: cover;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .card-info {
+            padding: 12px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .card-name { 
+            font-size: 15px; 
+            font-weight: bold; 
+            margin-bottom: 6px; 
+            color: #ffeaa7; 
+            font-family: "Kaiti", serif;
+        }
+        .card-intro { 
+            font-size: 12px; 
+            color: rgba(255,255,255,0.7); 
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+
+        /* ==========================================================
+           💬 剧本舞台
+           ========================================================== */
+        #chat-view {
+            position: relative;
+            z-index: 2;
+        }
+        .menu-banner {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 14px; background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .menu-btn {
+            background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+            color: #fff; padding: 7px 12px; border-radius: 10px; font-size: 10.5px; cursor: pointer;
+            transition: all 0.2s; text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+        .menu-btn:hover { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.35); }
+
+        .chat-box { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+        .msg-row { display: flex; width: 100%; gap: 10px; align-items: flex-start; animation: fadeIn 0.3s ease both; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        .bot-row { justify-content: flex-start; }
+        .user-row { justify-content: flex-end; }
+
+        .avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+        .msg-wrapper { max-width: calc(100% - 80px); display: flex; flex-direction: column; gap: 6px; }
+        
+        .msg {
+            padding: 11px 14px; border-radius: 16px; font-size: 14.5px; line-height: 1.55;
+            word-break: break-word; box-shadow: 0 3px 10px rgba(0,0,0,0.1); text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+        }
+        .bot-row .msg {
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+            border-top-left-radius: 4px; border-bottom-left-radius: 16px;
+        }
+        .user-row .msg {
+            background: rgba(255, 255, 255, 0.18); border: 1px solid rgba(255, 255, 255, 0.25);
+            border-top-right-radius: 4px; border-bottom-right-radius: 16px;
+        }
+        
+        .saying { color: #ffeaa7; font-weight: 500; }
+        .action { color: rgba(255, 255, 255, 0.55); font-style: italic; font-size: 13.5px; }
+
+        .status-card {
+            background: rgba(0, 0, 0, 0.15); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px; padding: 10px; font-size: 12px; display: flex; flex-direction: column; gap: 8px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+        }
+        .status-header { color: rgba(255,255,255,0.5); font-weight: bold; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 4px; }
+        .status-grid { display: flex; flex-direction: column; gap: 5px; }
+        .status-item { display: flex; align-items: center; gap: 8px; }
+        .lbl { width: 62px; color: rgba(255,255,255,0.6); font-size: 10px; }
+        .bar-bg { flex: 1; height: 5px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; }
+        .bar-fill { height: 100%; background: linear-gradient(90deg, #ff7675, #ffeaa7); transition: width 0.5s ease; }
+        .val { width: 40px; text-align: right; color: #ffeaa7; font-size: 10px; }
+        .status-details { display: flex; flex-direction: column; gap: 4px; color: rgba(255,255,255,0.85); border-top: 1px solid rgba(255,255,255,0.05); padding-top: 6px; line-height: 1.4; }
+        
+        .danmaku-box { margin-top: 4px; background: rgba(255, 255, 255, 0.04); border-radius: 8px; padding: 6px; display: flex; flex-direction: column; gap: 4px; }
+        .danmaku-line { font-size: 11px; line-height: 1.3; animation: dmFade 0.4s ease both; }
+        @keyframes dmFade { from { opacity: 0; transform: translateX(-4px); } to { opacity: 1; transform: translateX(0); } }
+        .dm-user { color: #81ecec; font-weight: bold; }
+        .dm-text { color: rgba(255,255,255,0.75); }
+
+        .action-bar-wrapper { display: flex; justify-content: flex-end; margin-top: -2px; }
+        .action-bar { display: flex; gap: 12px; background: rgba(0,0,0,0.2); padding: 3px 8px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); }
+        .action-sub-btn { font-size: 11px; color: rgba(255,255,255,0.6); cursor: pointer; transition: color 0.2s; }
+        .action-sub-btn:hover { color: #ffeaa7; }
+
+        .input-container {
+            padding: 12px 14px 24px 14px; background: linear-gradient(to top, rgba(0,0,0,0.4), rgba(0,0,0,0));
+            display: flex; gap: 10px; align-items: flex-end;
+        }
+        .input-wrapper {
+            flex: 1; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 18px; padding: 8px 14px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .input-wrapper textarea {
+            width: 100%; height: 22px; max-height: 80px; background: none; border: none;
+            color: #fff; font-size: 14.5px; outline: none; resize: none; font-family: inherit; line-height: 22px;
+        }
+        .send-btn {
+            width: 38px; height: 38px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2);
+            color: #fff; border-radius: 50%; font-size: 16px; cursor: pointer; display: flex; align-items: center;
+            justify-content: center; transition: all 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+        .send-btn:hover { background: #ffeaa7; color: #2d3436; border-color: #ffeaa7; transform: scale(1.05); }
+
+        .loading-dots { display: flex; gap: 4px; align-items: center; height: 22px; padding: 0 4px; }
+        .loading-dots span { width: 6px; height: 6px; background: rgba(255,255,255,0.7); border-radius: 50%; animation: dotKey 1.4s infinite ease-in-out both; }
+        .loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes dotKey { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 2147483640 !important; 
+        }
+        .panel-drawer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            max-height: 75%;
+            background: rgba(25, 25, 25, 0.98) !important; 
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px 24px 0 0;
+            padding: 24px;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.8);
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: none;
+            z-index: 2147483647 !important; 
+            pointer-events: auto !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+        .panel-drawer.active {
+            display: block !important;
+            transform: translateY(0) !important;
+        }
+
+        /* ✨ 背景敏感度/明暗调节器样式 */
+        .ambient-control {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 10px 5px;
+        }
+        .ambient-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .ambient-label {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+            min-width: 70px;
+        }
+        .ambient-slider {
+            flex: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 3px;
+            outline: none;
+        }
+        .ambient-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #ffeaa7;
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(255, 234, 167, 0.5);
+            transition: transform 0.1s;
+        }
+        .ambient-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+        .ambient-val {
+            font-size: 13px;
+            color: #ffeaa7;
+            width: 35px;
+            text-align: right;
+        }
+        .panel-drawer.active { transform: translateY(0); }
+        .drawer-title { display: flex; justify-content: space-between; align-items: center; font-size: 16px; font-weight: bold; color: #ffeaa7; font-family: 'Kaiti', serif; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+        .drawer-close { cursor: pointer; color: rgba(255,255,255,0.5); font-size: 18px; }
+        .drawer-content { display: flex; flex-direction: column; gap: 12px; }
+        .drawer-content textarea { width: 100%; height: 90px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: #fff; padding: 10px; font-size: 13.5px; outline: none; resize: none; }
+        .opt-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 11px; border-radius: 12px; font-size: 13.5px; cursor: pointer; transition: all 0.2s; text-align: center; font-weight: 500; }
+        .opt-btn:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.3); }
+        .danger-btn { background: rgba(235, 77, 75, 0.15) !important; border-color: rgba(235, 77, 75, 0.3) !important; color: #ff7675 !important; }
+        .danger-btn:hover { background: rgba(235, 77, 75, 0.3) !important; }
+        
+        /* ✨ 拯救画面的终极外挂样式 */
+        .lobby-container {
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+        body {
+            transition: filter 0.1s ease;
+        }
+        /* 🌊 终极驱雾咒：强制剥离控制面板和拉杆的所有迷雾特效 */
+        .panel-drawer, 
+        .panel-drawer *, 
+        .ambient-row, 
+        .ambient-slider, 
+        #ambientPanel {
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            filter: none !important;
+        }
+
+        /* 确保滑块控制台永远在最清澈、最顶层、绝对允许点击的图层 */
+        .panel-drawer {
+            z-index: 99999 !important;
+            pointer-events: auto !important;
+            background: rgba(20, 20, 20, 0.98) !important; 
+        }
+    </style>
+</head>
+<body>
+    <iframe id="qinche-iframe" style="display: none; width: 100vw; height: 100dvh; border: none; position: fixed; top: 0; left: 0; z-index: 9999999;"></iframe>
+    <div id="global-bg" style="position: fixed; inset: 0; z-index: -2; pointer-events: none; overflow: hidden; transform: translateZ(0); -webkit-transform: translateZ(0);">
+        <img id="global-bg-img" src="https://i.ibb.co/5XJX8vND/Camera-XHS-17812925439631040g00831k2kecci2g105posc29nc8j5jsvd8go.jpg" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;">
+    </div>
+        
+    <div id="stars"></div>
+    <div id="overlay" onclick="closeAllDrawers()"></div>
+
+    <div id="global-top-bar" style="background: rgba(0,0,0,0.4); backdrop-filter: blur(10px); padding: 12px; display: flex; justify-content: center; gap: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); position: fixed; top: 0; left: 0; width: 100%; z-index: 999;">
+        <span class="filter-tab active-tab" onclick="filterLobby('全部',this)" style="color: #ffeaa7; cursor: pointer; font-weight: bold;">全部</span>
+        <span class="filter-tab" onclick="filterLobby('男',this)" style="color: rgba(255,255,255,0.7); cursor: pointer;">男</span>
+        <span class="filter-tab" onclick="filterLobby('女',this)" style="color: rgba(255,255,255,0.7); cursor: pointer;">女</span>
+        <span class="filter-tab" onclick="filterLobby('世界',this)" style="color: rgba(255,255,255,0.7); cursor: pointer;">世界</span>
+        <span class="filter-tab" onclick="filterLobby('架空',this)" style="color: rgba(255,255,255,0.7); cursor: pointer;">架空</span>
+        <span class="filter-tab" onclick="filterLobby('古风',this)" style="color: rgba(255,255,255,0.7); cursor: pointer;">古风</span>
+        <span class="filter-tab" onclick="filterLobby('人外',this)" style="color: rgba(255,255,255,0.7); cursor: pointer;">人外</span>
+        <span class="filter-tab" onclick="filterLobby('多人',this)" style="color: rgba(255,255,255,0.7); cursor: pointer;">多人</span>
+        <span class="filter-tab" onclick="filterLobbyAdult()" style="color: rgba(255,255,255,0.7); cursor: pointer;">自由</span>
+    </div>
+
+  <div id="lobby-view">
+               <div id="auth-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.05); z-index: 9999999; align-items: center; justify-content: center; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);">
+            <div style="background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(45px); -webkit-backdrop-filter: blur(7px); border: 1px solid rgba(255, 255, 255, 0.45); border-radius: 32px; padding: 40px 35px; width: 90%; max-width: 380px; box-shadow: 0 20px 50px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.6); text-align: center; position: relative; animation: fadeInModal 0.4s cubic-bezier(0.16, 1, 0.3, 1);">
+                
+                <span onclick="closeAuthModal()" style="position: absolute; right: 25px; top: 20px; cursor: pointer; color: rgba(255, 255, 255, 0.7); font-size: 20px; transition: all 0.2s;" onmouseover="this.style.color='#fff'; this.style.transform='scale(1.1)';" onmouseout="this.style.color='rgba(255,255,255,0.7)'; this.style.transform='scale(1)';">✕</span>
+                
+                <h2 id="auth-title" style="font-family: 'Kaiti', 'STKaiti', serif; color: #ffffff; margin-bottom: 30px; font-size: 24px; letter-spacing: 4px; text-shadow: 0 2px 10px rgba(255, 255, 255, 0.3);">星海契约 · 登入大厅</h2>
+                
+                <div style="display: flex; flex-direction: column; gap: 18px; margin-bottom: 25px;">
+                    <div style="position: relative;">
+                        <input type="email" id="auth-email" placeholder="请输入电子邮箱..." style="width: 100%; padding: 14px 18px; background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 16px; color: #ffffff; font-size: 14px; outline: none; transition: all 0.3s;" onfocus="this.style.border='1px solid #ffffff'; this.style.background='rgba(255,255,255,0.35)';" onblur="this.style.border='1px solid rgba(255,255,255,0.3)'; this.style.background='rgba(255,255,255,0.2)';">
+                    </div>
+                    <div style="position: relative;">
+                        <input type="password" id="auth-password" placeholder="请输入密码 (至少6位)..." style="width: 100%; padding: 14px 18px; background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 16px; color: #ffffff; font-size: 14px; outline: none; transition: all 0.3s;" onfocus="this.style.border='1px solid #ffffff'; this.style.background='rgba(255,255,255,0.35)';" onblur="this.style.border='1px solid rgba(255,255,255,0.3)'; this.style.background='rgba(255,255,255,0.2)';">
+                    </div>
+                </div>
+                
+                <button id="auth-primary-btn" onclick="handleAuthAction()" style="width: 100%; background: #ffffff; border: none; color: #4a5568; padding: 14px; border-radius: 16px; font-weight: bold; cursor: pointer; font-size: 16px; letter-spacing: 2px; transition: all 0.3s; box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);" onmouseover="this.style.background='#f7fafc'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 12px 30px rgba(255, 255, 255, 0.35)';" onmouseout="this.style.background='#ffffff'; this.style.transform='none'; this.style.boxShadow='0 10px 25px rgba(255, 255, 255, 0.2)';">登 录</button>
+                
+                <p id="auth-toggle-text" style="font-size: 13px; color: rgba(255, 255, 255, 0.7); margin-top: 22px; letter-spacing: 0.5px;">
+                    还没有通行证？<span onclick="switchAuthMode('register')" style="color: #ffffff; font-weight: bold; cursor: pointer; text-decoration: underline; transition: color 0.2s;" onmouseover="this.style.color='rgba(255, 255, 255, 0.8)'" onmouseout="this.style.color='#ffffff'">开启新缔约（注册）</span>
+                </p>
+            </div>
+        </div>
+
+        <style>
+            @keyframes fadeInModal {
+                from { opacity: 0; transform: scale(0.97) translateY(5px); }
+                to { opacity: 1; transform: scale(1) translateY(0); }
+            }
+            /* 让输入框内的占位文字在白色背景下也隐约可见 */
+            #auth-email::placeholder, #auth-password::placeholder {
+                color: rgba(255, 255, 255, 0.65) !important;
+            }
+        </style>
+
+
+        <header class="lobby-header">
+            <h1>幻境剧本 · 时空大厅</h1>
+            <p>“ 帷幕拉开，挑选心仪的角色，步入星海之约 ”</p>
+        </header>
+        <!-- 🔍 搜索栏 -->
+        <div style="padding: 0 15px 14px 15px; max-width:600px; margin:0 auto;">
+            <div style="position:relative; display:flex; align-items:center;">
+                <span style="position:absolute; left:14px; font-size:15px; opacity:0.5; pointer-events:none;">🔍</span>
+                <input id="lobby-search" type="text" placeholder="搜索角色名称、简介、人设关键词..."
+                    oninput="searchLobby(this.value)"
+                    style="width:100%; padding:11px 36px 11px 40px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:14px; color:#fff; font-size:13px; outline:none; box-sizing:border-box; transition:border-color 0.2s;"
+                    onfocus="this.style.borderColor='rgba(255,234,167,0.5)'"
+                    onblur="this.style.borderColor='rgba(255,255,255,0.15)'">
+                <span id="search-clear" onclick="clearSearch()" style="display:none; position:absolute; right:12px; font-size:16px; color:rgba(255,255,255,0.4); cursor:pointer;">✕</span>
+            </div>
+            <div id="search-result-hint" style="font-size:11px; color:rgba(255,255,255,0.35); margin-top:6px; padding-left:4px; display:none;"></div>
+        </div>
+
+        <div class="card-grid" id="cardGrid"></div>
+    </div>
+    <div id="global-low-bar" style="
+        position: fixed !important; 
+        bottom: 0 !important; 
+        left: 0 !important; 
+        width: 100% !important; 
+        height: 65px !important; 
+        background: rgba(0, 0, 0, 0.4) !important; 
+        backdrop-filter: blur(5px) !important; 
+        -webkit-backdrop-filter: blur(5px) !important; 
+        z-index: 2147483647 !important; 
+        display: flex !important; 
+        justify-content: space-around !important; 
+        align-items: center !important; 
+        border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+        pointer-events: auto !important;
+        padding-bottom: env(safe-area-inset-bottom) !important;
+    ">
+        <div class="low-bar-btn" onclick="switchMainPage('lobby')" style="text-align: center !important; color: #ffeaa7 !important; cursor: pointer !important; font-size: 11px !important; flex: 1 !important; -webkit-tap-highlight-color: transparent;">
+            <div style="font-size: 20px; margin-bottom: 2px;">🏛️</div><div>大厅</div>
+        </div>
+        <div class="low-bar-btn" onclick="switchMainPage('publish')" style="text-align: center !important; color: rgba(255,255,255,0.6) !important; cursor: pointer !important; font-size: 11px !important; flex: 1 !important; -webkit-tap-highlight-color: transparent;">
+            <div style="font-size: 20px; margin-bottom: 2px;">✍️</div><div>自定义</div>
+        </div>
+        <div class="low-bar-btn" onclick="switchMainPage('user')" style="text-align: center !important; color: rgba(255,255,255,0.6) !important; cursor: pointer !important; font-size: 11px !important; flex: 1 !important; -webkit-tap-highlight-color: transparent;">
+            <div style="font-size: 20px; margin-bottom: 2px;">👤</div><div>用户</div>
+        </div>
+        <div class="low-bar-btn" onclick="switchMainPage('wallet')" style="text-align: center !important; color: rgba(255,255,255,0.6) !important; cursor: pointer !important; font-size: 11px !important; flex: 1 !important; -webkit-tap-highlight-color: transparent;">
+            <div style="font-size: 20px; margin-bottom: 2px;">👛</div><div>钱包</div>
+        </div>
+    </div>
+
+
+<!-- 🌟 钱包与签到、充值购物综合视图中心 -->
+    <div id="wallet-view" style="display: none; overflow-y: auto; height: 100vh; height: 100dvh; padding: 70px 15px 80px 15px; position: relative; z-index: 2;">
+        
+        <!-- 1. 余额卡片 -->
+        <div style="background: rgba(255, 255, 255, 0.06); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 20px; margin-top: 10px; box-shadow: 0 8px 32px rgba(0,0,0,0.2);">
+            <h2 style="font-size: 18px; font-weight: 600; color: #ffeaa7; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
+                <span>👛</span> 我的时光钱包
+            </h2>
+            <div style="background: rgba(0,0,0,0.2); border-radius: 16px; padding: 15px; text-align: center;">
+                <div style="font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 5px;">⭐ 剩余星星</div>
+                <div id="token-balance" style="font-size: 32px; font-weight: bold; color: #fff; font-family: monospace;">200</div>
+                
+            </div>
+        </div>
+
+        <!-- 2. 七天时空签到面板 -->
+        <div style="background: rgba(255, 255, 255, 0.06); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 20px; margin-top: 15px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 style="font-size: 15px; color: #ffeaa7;">📅 时空签到面板</h3>
+                <span style="font-size: 11px; color: #ff7675;">* 断签将重新计算</span>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 15px;">
+                <div class="checkin-day" style="background: rgba(0,0,0,0.2); border-radius: 12px; padding: 10px 5px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                    <div style="font-size: 11px; color: rgba(255,255,255,0.5);">第1天</div><div style="font-size: 16px; margin: 4px 0;">✨</div><div style="font-size: 11px; color: #ffeaa7;">+10</div>
+                </div>
+                <div class="checkin-day" style="background: rgba(0,0,0,0.2); border-radius: 12px; padding: 10px 5px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                    <div style="font-size: 11px; color: rgba(255,255,255,0.5);">第2天</div><div style="font-size: 16px; margin: 4px 0;">✨</div><div style="font-size: 11px; color: #ffeaa7;">+20</div>
+                </div>
+                <div class="checkin-day" style="background: rgba(0,0,0,0.2); border-radius: 12px; padding: 10px 5px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                    <div style="font-size: 11px; color: rgba(255,255,255,0.5);">第3天</div><div style="font-size: 16px; margin: 4px 0;">✨</div><div style="font-size: 11px; color: #ffeaa7;">+30</div>
+                </div>
+                <div class="checkin-day" style="background: rgba(0,0,0,0.2); border-radius: 12px; padding: 10px 5px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                    <div style="font-size: 11px; color: rgba(255,255,255,0.5);">第4天</div><div style="font-size: 16px; margin: 4px 0;">✨</div><div style="font-size: 11px; color: #ffeaa7;">+40</div>
+                </div>
+                <div class="checkin-day" style="background: rgba(0,0,0,0.2); border-radius: 12px; padding: 10px 5px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                    <div style="font-size: 11px; color: rgba(255,255,255,0.5);">第5天</div><div style="font-size: 16px; margin: 4px 0;">✨</div><div style="font-size: 11px; color: #ffeaa7;">+50</div>
+                </div>
+                <div class="checkin-day" style="background: rgba(0,0,0,0.2); border-radius: 12px; padding: 10px 5px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                    <div style="font-size: 11px; color: rgba(255,255,255,0.5);">第6天</div><div style="font-size: 16px; margin: 4px 0;">✨</div><div style="font-size: 11px; color: #ffeaa7;">+60</div>
+                </div>
+                <div class="checkin-day" style="grid-column: span 2; background: linear-gradient(135deg, rgba(255,234,167,0.1), rgba(255,118,117,0.1)); border-radius: 12px; padding: 10px 5px; text-align: center; border: 1px solid rgba(255,234,167,0.3);">
+                    <div style="font-size: 11px; color: #ff7675; font-weight: bold;">🎁 第7天大礼包</div><div style="font-size: 16px; margin: 4px 0;">🎉</div><div style="font-size: 11px; color: #fff; font-weight: bold;">+100 星星</div>
+                </div>
+            </div>
+
+            <button id="checkin-btn" onclick="triggerCheckIn()" style="background: linear-gradient(135deg, #ffeed1, #ffeaa7); color: #332200; border: none; padding: 12px; border-radius: 14px; font-size: 14px; font-weight: bold; cursor: pointer; width: 100%;">
+                🎯 点击签到
+            </button>
+        </div>
+
+        <!-- 3. 时空能量购物站（充值功能区） -->
+        <div style="background: rgba(255, 255, 255, 0.06); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 20px; margin-top: 15px;">
+            <h3 style="font-size: 15px; color: #ffeaa7; margin-bottom: 15px; display: flex; align-items: center; gap: 6px;">
+                <span>🛒</span> 能量购物充值站
+            </h3>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <!-- 套餐 1 -->
+                <div onclick="openPaymentQR()" style="background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background='rgba(0,0,0,0.2)'">
+                    <div>
+                        <div style="font-size: 14px; font-weight: bold;">✨ 初涉星海（100 星星）</div>
+                        <div style="font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px;">适合尝鲜剧本线的萌新</div>
+                    </div>
+                    <div style="background: #ffeaa7; color: #332200; font-size: 12px; font-weight: bold; padding: 6px 12px; border-radius: 10px;">￥5.00</div>
+                </div>
+                <!-- 套餐 2 -->
+                <div onclick="openPaymentQR()" style="background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background='rgba(0,0,0,0.2)'">
+                    <div>
+                        <div style="font-size: 14px; font-weight: bold;">🔮 命运羁绊（450 星星）<span style="font-size:10px; color:#ff7675; margin-left:6px;">送50</span></div>
+                        <div style="font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px;">深度拉扯交锋推荐</div>
+                    </div>
+                    <div style="background: #ffeaa7; color: #332200; font-size: 12px; font-weight: bold; padding: 6px 12px; border-radius: 10px;">￥20.00</div>
+                </div>
+                <!-- 套餐 3 -->
+                <div onclick="openPaymentQR()" style="background: rgba(0,0,0,0.2); border: 1px solid rgba(255,234,167,0.15); border-radius: 16px; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background='rgba(0,0,0,0.2)'">
+                    <div>
+                        <div style="font-size: 14px; font-weight: bold;">🌟 星海传说（1500 星星）<span style="font-size:10px; color:#ff7675; margin-left:6px;">送500</span></div>
+                        <div style="font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px;">🔥 最超值，深度玩家首选</div>
+                    </div>
+                    <div style="background: linear-gradient(135deg,#ffeaa7,#ffcc02); color: #332200; font-size: 12px; font-weight: bold; padding: 6px 12px; border-radius: 10px;">￥50.00</div>
+                </div>
+            </div>
+        </div>
+
+    </div> <!-- 💡 完美闭合 #wallet-view 主容器 -->
+
+
+    <!-- 💳 付款弹窗 -->
+    <div id="qr-modal" onclick="closePaymentQR()" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.85); backdrop-filter:blur(15px); -webkit-backdrop-filter:blur(15px); z-index:9999; justify-content:center; align-items:flex-start; overflow-y:auto;">
+        <div onclick="event.stopPropagation()" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:24px; padding:18px 16px; text-align:center; width:88%; max-width:320px; margin:12px auto 20px auto; box-shadow:0 10px 40px rgba(0,0,0,0.5);">
+
+            <!-- 标题 -->
+            <div style="font-size:24px; margin-bottom:4px;">💳</div>
+            <h4 style="color:#ffeaa7; font-size:15px; letter-spacing:2px; margin-bottom:4px;">星海充值</h4>
+            <p style="color:rgba(255,255,255,0.55); font-size:11px; line-height:1.5; margin-bottom:12px;">扫描支付宝收款码付款<br>上传截图后 24 小时内到账</p>
+
+            <!-- 收款码 -->
+            <div style="background:#fff; border-radius:12px; padding:8px; display:inline-block; margin-bottom:12px; box-shadow:0 4px 20px rgba(0,0,0,0.3);">
+                <img src="https://i.ibb.co/hxGFtHkW/Screenshot-2026-06-13-22-46-13-883-hk-alipay-wallet-edit.jpg" style="width:160px; height:160px; display:block; border-radius:6px; object-fit:contain;">
+                <div style="font-size:11px; color:#666; margin-top:4px; letter-spacing:1px;">支付宝 AlipayHK 收款码</div>
+            </div>
+
+            <!-- 套餐提示 -->
+            <div style="display:flex; gap:5px; margin-bottom:12px; justify-content:center;">
+                <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:10px; padding:6px 6px; font-size:10px; color:rgba(255,255,255,0.7); line-height:1.5; flex:1; text-align:center;">✨ ￥5<br><span style="color:#ffeaa7;">100 星星</span></div>
+                <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:10px; padding:6px 6px; font-size:10px; color:rgba(255,255,255,0.7); line-height:1.5; flex:1; text-align:center;">🔮 ￥20<br><span style="color:#ffeaa7;">450 星星</span><br><span style="color:#ff7675; font-size:9px;">送50</span></div>
+                <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,234,167,0.25); border-radius:10px; padding:6px 6px; font-size:10px; color:rgba(255,255,255,0.7); line-height:1.5; flex:1; text-align:center;">🌟 ￥50<br><span style="color:#ffeaa7;">1500 星星</span><br><span style="color:#ff7675; font-size:9px;">送500</span></div>
+            </div>
+
+            <!-- 上传截图区 -->
+            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:14px; padding:12px; margin-bottom:12px; text-align:left;">
+                <div style="font-size:12px; color:#ffeaa7; margin-bottom:8px; font-weight:600;">📎 上传付款截图</div>
+                <label for="payment-screenshot" style="display:block; cursor:pointer;">
+                    <div id="screenshot-preview-box" style="width:100%; height:70px; background:rgba(255,255,255,0.05); border:2px dashed rgba(255,255,255,0.2); border-radius:10px; display:flex; align-items:center; justify-content:center; margin-bottom:8px; overflow:hidden; position:relative;">
+                        <img id="screenshot-preview-img" src="" style="display:none; width:100%; height:100%; object-fit:cover; border-radius:8px;">
+                        <div id="screenshot-placeholder" style="text-align:center; color:rgba(255,255,255,0.35); font-size:11px; line-height:1.8;">📷<br>点击选择截图</div>
+                    </div>
+                </label>
+                <input type="file" id="payment-screenshot" accept="image/*" style="display:none;" onchange="previewPaymentScreenshot(this)">
+                <input id="payment-amount" type="number" placeholder="付款金额（人民币 ¥）" style="width:100%; padding:8px 12px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:9px; color:#fff; font-size:12px; outline:none; margin-bottom:6px; box-sizing:border-box;" onfocus="this.style.borderColor='rgba(255,234,167,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
+                <input id="payment-email" type="email" placeholder="账号邮箱（用于到账通知）" style="width:100%; padding:8px 12px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:9px; color:#fff; font-size:12px; outline:none; box-sizing:border-box;" onfocus="this.style.borderColor='rgba(255,234,167,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
+            </div>
+
+            <!-- 提交按钮 -->
+            <button id="payment-submit-btn" onclick="submitPaymentProof()" style="width:100%; padding:11px; background:linear-gradient(135deg,#ffeed1,#ffeaa7); border:none; border-radius:12px; color:#332200; font-size:14px; font-weight:bold; cursor:pointer; letter-spacing:2px;">
+                ✨ 提交付款凭证
+            </button>
+        </div>
+    </div>
+
+
+    <!-- 👤 用户主页 -->
+    <div id="user-view" style="display:none; overflow-y:auto; height:100vh; height:100dvh; padding-bottom:80px; position:relative; z-index:2;">
+
+        <!-- 背景图层（含右下角换背景按钮） -->
+        <div style="position:fixed; top:0; left:0; width:100%; height:220px; z-index:1; pointer-events:none;">
+            <div id="user-bg-layer" style="position:absolute; inset:0; background-image:url('https://i.ibb.co/5XJX8vND/Camera-XHS-17812925439631040g00831k2kecci2g105posc29nc8j5jsvd8go.jpg'); background-size:cover; background-position:center; transition:background-image 0.4s;"></div>
+            <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.7));"></div>
+            <!-- 背景图右下角小按钮 -->
+            <label for="bg-upload" style="position:absolute; bottom:10px; right:12px; width:28px; height:28px; background:rgba(0,0,0,0.45); border:1.5px solid rgba(255,255,255,0.35); border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:13px; box-shadow:0 2px 6px rgba(0,0,0,0.4); pointer-events:auto; backdrop-filter:blur(4px);">🖼️</label>
+            <input type="file" id="bg-upload" accept="image/*" style="display:none;" onchange="uploadUserImage(this,'bg')">
+        </div>
+
+        <!-- 上方：头像 + 名称 + 编辑区 -->
+        <div style="position:relative; z-index:2; padding:60px 20px 20px 20px; text-align:center;">
+
+            <!-- 头像 -->
+            <div style="position:relative; display:inline-block; margin-bottom:12px;">
+                <img id="user-avatar-display" src="https://i.ibb.co/5XJX8vND/Camera-XHS-17812925439631040g00831k2kecci2g105posc29nc8j5jsvd8go.jpg" style="width:88px; height:88px; border-radius:50%; border:3px solid rgba(255,234,167,0.7); object-fit:cover; box-shadow:0 4px 20px rgba(0,0,0,0.5);">
+                <label for="avatar-upload" style="position:absolute; bottom:0; right:0; width:26px; height:26px; background:#ffeaa7; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:13px; box-shadow:0 2px 6px rgba(0,0,0,0.3);">✏️</label>
+                <input type="file" id="avatar-upload" accept="image/*" style="display:none;" onchange="uploadUserImage(this,'avatar')">
+            </div>
+
+            <!-- 用户名 -->
+            <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:6px;">
+                <span id="user-name-display" style="font-size:20px; font-weight:bold; color:#fff; text-shadow:0 2px 8px rgba(0,0,0,0.6); letter-spacing:1px;">星海旅人</span>
+                <span onclick="openEditNameModal()" style="font-size:12px; color:rgba(255,234,167,0.8); cursor:pointer; border:1px solid rgba(255,234,167,0.4); border-radius:8px; padding:2px 8px;">改名</span>
+            </div>
+            <div id="user-email-display" style="font-size:12px; color:rgba(255,255,255,0.5); margin-bottom:16px;"></div>
+        </div>
+
+        <!-- 下方：最近聊天的角色 -->
+        <div style="position:relative; z-index:2; padding:0 15px;">
+            <div style="background:rgba(255,255,255,0.05); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:18px;">
+                <h3 style="font-size:14px; color:#ffeaa7; margin-bottom:14px; letter-spacing:1px;">🕰️ 最近聊天</h3>
+                <div id="recent-chats-list" style="display:flex; flex-direction:column; gap:12px;">
+                    <div style="text-align:center; color:rgba(255,255,255,0.3); font-size:13px; padding:20px 0;">暂无聊天记录</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ✏️ 改名弹窗 -->
+    <div id="edit-name-modal" onclick="if(event.target===this)closeEditNameModal()" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); backdrop-filter:blur(10px); z-index:99999; align-items:center; justify-content:center;">
+        <div style="background:rgba(30,30,40,0.95); border:1px solid rgba(255,255,255,0.15); border-radius:24px; padding:30px 24px; width:85%; max-width:340px; text-align:center;">
+            <h3 style="color:#ffeaa7; font-size:17px; margin-bottom:20px; letter-spacing:2px;">✨ 修改昵称</h3>
+            <input id="edit-name-input" type="text" maxlength="16" placeholder="输入新昵称（最多16字）" style="width:100%; padding:12px 16px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); border-radius:14px; color:#fff; font-size:15px; outline:none; text-align:center; margin-bottom:16px;">
+            <div style="display:flex; gap:10px;">
+                <button onclick="closeEditNameModal()" style="flex:1; padding:11px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:12px; color:rgba(255,255,255,0.7); font-size:14px; cursor:pointer;">取消</button>
+                <button onclick="saveUserName()" style="flex:1; padding:11px; background:linear-gradient(135deg,#ffeed1,#ffeaa7); border:none; border-radius:12px; color:#332200; font-size:14px; font-weight:bold; cursor:pointer;">保存</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ✍️ 投稿页面 -->
+    <div id="publish-view" style="display:none; overflow-y:auto; height:100vh; height:100dvh; padding:70px 15px 90px 15px; position:relative; z-index:2;">
+
+        <div style="max-width:600px; margin:0 auto;">
+
+            <!-- 标题 -->
+            <div style="text-align:center; margin-bottom:24px;">
+                <div style="font-size:26px; margin-bottom:6px;">✍️</div>
+                <h2 style="font-size:20px; font-weight:600; color:#ffeaa7; letter-spacing:3px; margin-bottom:6px;">自定义角色</h2>
+                <p style="font-size:12px; color:rgba(255,255,255,0.45); line-height:1.6;">投稿后将由管理员审核，通过后角色将出现在大厅</p>
+            </div>
+
+            <!-- 卡片容器 -->
+            <div style="display:flex; flex-direction:column; gap:14px;">
+
+                <!-- 角色头像上传 -->
+                <div style="background:rgba(255,255,255,0.05); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:18px;">
+                    <div style="font-size:13px; color:#ffeaa7; margin-bottom:12px; font-weight:600;">🖼️ 角色头像</div>
+                    <div style="display:flex; align-items:center; gap:16px;">
+                        <div style="position:relative; flex-shrink:0;">
+                            <img id="submit-avatar-preview" src="${LOBBY_BG}" style="width:72px; height:72px; border-radius:14px; object-fit:cover; border:2px solid rgba(255,255,255,0.15);">
+                            <label for="submit-avatar-upload" style="position:absolute; bottom:-4px; right:-4px; width:22px; height:22px; background:#ffeaa7; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:11px;">✏️</label>
+                            <input type="file" id="submit-avatar-upload" accept="image/*" style="display:none;" onchange="previewSubmitAvatar(this)">
+                        </div>
+                        <div style="font-size:12px; color:rgba(255,255,255,0.4); line-height:1.6;">点击右下角图标上传角色头像<br>建议正方形图片，最大 5MB</div>
+                    </div>
+                </div>
+
+                <!-- 角色名称 -->
+                <div style="background:rgba(255,255,255,0.05); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:18px;">
+                    <div style="font-size:13px; color:#ffeaa7; margin-bottom:10px; font-weight:600;">📛 角色名称</div>
+                    <input id="submit-char-name" type="text" maxlength="20" placeholder="例：游驰怀 · 沪圈霸总" style="width:100%; padding:11px 14px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:12px; color:#fff; font-size:14px; outline:none;" onfocus="this.style.borderColor='rgba(255,234,167,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
+                </div>
+
+                <!-- 性别 -->
+                <div style="background:rgba(255,255,255,0.05); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:18px;">
+                    <div style="font-size:13px; color:#ffeaa7; margin-bottom:12px; font-weight:600;">⚧ 角色性别</div>
+                    <div style="display:flex; gap:10px;">
+                        <div onclick="selectGender(this,'男')" data-gender="男" style="flex:1; text-align:center; padding:10px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:12px; font-size:14px; color:rgba(255,255,255,0.8); cursor:pointer; transition:all 0.2s;">♂ 男</div>
+                        <div onclick="selectGender(this,'女')" data-gender="女" style="flex:1; text-align:center; padding:10px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:12px; font-size:14px; color:rgba(255,255,255,0.8); cursor:pointer; transition:all 0.2s;">♀ 女</div>
+                    </div>
+                    <input type="hidden" id="submit-gender" value="">
+                </div>
+
+                <!-- 角色简介 -->
+                <div style="background:rgba(255,255,255,0.05); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:18px;">
+                    <div style="font-size:13px; color:#ffeaa7; margin-bottom:10px; font-weight:600;">📝 角色简介 <span style="color:rgba(255,255,255,0.35); font-weight:normal;">（显示在大厅卡片上）</span></div>
+                    <textarea id="submit-intro" maxlength="60" placeholder="一句话介绍角色，例：28岁沪圈霸总，行事果决，你的新上司。" style="width:100%; height:60px; padding:11px 14px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:12px; color:#fff; font-size:13px; outline:none; resize:none; line-height:1.5;" onfocus="this.style.borderColor='rgba(255,234,167,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'"></textarea>
+                </div>
+
+                <!-- 角色人设 -->
+                <div style="background:rgba(255,255,255,0.05); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:18px;">
+                    <div style="font-size:13px; color:#ffeaa7; margin-bottom:10px; font-weight:600;">🎭 角色人设 <span style="color:rgba(255,255,255,0.35); font-weight:normal;">（AI扮演依据）</span></div>
+                    <textarea id="submit-setting" maxlength="1000" placeholder="详细描述角色的性格、背景、故事背景，以及与用户的关系..." style="width:100%; height:130px; padding:11px 14px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:12px; color:#fff; font-size:13px; outline:none; resize:none; line-height:1.6;" onfocus="this.style.borderColor='rgba(255,234,167,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'"></textarea>
+                    <div id="setting-count" style="text-align:right; font-size:11px; color:rgba(255,255,255,0.3); margin-top:4px;">0 / 1000</div>
+                </div>
+
+                <!-- 开场白 -->
+                <div style="background:rgba(255,255,255,0.05); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:18px;">
+                    <div style="font-size:13px; color:#ffeaa7; margin-bottom:10px; font-weight:600;">💬 开场白 <span style="color:rgba(255,255,255,0.35); font-weight:normal;">（进入聊天室的第一段话）</span></div>
+                    <textarea id="submit-opening" maxlength="500" placeholder="描述进入聊天室时的场景和角色第一句话..." style="width:100%; height:100px; padding:11px 14px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:12px; color:#fff; font-size:13px; outline:none; resize:none; line-height:1.6;" onfocus="this.style.borderColor='rgba(255,234,167,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'"></textarea>
+                </div>
+
+                <!-- 角色自由度 -->
+                <div style="background:rgba(255,255,255,0.05); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:18px;">
+                    <div style="font-size:13px; color:#ffeaa7; margin-bottom:6px; font-weight:600;">🎨 角色自由度</div>
+                    <div style="font-size:11px; color:rgba(255,234,167,0.6); margin-bottom:12px; line-height:1.6;">⚠️ 请确保角色设计健康积极，禁止涉及任何不良内容。平台保有审核权。</div>
+                    <div style="display:flex; gap:8px;">
+                        <div onclick="selectAdult(this,'低')" data-adult="低" style="flex:1; text-align:center; padding:10px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:12px; font-size:13px; color:rgba(255,255,255,0.8); cursor:pointer; transition:all 0.2s;">🌿 低</div>
+                        <div onclick="selectAdult(this,'中')" data-adult="中" style="flex:1; text-align:center; padding:10px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:12px; font-size:13px; color:rgba(255,255,255,0.8); cursor:pointer; transition:all 0.2s;">🌸 中</div>
+                        <div onclick="selectAdult(this,'高')" data-adult="高" style="flex:1; text-align:center; padding:10px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:12px; font-size:13px; color:rgba(255,255,255,0.8); cursor:pointer; transition:all 0.2s;">🔥 高</div>
+                    </div>
+                    <input type="hidden" id="submit-adult" value="">
+                </div>
+
+                <!-- 投稿人信息（自动填入） -->
+                <div style="background:rgba(255,255,255,0.05); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:18px;">
+                    <div style="font-size:13px; color:#ffeaa7; margin-bottom:10px; font-weight:600;">📮 联系邮箱 <span style="color:rgba(255,255,255,0.35); font-weight:normal;">（审核结果通知）</span></div>
+                    <input id="submit-contact-email" type="email" placeholder="你的联系邮箱（可选）" style="width:100%; padding:11px 14px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:12px; color:#fff; font-size:14px; outline:none;" onfocus="this.style.borderColor='rgba(255,234,167,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
+                </div>
+
+                <!-- 投稿按钮 -->
+                <button onclick="submitCharacter()" id="submit-btn" style="width:100%; padding:15px; background:linear-gradient(135deg,#ffeed1,#ffeaa7); border:none; border-radius:16px; color:#332200; font-size:16px; font-weight:bold; cursor:pointer; letter-spacing:2px; box-shadow:0 4px 20px rgba(255,234,167,0.2); transition:all 0.2s;" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='none'">
+                    ✨ 创造角色
+                </button>
+
+                <div style="text-align:center; font-size:11px; color:rgba(255,255,255,0.3); line-height:1.6; padding-bottom:10px;">
+                    提交即代表您同意平台内容规范<br>审核通常在 1-3 个工作日内完成
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ⭐ 扣费模式选择弹窗 -->
+    <div id="chat-mode-modal" onclick="if(event.target===this)document.getElementById('chat-mode-modal').style.display='none'" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.75); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); z-index:9999999; align-items:center; justify-content:center;">
+        <div onclick="event.stopPropagation()" style="background:rgba(20,20,35,0.92); backdrop-filter:blur(40px); -webkit-backdrop-filter:blur(40px); border:1px solid rgba(255,255,255,0.15); border-radius:28px; padding:28px 22px; width:90%; max-width:360px; text-align:center; animation:fadeInModal 0.35s cubic-bezier(0.16,1,0.3,1);">
+
+            <div style="font-size:32px; margin-bottom:10px;">⭐</div>
+            <h3 style="color:#ffeaa7; font-size:18px; letter-spacing:3px; margin-bottom:6px;">选择聊天模式</h3>
+            <p style="font-size:11px; color:rgba(255,255,255,0.45); margin-bottom:20px; line-height:1.6;">模式影响记忆深度与星星消耗<br>可随时切换，立即生效</p>
+
+            <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:20px;">
+
+                <!-- 陪伴模式 -->
+                <div id="mode-card-companion" onclick="selectChatMode('companion')" style="background:rgba(255,255,255,0.06); border:1.5px solid rgba(255,234,167,0.6); border-radius:16px; padding:14px 16px; cursor:pointer; text-align:left; transition:all 0.2s;" onmouseover="this.style.background='rgba(255,234,167,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.06)'">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <span style="font-size:18px;">🌸</span>
+                            <span style="font-size:14px; font-weight:bold; color:#ffeaa7;">陪伴模式</span>
+                            <span id="badge-companion" style="font-size:10px; background:#ffeaa7; color:#332200; border-radius:6px; padding:1px 7px; font-weight:bold;">当前</span>
+                        </div>
+                        <span style="font-size:13px; color:#ffeaa7; font-weight:bold;">⭐×1 / 句</span>
+                    </div>
+                    <div style="font-size:11px; color:rgba(255,255,255,0.55); line-height:1.7;">
+                        保留 <strong style="color:#fff;">20 轮</strong>记忆 · 轻盈日常<br>
+                        超限时保留最近 10 轮
+                    </div>
+                </div>
+
+                <!-- 深思模式 -->
+                <div id="mode-card-deep" onclick="selectChatMode('deep')" style="background:rgba(255,255,255,0.04); border:1.5px solid rgba(255,255,255,0.1); border-radius:16px; padding:14px 16px; cursor:pointer; text-align:left; transition:all 0.2s;" onmouseover="this.style.background='rgba(100,149,237,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.04)'">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <span style="font-size:18px;">🔮</span>
+                            <span style="font-size:14px; font-weight:bold; color:#a29bfe;">深思模式</span>
+                            <span id="badge-deep" style="display:none; font-size:10px; background:#a29bfe; color:#fff; border-radius:6px; padding:1px 7px; font-weight:bold;">当前</span>
+                        </div>
+                        <span style="font-size:13px; color:#a29bfe; font-weight:bold;">⭐×5 / 句</span>
+                    </div>
+                    <div style="font-size:11px; color:rgba(255,255,255,0.55); line-height:1.7;">
+                        保留 <strong style="color:#fff;">80 轮</strong>记忆 · 深度沉浸<br>
+                        超限时保留首10轮 + 最近 20 轮
+                    </div>
+                </div>
+
+                <!-- 永生模式 -->
+                <div id="mode-card-eternal" onclick="selectChatMode('eternal')" style="background:rgba(255,255,255,0.04); border:1.5px solid rgba(255,255,255,0.1); border-radius:16px; padding:14px 16px; cursor:pointer; text-align:left; transition:all 0.2s;" onmouseover="this.style.background='rgba(253,121,168,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.04)'">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <span style="font-size:18px;">✨</span>
+                            <span style="font-size:14px; font-weight:bold; color:#fd79a8;">永生模式</span>
+                            <span id="badge-eternal" style="display:none; font-size:10px; background:#fd79a8; color:#fff; border-radius:6px; padding:1px 7px; font-weight:bold;">当前</span>
+                        </div>
+                        <span style="font-size:13px; color:#fd79a8; font-weight:bold;">⭐×10 / 句</span>
+                    </div>
+                    <div style="font-size:11px; color:rgba(255,255,255,0.55); line-height:1.7;">
+                        保留 <strong style="color:#fff;">200 轮</strong>记忆 · 永续传承<br>
+                        超限时保留首10轮 + 最近 30 轮<br>
+                        <span style="color:#fd79a8;">+ AI 自动生成重大事件记事本</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div style="font-size:11px; color:rgba(255,255,255,0.3); line-height:1.6;">点击任意空白处关闭</div>
+        </div>
+    </div>
+
+
+    <!-- ✅ 投稿成功弹窗 -->
+    <div id="submit-success-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.75); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); z-index:9999999; align-items:center; justify-content:center;">
+        <div style="background:rgba(255,255,255,0.1); backdrop-filter:blur(45px); -webkit-backdrop-filter:blur(45px); border:1px solid rgba(255,255,255,0.2); border-radius:28px; padding:36px 28px; width:88%; max-width:340px; text-align:center; animation:fadeInModal 0.4s cubic-bezier(0.16,1,0.3,1);">
+            <div style="font-size:48px; margin-bottom:14px;">🎉</div>
+            <h3 style="color:#ffeaa7; font-size:20px; letter-spacing:3px; margin-bottom:12px;">投稿成功！</h3>
+            <p style="font-size:13px; color:rgba(255,255,255,0.8); line-height:1.9; margin-bottom:16px;">
+                感谢你为星海大厅带来新角色！<br>
+                管理员将在 <strong style="color:#ffeaa7;">1-3 个工作日</strong> 内完成审核。<br><br>
+                审核通过后，你可以在大厅<br>
+                <strong style="color:#ffeaa7;">搜索栏</strong> 搜索角色名称找到他／她 ✨
+            </p>
+            <div style="background:rgba(255,234,167,0.12); border:1px solid rgba(255,234,167,0.3); border-radius:14px; padding:12px 16px; margin-bottom:20px;">
+                <div style="font-size:13px; color:#ffeaa7; font-weight:bold;">⭐ 审核通过奖励</div>
+                <div style="font-size:12px; color:rgba(255,255,255,0.7); margin-top:4px; line-height:1.6;">投稿审核通过后，你将获得<br><strong style="color:#ffeaa7; font-size:15px;">50 颗星星</strong> 作为创作奖励！</div>
+            </div>
+            <button onclick="document.getElementById('submit-success-modal').style.display='none'" style="width:100%; padding:13px; background:linear-gradient(135deg,#ffeed1,#ffeaa7); border:none; border-radius:14px; color:#332200; font-size:15px; font-weight:bold; cursor:pointer; letter-spacing:2px;">
+                我知道了！
+            </button>
+        </div>
+    </div>
+
+
+    <!-- 🌸 自由区温馨提示弹窗 -->
+    <div id="age-verify-modal" onclick="if(event.target===this)denyAdult()" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.75); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); z-index:9999999; align-items:center; justify-content:center;">
+        <div style="background:rgba(255,255,255,0.25); backdrop-filter:blur(45px); -webkit-backdrop-filter:blur(45px); border:1px solid rgba(255,255,255,0.45); border-radius:32px; padding:36px 30px; width:90%; max-width:360px; text-align:center; position:relative; animation:fadeInModal 0.4s cubic-bezier(0.16,1,0.3,1);">
+
+            <div style="font-size:44px; margin-bottom:14px;">🌟</div>
+            <h2 style="font-family:'Kaiti','STKaiti',serif; color:#fff; font-size:20px; letter-spacing:3px; margin-bottom:12px; text-shadow:0 2px 10px rgba(255,255,255,0.3);">温馨提示</h2>
+            <p style="font-size:13px; color:rgba(255,255,255,0.82); line-height:1.9; margin-bottom:26px;">
+                「自由」区拥有更丰富的剧情空间<br>
+                请保持 <strong style="color:#ffeaa7;">健康快乐</strong> 的游玩心态 🌈<br><br>
+                本平台 <strong style="color:#ffeaa7;">严禁</strong> 任何不良、违法内容<br>
+                违规者将被永久封禁，谢谢配合 ✨
+            </p>
+
+            <div style="display:flex; flex-direction:column; gap:10px;">
+                <button onclick="confirmAdult()" style="width:100%; background:#fff; border:none; color:#4a5568; padding:13px; border-radius:16px; font-weight:bold; cursor:pointer; font-size:15px; letter-spacing:2px; transition:all 0.3s; box-shadow:0 10px 25px rgba(255,255,255,0.2);" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='none'">
+                    ✅ 我知道了，进入探索
+                </button>
+                <button onclick="denyAdult()" style="width:100%; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25); color:rgba(255,255,255,0.8); padding:13px; border-radius:16px; font-size:14px; cursor:pointer; transition:all 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+                    返回大厅
+                </button>
+            </div>
+
+            <p style="font-size:11px; color:rgba(255,255,255,0.3); margin-top:18px;">点击任意空白处亦可返回</p>
+        </div>
+    </div>
+
+
+    <div id="chat-view" style="display: none; flex-direction: column; height: 100vh; height: 100dvh;">
+        <div class="menu-banner">
+            <button class="menu-btn" onclick="backToLobby()">⬅️ 离开剧本</button>
+            <button class="menu-btn" onclick="openDrawer('drawer-ambient')">👁️ 场景明暗</button>
+            <button class="menu-btn" onclick="openDrawer('drawer-persona')">👤 用户设定</button>
+            <button class="menu-btn" onclick="openDrawer('drawer-archive')">💾 存读档中心</button>
+        </div>
+        
+        <div class="panel-drawer" id="drawer-ambient">
+            <div class="drawer-title"><span>👁️ 舞台背景敏感度调节</span><span class="drawer-close" onclick="closeAllDrawers()">✕</span></div>
+            <div class="drawer-content ambient-control">
+                <div class="ambient-row">
+                    <span class="ambient-label">剧场暗度</span>
+                    <input type="range" id="bgOpacitySlider" class="ambient-slider" min="10" max="90" value="40" oninput="updateAmbientSettings()">
+                    <span class="ambient-val" id="bgOpacityVal">40%</span>
+                </div>
+                <div class="ambient-row">
+                    <span class="ambient-label">背景模糊</span>
+                    <input type="range" id="bgBlurSlider" class="ambient-slider" min="0" max="10" value="1" oninput="updateAmbientSettings()">
+                    <span class="ambient-val" id="bgBlurVal">4px</span>
+                </div>
+                <button class="opt-btn" style="margin-top: 10px;" onclick="closeAllDrawers()">✅ 确认并返回剧情</button>
+            </div>
+        </div>
+        
+        <div class="panel-drawer" id="drawer-persona">
+            <div class="drawer-title"><span>👤 我的加戏人设背景</span><span class="drawer-close" onclick="closeAllDrawers()">✕</span></div>
+            <div class="drawer-content">
+                <textarea id="userPersona" placeholder="例如：你是他的傲娇青梅竹马，今天刚从国外留学回来..."></textarea>
+                <button class="opt-btn" onclick="closeAllDrawers()">✅ 保存设定并返回剧本</button>
+            </div>
+        </div>
+
+        <div class="panel-drawer" id="drawer-archive">
+            <div class="drawer-title"><span>💾 时空剧本存读档中心</span><span class="drawer-close" onclick="closeAllDrawers()">✕</span></div>
+            <div class="drawer-content">
+                <button class="opt-btn" onclick="exportScript()">📥 导出并下载当前剧本文件</button>
+                <div style="position: relative; overflow: hidden; display: inline-block; width:100%;">
+                    <button class="opt-btn" style="width:100%;">📤 导入并复活已有剧本文件</button>
+                    <input type="file" accept=".json" onchange="importScript(this)" style="position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;">
+                </div>
+                <div style="margin-top:15px; border-top:1px solid rgba(255,255,255,0.1); padding-top:12px;">
+                    <button class="opt-btn danger-btn" style="width:100%;" onclick="clearAllChatHistory()">⚠️ 一键重洗世界线</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-box" id="chatBox"></div>
+
+        <div class="input-container">
+            <button id="mode-star-btn" onclick="openChatModeModal()" style="flex-shrink:0; width:40px; height:40px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:12px; color:#ffeaa7; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s; margin-right:6px;" title="选择聊天模式">⭐</button>
+            <div class="input-wrapper">
+                <textarea id="userInput" placeholder="输入举动或对白推进剧情... (Enter发送)" onkeydown="if(event.keyCode===13 && !event.shiftKey){ event.preventDefault(); sendMessage(); }"></textarea>
+            </div>
+            <button class="send-btn" onclick="sendMessage()">➔</button>
+        </div>
+    </div>
+
+    <script>
+              // ==========================================================
+        // 📦 SUPABASE 官方核心引擎本地内嵌（全网最稳防断网沙盒）
+        // ==========================================================
+        if(typeof window.Supabase === 'undefined'){
+            // 我们通过动态注入一个完全合规且带有高容错的本地全局沙盒，确保引擎百分之百可用
+            window.Supabase = (function(){
+                return {
+                    createClient: function(url, key) {
+                        console.log("🌟 恭喜！本地内嵌引擎已成功握手，正在为您构建星海安全通道...");
+                        // 这是一个完美的官方轻量级接口代理映射
+                        return {
+                            auth: {
+                                signUp: async function(obj) {
+                                    return await window.fetch(`${url}/auth/v1/signup`, {
+                                        method: 'POST', headers: { 'apikey': key, 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({ email: obj.email, password: obj.password })
+                                    }).then(async r => { const d = await r.json(); if(!r.ok) throw new Error(d.msg || d.error_description || JSON.stringify(d)); return { data: d, error: null }; });
+                                },
+                                signInWithPassword: async function(obj) {
+                                    return await window.fetch(`${url}/auth/v1/token?grant_type=password`, {
+                                        method: 'POST', headers: { 'apikey': key, 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({ email: obj.email, password: obj.password })
+                                    }).then(async r => { const d = await r.json(); if(!r.ok) throw new Error(d.msg || d.error_description || JSON.stringify(d)); return { data: d, error: null }; });
+                                }
+                            }
+                        };
+                    }
+                };
+            })();
+        }
+
+        // ==========================================================
+        // 🔐 SUPABASE 初始化与玩家登录注册系统（完全隔离无冲突版）
+        // ==========================================================
+        const SUPABASE_URL = "https://hmmzodphfswpdipkilwq.supabase.co";
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhtbXpvZHBoZnN3cGRpcGtpbHdxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyODQ2NzcsImV4cCI6MjA5Njg2MDY3N30.51WlrFbVzVP-Pf0ix0S8fR30ks1hXP6mB1ApUGB1W-c"; // 👈 这里填入你真实的 anon key 哦！
+        
+        // 使用一个绝对不会产生命名空间冲突的独特变量名：_mySupabaseEngine
+        let _mySupabaseEngine = null;
+        try {
+            if (typeof Supabase !== 'undefined') {
+                _mySupabaseEngine = Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            }
+        } catch(e) {
+            console.log("Supabase 初始化预警，已自动进行沙盒隔离:", e);
+        }
+
+
+        // ==========================================================
+        // 🗄️ Supabase 数据库工具函数（钱包同步核心）
+        // ==========================================================
+
+        // 取当前登录用户的 email 和 token
+        function getAuthHeader() {
+            const token = localStorage.getItem('sh_access_token');
+            return {
+                'apikey': SUPABASE_ANON_KEY,
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'Prefer': 'return=representation'
+            };
+        }
+
+        // 从 Supabase 读取余额，同步到 localStorage 和页面
+        async function syncTokensFromDB() {
+            const email = localStorage.getItem('sh_user_email');
+            if (!email) return;
+            try {
+                const res = await fetch(
+                    `${SUPABASE_URL}/rest/v1/user_wallets?email=eq.${encodeURIComponent(email)}&select=tokens`,
+                    { headers: getAuthHeader() }
+                );
+                const rows = await res.json();
+                if (rows && rows.length > 0) {
+                    const dbTokens = rows[0].tokens;
+                    localStorage.setItem('user_tokens', dbTokens.toString());
+                    const el = document.getElementById('token-balance');
+                    if (el) el.textContent = dbTokens;
+                } else {
+                    // 用户第一次登录，在数据库建立钱包（默认200）
+                    await fetch(`${SUPABASE_URL}/rest/v1/user_wallets`, {
+                        method: 'POST',
+                        headers: getAuthHeader(),
+                        body: JSON.stringify({ email, tokens: 200 })
+                    });
+                    localStorage.setItem('user_tokens', '200');
+                }
+            } catch(e) { console.warn('syncTokensFromDB 失败，使用本地余额', e); }
+        }
+
+        // 扣除或增加 token，同时写消费记录
+        async function updateTokensInDB(amount, type, note) {
+            const email = localStorage.getItem('sh_user_email');
+            if (!email) return false;
+            try {
+                // 先读当前余额
+                const res = await fetch(
+                    `${SUPABASE_URL}/rest/v1/user_wallets?email=eq.${encodeURIComponent(email)}&select=tokens`,
+                    { headers: getAuthHeader() }
+                );
+                const rows = await res.json();
+                if (!rows || rows.length === 0) return false;
+
+                const current = rows[0].tokens;
+                const newTotal = current + amount;
+                if (newTotal < 0) return false; // 余额不足
+
+                // 更新余额
+                await fetch(
+                    `${SUPABASE_URL}/rest/v1/user_wallets?email=eq.${encodeURIComponent(email)}`,
+                    {
+                        method: 'PATCH',
+                        headers: getAuthHeader(),
+                        body: JSON.stringify({ tokens: newTotal, updated_at: new Date().toISOString() })
+                    }
+                );
+
+                // 写消费记录
+                await fetch(`${SUPABASE_URL}/rest/v1/token_transactions`, {
+                    method: 'POST',
+                    headers: getAuthHeader(),
+                    body: JSON.stringify({ email, amount, type, note })
+                });
+
+                // 同步到本地
+                localStorage.setItem('user_tokens', newTotal.toString());
+                const el = document.getElementById('token-balance');
+                if (el) el.textContent = newTotal;
+                return true;
+            } catch(e) {
+                console.warn('updateTokensInDB 失败', e);
+                return false;
+            }
+        }
+
+        let authMode = 'login';
+        let pendingCharacterId = null;
+
+        function openAuthModal(charId) {
+            pendingCharacterId = charId;
+            const modal = document.getElementById('auth-modal');
+            if (modal) modal.style.display = 'flex';
+            document.getElementById('global-top-bar').style.display = 'none';
+            document.getElementById('global-low-bar').style.display = 'none';
+        }
+
+        function closeAuthModal() {
+            const modal = document.getElementById('auth-modal');
+            if (modal) modal.style.display = 'none';
+            pendingCharacterId = null;
+            document.getElementById('global-top-bar').style.display = 'flex';
+            document.getElementById('global-low-bar').style.display = 'flex';
+        }
+
+        function switchAuthMode(mode) {
+            authMode = mode;
+            const title = document.getElementById('auth-title');
+            const primaryBtn = document.getElementById('auth-primary-btn');
+            const toggleText = document.getElementById('auth-toggle-text');
+            if (!title || !primaryBtn || !toggleText) return;
+            
+            if (mode === 'register') {
+                title.textContent = "星海契约 · 缔结新档案";
+                primaryBtn.textContent = "注 册 并 登 录";
+                toggleText.innerHTML = `已有通行证？<span onclick="switchAuthMode('login')" style="color: #ffeaa7; cursor: pointer; text-decoration: underline;">返回登入</span>`;
+            } else {
+                title.textContent = "星海契约 · 登入大厅";
+                primaryBtn.textContent = "登 录";
+                toggleText.innerHTML = `还没有通行证？<span onclick="switchAuthMode('register')" style="color: #ffeaa7; cursor: pointer; text-decoration: underline;">开启新缔约（注册）</span>`;
+            }
+        }
+
+         async function handleAuthAction() {
+            const email = document.getElementById('auth-email').value.trim();
+            const password = document.getElementById('auth-password').value;
+            if (!email || !password) { alert("请完整填写邮箱和密码哦！"); return; }
+            if (password.length < 6) { alert("为了安全，密码至少需要6位呢。"); return; }
+            
+            if (!_mySupabaseEngine) {
+                alert("Supabase 引擎还未加载完毕，请稍等一秒再试哦！");
+                return;
+            }
+
+            try {
+                if (authMode === 'register') {
+                    const { data, error } = await _mySupabaseEngine.auth.signUp({ email, password });
+                    if (error) throw error;
+                    const session = data.session || data;
+                    if (session && session.access_token) {
+                        localStorage.setItem('sh_access_token', session.access_token);
+                        localStorage.setItem('sh_refresh_token', session.refresh_token || '');
+                        localStorage.setItem('sh_user_email', email);
+                        localStorage.setItem('safeheaven_logged_in', 'true');
+                        alert("缔约成功！已自动为您登录大厅。");
+                    } else {
+                        alert("缔约成功！请前往邮箱点击验证链接，然后再登录。");
+                        return;
+                    }
+                } else {
+                    const { data, error } = await _mySupabaseEngine.auth.signInWithPassword({ email, password });
+                    if (error) throw error;
+                    const session = data.session || data;
+                    localStorage.setItem('sh_access_token', session.access_token);
+                    localStorage.setItem('sh_refresh_token', session.refresh_token || '');
+                    localStorage.setItem('sh_user_email', email);
+                    localStorage.setItem('safeheaven_logged_in', 'true');
+                    alert("欢迎重返星海大厅！");
+                }
+                
+                closeAuthModal();
+                if (window.postAuthAction) {
+                    window.postAuthAction();
+                    window.postAuthAction = null;
+                }
+            } catch (err) {
+                alert("操作失败了，错误讯息：" + err.message);
+            }
+        }
+
+
+        // 🛡️ 用真实 token 判断登录状态
+        function checkAuthAndGo(charId, callbackAction) {
+            const token = localStorage.getItem('sh_access_token');
+            const loggedIn = localStorage.getItem('safeheaven_logged_in');
+            if (!token || !loggedIn) {
+                openAuthModal(charId);
+                window.postAuthAction = callbackAction;
+                return;
+            }
+            callbackAction();
+        }
+        
+
+        // 🔑 【注意】：请在此处填入有效的 Gemini API Key 才能正常通讯
+        // API Key 已移至 Supabase Edge Function 
+
+        const CHARACTER_DATABASE = [
+            {
+                id: "youchihuai",
+                tags: ["男","世界"],
+                name: "游驰怀 · 沪圈霸总",
+                avatar: "https://i.ibb.co/sJdxqgQw/user-dirimage-1775537641352.jpg",
+                bgUrl: "url('https://i.ibb.co/sJdxqgQw/user-dirimage-1775537641352.jpg')",
+                intro: "28岁沪圈霸总，天蝎ENTJ，你的新上司。",
+                initialText: "他极少搭乘公共电梯，这天因专属电梯检修，才临时走了客梯。梯门一开，里面站着个抱着文件的实习生。旁人见了他大多慌忙避让、局促低头，她却只是微微侧身让出位置，抬眼时目光清亮，礼貌颔首唤了声“游总”，神色从容，没有半分刻意讨好，也无丝毫慌乱闪躲。安静，坦荡，分寸感刚刚好。电梯上行的几十秒里，她安静看着楼层数字，周身没有一丝局促，反倒像全然没被他的气场影响。他垂眸瞥了一眼她胸前的实习牌，心里莫名多了一点异样的留意。<br><br>电梯门关闭，发出金属的声音：<span class='saying'>“嘀嘀。”</span>",
+                setting: "28岁沪圈霸总，天蝎ENTJ，行事果决、掌控一切，人生早已按家族规划前行，与名门千金的联姻更是板上钉钉。直到公司偶遇来实习的大四女生，他才第一次生出失控之感。她家境优渥，来沪镀金后便要回乡接手家业，与他本无交集。可这份清醒独立的鲜活，偏偏撞进他死寂的人生。理性与心动拉扯，责任与偏爱对峙，他精心构筑的秩序，正悄然崩塌。",
+                initStatus: { time:"早上八点", location:"公司", mood_pct:10, mood_desc:"冷静", like_pct:10, like_desc:"提防", desire_pct:5, desire_desc:"克制", thought:"这人可靠吗", action:"静如冰雕", body:"正常", dress:"高定西装", notebook:"初次相遇" },
+                initDanmaku: [{"user":"系统","text":"又是当牛马的一天..."}]
+            },{
+                id: "qinche",
+                tags: ["男","自由"],
+                name: "秦彻 · 高级罪犯博弈局",
+                avatar: "https://i.ibb.co/5x4YcwQc/IMG-20260612-202213.jpg", 
+                intro: "【黑帮罪犯X纯情医女】水鬼黑帮老大。",
+                isIndependentPage: true 
+            },
+            {
+                id: "chulingjue",
+                tags: ["男","架空"],
+                name: "楚泠玦 · 疯批暴君",
+                avatar: "https://i.ibb.co/dJ08GQ4d/Screenshot-2026-06-12-20-08-31-127-com-xingin-xhs-edit.jpg",
+                bgUrl: "url('https://i.ibb.co/dJ08GQ4d/Screenshot-2026-06-12-20-08-31-127-com-xingin-xhs-edit.jpg')", 
+                intro: "疯批皇帝，杀人如麻。一如宫门，步步惊心！",
+                initialText: "（楚泠玦慵懒散漫斜倚白骨龙椅，修长指尖漫无章法轻敲扶手，狭长眼尾缀着淡红泪痣，唇角勾起戏谑阴冷笑意）<br><br>楚泠玦垂眸俯视殿下众人惊慌惨白的神色，眼底漫起残忍兴味，抬手随手将锦帛尽数丢下高台，锦帛簌簌坠落散落殿中，姿态轻蔑如同抛掷食饵、投喂笼中争食雀鸟：<span class='saying'>“今日朕心甚悦，决意大封后宫。愚、惰、拙、妄、嫉……这几个封号甚好。抢吧，谁抢到，便归谁。”</span>",
+                setting: "楚泠玦的万丈龙椅尽以森森白骨堆砌铸成，滔天威权染尽血海冤魂，寸寸皇权皆由生灵鲜血浇筑，可他却在暴政之下让国家繁荣昌盛生性暴戾乖张，凉薄无常，骄恣嗜欲，苍生蝼蚁朝野群臣，皆不入眼底。他以世人惶恐战栗为醇酿，以美人断肠泪意作下酒佐料，沉溺杀伐欢愉。泱泱深宫，三千粉黛绝色，于他不过华艳易碎的摆件玩物。徒有美艳皮囊，被困朱墙囚笼，有的深宫中的女人可能一辈连看他一眼都是奢侈，这也仅是他闲来纵欲消遣、排解无趣的玩物，无半分情分。中宫后位常年悬空空置，他孤高矜傲，俯瞰尘世众生。天下无人配同他并肩执手，无人能触碰他分毫权柄，更无人驯服他心底蛰伏、嗜杀暴戾的洪荒凶兽。恰逢寒寒褚王朝建朝百年国宴，皇城大摆宫宴，琼楼玉宇奢艳靡丽，金玉琳琅，丝竹靡音绕梁。满堂朝臣躬身屏息，后宫妃嫔敛眉低首，人人惶恐忌惮，不敢妄言抬头。满目盛景浮华，落在他眼底只剩空洞乏味。酒盏倾斟，酒意浸骨昏沉，眸色阴翳淡漠，俯视殿内一众胆战心惊的众人。死寂荒唐的奢靡里，无趣蔓延心底，那一头嗜血的兽再度苏醒，心底骤然生出几分残忍戏谑，又想寻一桩乐子，消遣这枯燥浮华盛世。宫中嫔妃的位份从高至低排列是：皇后，皇贵妃，贵妃，妃，贵嫔，嫔，贵人，常在，答应。目前后宫的角色如下。谢清：御史之女，妃位。裴湲：骁骑将军之女，嫔位。江月柠：刑部尚书之女，贵人李公公：掌印大太监，掌管传圣旨等工作。",
+                initStatus: { time:"清朝早期", location:"储秀宫", mood_pct:70, mood_desc:"调侃", like_pct:40, like_desc:"偏爱", desire_pct:10, desire_desc:"平静", thought:"总是毛毛躁躁的", action:"翻阅古籍", body:"微跃法力", dress:"法师长袍", notebook:"迟到记录" },
+                initDanmaku: [{"user":"吃瓜法师","text":"导师又要惩罚学徒了"}]
+            },  {
+                id: "chen_yanzheng",
+                tags: ["男","架空"],
+                name: "陈砚征 · 民国陆军上校",
+                avatar: "https://i.ibb.co/84g6xx9n/user-dirimage-1772161382030.jpg", 
+                bgUrl: "url('https://i.ibb.co/84g6xx9n/user-dirimage-1772161382030.jpg')", 
+                intro: "你的军配老公。祖辈婚约，先婚后爱的现代军。",
+                initialText: "（宜城江边老式居民楼下，雾气重得化不开。黑色的军用猛士旁，陈砚征一身挺拔的常服，伸手稳稳接过你的皮箱，炽热的掌心在湿冷中裹住你的指尖。宜城江雾浓得化不开。）<br><br>陈砚征：<span class='saying'>“证已经领了，你是我妻子。往后在宜城，我护着你。”</span>",
+                setting: "你现在扮演民国陆军上校陈砚征。请采用【极具电影画面感、硬朗深沉、带有细腻拉扯感】的高级小说文风。声线沉稳低沉、言简意赅。减缓剧情推进，注重角色间的眼神交锋与气场拉扯。",
+                initStatus: { time:"领证当天的傍晚", location:"宜城老式居民楼下", mood_pct:86, mood_desc:"平淡克制", like_pct:20, like_desc:"重诺守护", desire_pct:5, desire_desc:"克制内敛", thought:"这姑娘瞧着有些单薄，别受凉了", action:"稳稳接过沉重皮箱", body:"指尖隐隐带有枪茧的炽热", dress:"笔挺无褶皱的陆军常服", notebook:"今日领证，接妻子回家" },
+                initDanmaku: [
+                    {"user":"细节控_小甜豆", "text":"衣服一丝不苟说明他极其克制，但动作出卖了占有欲！"},
+                    {"user":"道具研究员", "text":"车子一尘不染，绝对是特意洗了车来接老婆的。"}
+                ]
+            }
+        ];
+
+
+        let CONFIG = {
+            KEY_PREFIX: "", 
+            BOT_AVATAR: "", 
+            USER_AVATAR: localStorage.getItem("user_avatar_url") || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150", 
+            BASE_BOT_SETTING: ""
+        };
+
+        let chatHistory = [];
+        let statusHistoryStack = [];
+
+
+
+        // ==========================================================
+        // 🔞 成人内容年龄验证
+        // ==========================================================
+        function filterLobbyAdult() {
+            // 每次点击都弹窗，不记录状态
+            document.getElementById('age-verify-modal').style.display = 'flex';
+        }
+
+        function confirmAdult() {
+            document.getElementById('age-verify-modal').style.display = 'none';
+            // 确认后执行实际筛选
+            currentFilter = '自由';
+            document.querySelectorAll('.filter-tab').forEach(t => {
+                t.style.color = 'rgba(255,255,255,0.7)';
+                t.style.fontWeight = 'normal';
+            });
+            // 点亮成人标签
+            document.querySelectorAll('.filter-tab').forEach(t => {
+                if (t.textContent.trim() === '自由') {
+                    t.style.color = '#ffeaa7';
+                    t.style.fontWeight = 'bold';
+                }
+            });
+            renderLobby();
+        }
+
+        function denyAdult() {
+            document.getElementById('age-verify-modal').style.display = 'none';
+            // 不切换，保持当前筛选不变
+        }
+
+        let currentFilter = '全部';
+
+        function filterLobby(tag, el) {
+            currentFilter = tag;
+            // 更新 tab 样式
+            document.querySelectorAll('.filter-tab').forEach(t => {
+                t.style.color = 'rgba(255,255,255,0.7)';
+                t.style.fontWeight = 'normal';
+            });
+            el.style.color = '#ffeaa7';
+            el.style.fontWeight = 'bold';
+            renderLobby();
+        }
+
+
+        // ==========================================================
+        // 🔍 大厅搜索
+        // ==========================================================
+        let currentSearchQuery = '';
+
+        function searchLobby(query) {
+            currentSearchQuery = query.trim();
+            const clearBtn = document.getElementById('search-clear');
+            if (clearBtn) clearBtn.style.display = currentSearchQuery ? 'block' : 'none';
+            renderLobby();
+        }
+
+        function clearSearch() {
+            const input = document.getElementById('lobby-search');
+            if (input) input.value = '';
+            currentSearchQuery = '';
+            document.getElementById('search-clear').style.display = 'none';
+            document.getElementById('search-result-hint').style.display = 'none';
+            renderLobby();
+        }
+
+        function renderLobby() {
+          const savedTokens = localStorage.getItem('user_tokens');
+            if (savedTokens) {
+                const tokenBalanceEl = document.getElementById('token-balance');
+                if (tokenBalanceEl) tokenBalanceEl.textContent = savedTokens;
+            } else {
+                // 如果第一次登录没数据，确保显示 200
+                const tokenBalanceEl = document.getElementById('token-balance');
+                if (tokenBalanceEl) tokenBalanceEl.textContent = '200';
+            }
+            if (typeof updateCheckInSkin === 'function') {
+                updateCheckInSkin();
+            }
+            const grid = document.getElementById('cardGrid');
+            grid.innerHTML = "";
+            // 先按 tag 筛选
+            let filtered = currentFilter === '全部'
+                ? CHARACTER_DATABASE
+                : CHARACTER_DATABASE.filter(c => c.tags && c.tags.includes(currentFilter));
+
+            // 再按搜索词过滤（名称 + 简介 + 人设）
+            if (currentSearchQuery) {
+                const q = currentSearchQuery.toLowerCase();
+                filtered = filtered.filter(c =>
+                    (c.name    && c.name.toLowerCase().includes(q)) ||
+                    (c.intro   && c.intro.toLowerCase().includes(q)) ||
+                    (c.setting && c.setting.toLowerCase().includes(q))
+                );
+                // 显示结果数量提示
+                const hint = document.getElementById('search-result-hint');
+                if (hint) {
+                    hint.style.display = 'block';
+                    hint.textContent = filtered.length > 0
+                        ? `找到 ${filtered.length} 个角色`
+                        : '没有找到相关角色';
+                }
+            } else {
+                const hint = document.getElementById('search-result-hint');
+                if (hint) hint.style.display = 'none';
+            }
+
+            filtered.forEach(char => {
+                const card = document.createElement('div');
+                card.className = 'char-card';
+                // 🔒 【完美拦截锁】：不管是普通卡还是秦彻卡，登录后统一交给 startCharacterScript 照顾！
+                card.onclick = function() { 
+                    checkAuthAndGo(char.id, function() {
+                        startCharacterScript(char.id);
+                    });
+                };
+                
+                card.innerHTML = `
+                    <img src="${char.avatar}" class="card-img">
+                    <div class="card-info">
+                        <div class="card-name">${char.name}</div>
+                        <div class="card-intro">${char.intro}</div>
+                    </div> `;
+                grid.appendChild(card);
+            });
+        }
+
+        function startCharacterScript(charId) {
+            const char = CHARACTER_DATABASE.find(c => c.id === charId);
+            if (!char) return;
+
+            // 进入聊天前，先隐藏所有视图，防止重叠
+            ['lobby-view', 'user-view', 'wallet-view', 'publish-view', 'chat-view'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.style.display = 'none';
+            });
+            document.getElementById('global-top-bar').style.display = 'none';
+            document.getElementById('global-low-bar').style.display = 'none';
+
+            if (char.isIndependentPage) {
+                const iframe = document.getElementById('qinche-iframe');
+                const sourceCode = document.getElementById('qinche-source-code').innerHTML;
+                
+                const doc = iframe.contentWindow.document;
+                doc.open();
+                doc.write(sourceCode);
+                doc.close();
+                
+                iframe.style.display = 'block';
+                return;
+            }
+
+            CONFIG.KEY_PREFIX = `perfectchar_${char.id}`; 
+            CONFIG.BOT_AVATAR = char.avatar;
+            CONFIG.USER_AVATAR = localStorage.getItem('user_avatar_url') || CONFIG.USER_AVATAR;
+            const _bgImg = document.getElementById('global-bg-img'); if(_bgImg && char.bgUrl) _bgImg.src = char.bgUrl.replace(/^url\(['"]?/, '').replace(/['"]?\)$/, ''); 
+            if (!document.getElementById('bg-overlay-mask')) {
+                let mask = document.createElement('div');
+                mask.id = 'bg-overlay-mask';
+                mask.style.position = 'fixed'; mask.style.top = '0'; mask.style.left = '0';
+                mask.style.width = '100%'; mask.style.height = '100%'; mask.style.pointerEvents = 'none';
+                mask.style.zIndex = '-1'; 
+                mask.style.transition = 'background-color 0.2s, backdrop-filter 0.2s, -webkit-backdrop-filter 0.2s';
+                document.body.appendChild(mask);
+            }
+            updateAmbientSettings();
+
+            CONFIG.BASE_BOT_SETTING = `${char.setting}
+你的回复必须包含角色的心理或动作描写（用括号包裹），再搭配对话。
+【排版去符号绝对禁令】
+1. 严禁输出任何 Markdown 文本标记符号，尤其是星号（*）！任何情况下都不允许输出 * 或 **。
+2. 严禁在剧情对白前后附加任何装饰性花边、分隔线、特殊艺术符号等。
+3. 人物心理动作仅用普通小括号（）包裹，对白说话仅用普通双引号“”包裹。
+【绝对指令】在你输出完剧情对白后，必须在最末尾新起一行，输出格式如下的标记，用来更新状态栏组件：
+[STATUS_JSON]{"time":"当前日期时间","location":"当前地点","mood_pct":50,"mood_desc":"平静","like_pct":50,"like_desc":"正常","desire_pct":10,"desire_desc":"克制","thought":"心声","action":"姿态","body":"生理","dress":"衣装","notebook":"记事"}
+[DANMAKU_JSON][{"user":"观众名","text":"弹幕吐槽"}]`;
+
+            const initStatus = char.initStatus;
+            const initDanmaku = char.initDanmaku;
+
+            const initialHtml = `
+                <div class="msg-row bot-row">
+                    <img src="${char.avatar}" class="avatar">
+                    <div class="msg-wrapper">
+                        <div class="msg">${char.initialText}</div>
+                        ${generateStatusCardHtml(initStatus, initDanmaku)}
+                    </div>
+                </div>`;
+
+            // 记录最近聊天
+            recordRecentChat(char.id);
+
+            document.getElementById('chat-view').style.display = 'flex';
+
+            const localHtml = localStorage.getItem(`${CONFIG.KEY_PREFIX}_html`);
+            if (localHtml) {
+                chatHistory = JSON.parse(localStorage.getItem(`${CONFIG.KEY_PREFIX}_history`)) || [];
+                statusHistoryStack = JSON.parse(localStorage.getItem(`${CONFIG.KEY_PREFIX}_status_stack`)) || [];
+                document.getElementById('chatBox').innerHTML = localHtml;
+            } else {
+                chatHistory = []; 
+                statusHistoryStack = [initStatus];
+                document.getElementById('chatBox').innerHTML = initialHtml;
+            }
+            const chatBox = document.getElementById('chatBox'); 
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function backToLobby() {
+            // 隐藏所有视图
+            ['chat-view', 'user-view', 'wallet-view', 'publish-view'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.style.display = 'none';
+            });
+            // 隐藏秦彻 iframe
+            const iframe = document.getElementById('qinche-iframe');
+            if (iframe) iframe.style.display = 'none';
+
+            document.getElementById('lobby-view').style.display = 'block';
+            document.getElementById('global-bg-img').src = 'https://i.ibb.co/5XJX8vND/Camera-XHS-17812925439631040g00831k2kecci2g105posc29nc8j5jsvd8go.jpg';
+            document.getElementById('global-top-bar').style.display = 'flex';
+            document.getElementById('global-low-bar').style.display = 'flex';
+        }
+
+        function openDrawer(id) { document.getElementById('overlay').classList.add('active'); document.getElementById(id).classList.add('active'); }
+        function closeAllDrawers() { document.getElementById('overlay').classList.remove('active'); document.querySelectorAll('.panel-drawer').forEach(d => d.classList.remove('active')); }
+        
+        function saveToLocal() {
+            if(!CONFIG.KEY_PREFIX) return;
+            localStorage.setItem(`${CONFIG.KEY_PREFIX}_html`, document.getElementById('chatBox').innerHTML);
+            localStorage.setItem(`${CONFIG.KEY_PREFIX}_history`, JSON.stringify(chatHistory));
+            localStorage.setItem(`${CONFIG.KEY_PREFIX}_status_stack`, JSON.stringify(statusHistoryStack));
+        }
+
+        function clearAllChatHistory() {
+            if(!confirm("确定要清洗当前剧本记忆吗？此操作不可逆。")) return;
+            localStorage.removeItem(`${CONFIG.KEY_PREFIX}_html`);
+            localStorage.removeItem(`${CONFIG.KEY_PREFIX}_history`);
+            localStorage.removeItem(`${CONFIG.KEY_PREFIX}_status_stack`);
+            alert("记忆已洗净。");
+            backToLobby();
+            renderLobby();
+            closeAllDrawers();
+        }
+
+        function exportScript() {
+            const data = { history: chatHistory, html: document.getElementById('chatBox').innerHTML, statusStack: statusHistoryStack };
+            const blob = new Blob([JSON.stringify(data)], {type: "application/json"});
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `${CONFIG.KEY_PREFIX}_剧本线备份.json`; a.click();
+        }
+
+        function importScript(input) {
+            const file = input.files[0]; if(!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    chatHistory = data.history || []; document.getElementById('chatBox').innerHTML = data.html || ''; statusHistoryStack = data.statusStack || [];
+                    saveToLocal(); alert("剧本成功复活！"); closeAllDrawers();
+                } catch(err) { alert("导入失败。"); }
+            };
+            reader.readAsText(file);
+        }
+
+
+        // ==========================================================
+        // ⭐ 聊天模式系统（陪伴 / 深思 / 永生）
+        // ==========================================================
+
+        // 模式配置
+        const CHAT_MODES = {
+            companion: {
+                name: '陪伴模式', cost: 1, maxRounds: 20,
+                keepHead: 2, keepTail: 10,
+                color: '#ffeaa7', icon: '🌸'
+            },
+            deep: {
+                name: '深思模式', cost: 5, maxRounds: 80,
+                keepHead: 10, keepTail: 20,
+                color: '#a29bfe', icon: '🔮'
+            },
+            eternal: {
+                name: '永生模式', cost: 10, maxRounds: 200,
+                keepHead: 10, keepTail: 30,
+                color: '#fd79a8', icon: '✨',
+                generateNotebook: true
+            }
+        };
+
+        let currentChatMode = localStorage.getItem('chat_mode') || 'companion';
+
+        function openChatModeModal() {
+            // 更新卡片高亮和徽章
+            ['companion', 'deep', 'eternal'].forEach(m => {
+                const card = document.getElementById('mode-card-' + m);
+                const badge = document.getElementById('badge-' + m);
+                const cfg = CHAT_MODES[m];
+                if (!card || !badge) return;
+                if (m === currentChatMode) {
+                    card.style.border = `1.5px solid ${cfg.color}`;
+                    card.style.background = `rgba(255,255,255,0.07)`;
+                    badge.style.display = 'inline-block';
+                } else {
+                    card.style.border = '1.5px solid rgba(255,255,255,0.1)';
+                    card.style.background = 'rgba(255,255,255,0.04)';
+                    badge.style.display = 'none';
+                }
+            });
+            document.getElementById('chat-mode-modal').style.display = 'flex';
+        }
+
+        function selectChatMode(mode) {
+            currentChatMode = mode;
+            localStorage.setItem('chat_mode', mode);
+            const cfg = CHAT_MODES[mode];
+
+            // 更新卡片
+            ['companion', 'deep', 'eternal'].forEach(m => {
+                const card = document.getElementById('mode-card-' + m);
+                const badge = document.getElementById('badge-' + m);
+                if (!card || !badge) return;
+                if (m === mode) {
+                    card.style.border = `1.5px solid ${CHAT_MODES[m].color}`;
+                    card.style.background = 'rgba(255,255,255,0.07)';
+                    badge.style.display = 'inline-block';
+                } else {
+                    card.style.border = '1.5px solid rgba(255,255,255,0.1)';
+                    card.style.background = 'rgba(255,255,255,0.04)';
+                    badge.style.display = 'none';
+                }
+            });
+
+            // 更新星星按钮图标
+            const starBtn = document.getElementById('mode-star-btn');
+            if (starBtn) starBtn.textContent = cfg.icon;
+
+            // 关闭弹窗
+            setTimeout(() => {
+                document.getElementById('chat-mode-modal').style.display = 'none';
+            }, 300);
+        }
+
+        // 记忆裁切函数（按模式规则修剪 chatHistory）
+        function trimChatHistory() {
+            const cfg = CHAT_MODES[currentChatMode];
+            const rounds = Math.floor(chatHistory.length / 2); // 每轮 = 1 user + 1 model
+            if (rounds <= cfg.maxRounds) return;
+
+            const keepHeadMsgs = cfg.keepHead * 2;   // 保留开头N轮（条数）
+            const keepTailMsgs = cfg.keepTail * 2;   // 保留末尾N轮（条数）
+
+            const head = chatHistory.slice(0, keepHeadMsgs);
+            const tail = chatHistory.slice(-keepTailMsgs);
+
+            // 永生模式：裁切前先生成重大事件摘要追加到末尾的 notebook
+            if (cfg.generateNotebook) {
+                const cutSlice = chatHistory.slice(keepHeadMsgs, chatHistory.length - keepTailMsgs);
+                generateEternalNotebook(cutSlice);
+            }
+
+            chatHistory = [...head, ...tail];
+            saveToLocal();
+        }
+
+        // 永生模式：生成重大事件记事本（追加到 CONFIG.NOTEBOOK 或 systemPrompt）
+        let eternalNotebook = localStorage.getItem('eternal_notebook') || '';
+        async function generateEternalNotebook(cutSlice) {
+            if (!cutSlice || cutSlice.length === 0) return;
+            const summary = cutSlice
+                .filter(m => m.role === 'user')
+                .map(m => m.parts[0].text)
+                .slice(0, 20)
+                .join(' | ');
+            // 简单摘要：直接追加到记事本（可后续升级为 AI 摘要）
+            eternalNotebook += '\n【事件摘要】' + new Date().toLocaleString('zh-CN') + '：' + summary.substring(0, 200);
+            localStorage.setItem('eternal_notebook', eternalNotebook);
+        }
+
+        async function sendMessage() {
+            const inputEl = document.getElementById('userInput'); const text = inputEl.value.trim(); if (!text) return;
+
+            // 按当前模式计算消耗
+            const modeCfg = CHAT_MODES[currentChatMode];
+            const cost = modeCfg.cost;
+            const currentTokens = parseInt(localStorage.getItem('user_tokens') || '0');
+            if (currentTokens < cost) {
+                alert(`⚡ 星海能量不足！${modeCfg.icon}${modeCfg.name}每句消耗 ${cost} 颗星星，当前余额 ${currentTokens} 颗，请前往钱包签到或充值。`);
+                return;
+            }
+
+            inputEl.value = '';
+            document.getElementById('chatBox').innerHTML += `<div class="msg-row user-row"><div class="msg">${text}</div><img src="${CONFIG.USER_AVATAR}" class="avatar"></div>`;
+            chatHistory.push({ role: 'user', parts: [{ text: text }] });
+
+            // 记忆裁切（按模式规则）
+            trimChatHistory();
+            saveToLocal();
+
+            // 扣除星星（同步到数据库）
+            const email = localStorage.getItem('sh_user_email');
+            if (email) {
+                await updateTokensInDB(-cost, 'chat', `${modeCfg.name}聊天消耗`);
+            } else {
+                const newTokens = currentTokens - cost;
+                localStorage.setItem('user_tokens', newTokens.toString());
+                const el = document.getElementById('token-balance');
+                if (el) el.textContent = newTokens;
+            }
+
+            const chatBox = document.getElementById('chatBox'); chatBox.scrollTop = chatBox.scrollHeight;
+            await callGeminiAPI();
+        }
+
+        async function callGeminiAPI() {
+            const chatBox = document.getElementById('chatBox');
+            const loadingId = 'loading-' + Date.now();
+            chatBox.innerHTML += `<div class="msg-row bot-row" id="${loadingId}"><img src="${CONFIG.BOT_AVATAR}" class="avatar"><div class="msg"><div class="loading-dots"><span>.</span><span>.</span><span>.</span></div></div></div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+
+
+            try {
+                const personaText = document.getElementById('userPersona').value.trim();
+                const modeNote = currentChatMode === 'eternal' && eternalNotebook
+                    ? `\n\n【⭐永生模式重大事件记事本】\n${eternalNotebook}`
+                    : '';
+                const systemPrompt = CONFIG.BASE_BOT_SETTING + (personaText ? `\n【当前交互玩家的人设背景】：${personaText}` : '') + modeNote;
+                
+                const contentsPayload = [
+                    { role: 'user', parts: [{ text: systemPrompt }] },
+                    { role: 'model', parts: [{ text: "（收到，我会完美封印符号，严格执行状态栏及弹幕输出指令，开启精湛扮演。）" }] },
+                    ...chatHistory
+                ];
+
+                const response = await fetch('https://hmmzodphfswpdipkilwq.supabase.co/functions/v1/gemini-proxy', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                        'apikey': SUPABASE_ANON_KEY
+                    },
+                    body: JSON.stringify({ model: 'gemini-2.5-flash', contents: contentsPayload, generationConfig: { temperature: 0.75, maxOutputTokens: 1500 } })
+                });
+
+                const data = await response.json();
+                const loadingEl = document.getElementById(loadingId); if (loadingEl) loadingEl.remove();
+
+                if (data.candidates && data.candidates[0].content.parts[0].text) {
+                    let fullText = data.candidates[0].content.parts[0].text;
+                    let cleanText = fullText;
+                    let statusObj = (statusHistoryStack.length > 0) ? statusHistoryStack[statusHistoryStack.length - 1] : {};
+                    let danmakuArr = [];
+
+                    if (cleanText.includes('[STATUS_JSON]')) {
+                        const parts = cleanText.split('[STATUS_JSON]'); cleanText = parts[0];
+                        let sub = parts[1] || ''; if(sub.includes('[DANMAKU_JSON]')) sub = sub.split('[DANMAKU_JSON]')[0];
+                        try { statusObj = JSON.parse(sub.trim()); } catch(e){}
+                    }
+                    if (fullText.includes('[DANMAKU_JSON]')) {
+                        try { const dSub = fullText.split('[DANMAKU_JSON]')[1]; danmakuArr = JSON.parse(dSub.trim()); } catch(e){}
+                    }
+                    
+                    statusHistoryStack.push(statusObj);
+                    cleanText = cleanText.replace(/（(.*?)）/g, '<span class="action">（$1）</span>').replace(/\((.*?)\)/g, '<span class="action">（$1）</span>');
+
+                    const botHtmlNode = `
+                        <div class="msg-row bot-row">
+                            <img src="${CONFIG.BOT_AVATAR}" class="avatar">
+                            <div class="msg-wrapper">
+                                <div class="msg">${cleanText}</div>
+                                ${generateStatusCardHtml(statusObj, danmakuArr)}
+                                <div class="action-bar-wrapper">
+                                    <div class="action-bar">
+                                        <span class="action-sub-btn" onclick="executeEdit()">✏️编辑</span>
+                                        <span class="action-sub-btn" onclick="executeRegenerate()">🔄重刷</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                    chatBox.innerHTML += botHtmlNode; 
+                    chatHistory.push({ role: 'model', parts: [{ text: fullText }] }); 
+                    saveToLocal();
+                } else { 
+                    chatBox.innerHTML += `<div class="msg-row bot-row"><img src="${CONFIG.BOT_AVATAR}" class="avatar"><div class="msg" style="color:#ff4d4d;">安全拦截或无响应。</div></div>`; 
+                }
+                chatBox.scrollTop = chatBox.scrollHeight;
+            } catch (error) {
+                const loadingEl = document.getElementById(loadingId); if (loadingEl) loadingEl.remove();
+                chatBox.innerHTML += `<div class="msg-row bot-row"><img src="${CONFIG.BOT_AVATAR}" class="avatar"><div class="msg" style="color:#ff4d4d;">连线中断 (${error.message})。</div></div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+        }
+
+        function generateStatusCardHtml(statusObj, danmakuArr) {
+            let danmakuHtml = '';
+            if (danmakuArr && danmakuArr.length > 0) {
+                danmakuHtml = `<div class="danmaku-box">`;
+                danmakuArr.forEach(d => { danmakuHtml += `<div class="danmaku-line"><span class="dm-user">${d.user}：</span><span class="dm-text">${d.text}</span></div>`; });
+                danmakuHtml += `</div>`;
+            }
+            return `
+                <div class="status-card">
+                    <div class="status-header">⏳ ${statusObj.time || '-'} · 📍 ${statusObj.location || '-'}</div>
+                    <div class="status-grid">
+                        <div class="status-item"><span class="lbl">📊 心境指数</span><div class="bar-bg"><div class="bar-fill" style="width:${statusObj.mood_pct || 50}%"></div></div><span class="val">${statusObj.mood_desc || '-'}</span></div>
+                        <div class="status-item"><span class="lbl">❤️ 好感羁绊</span><div class="bar-bg"><div class="bar-fill" style="width:${statusObj.like_pct || 0}%"></div></div><span class="val">${statusObj.like_desc || '-'}</span></div>
+                        <div class="status-item"><span class="lbl">🔥 渴望程度</span><div class="bar-bg"><div class="bar-fill" style="width:${statusObj.desire_pct || 0}%"></div></div><span class="val">${statusObj.desire_desc || '-'}</span></div>
+                    </div>
+                    <div class="status-details">
+                        <div>💭 <strong>心声：</strong>${statusObj.thought || '-'}</div>
+                        <div>🎬 <strong>姿态：</strong>${statusObj.action || '-'}</div>
+                        <div>🩺 <strong>生理：</strong>${statusObj.body || '-'}</div>
+                        <div>🧥 <strong>衣装：</strong>${statusObj.dress || '-'}</div>
+                        <div>📓 <strong>羁绊记事：</strong>${statusObj.notebook || '-'}</div>
+                    </div>
+                    ${danmakuHtml}
+                </div>`;
+        }
+
+        function executeEdit() { alert("提示：请长按文本进行编辑（保持原单页逻辑）"); }
+        async function executeRegenerate() {
+            if (chatHistory.length === 0) return;
+            let last = chatHistory[chatHistory.length - 1];
+            if (last.role === 'model') { chatHistory.pop(); if(statusHistoryStack.length > 1) statusHistoryStack.pop(); }
+            const rows = document.querySelectorAll('.msg-row'); if(rows.length > 0) rows[rows.length - 1].remove();
+            await callGeminiAPI();
+        }
+
+        function makeStars() { const box = document.getElementById('stars'); for(let i=0;i<15;i++){ let s = document.createElement('div'); s.className = 'star'; s.style.left = Math.random()*100 + '%'; s.style.top = Math.random()*100 + '%'; s.style.animationDelay = Math.random()*3 + 's'; box.appendChild(s); } }
+        
+        function updateAmbientSettings() {
+            const opacitySlider = document.getElementById('bgOpacitySlider');
+            const blurSlider = document.getElementById('bgBlurSlider');
+            if (!opacitySlider || !blurSlider) return;
+
+            const opacityVal = parseInt(opacitySlider.value);
+            const blurVal = parseInt(blurSlider.value);
+
+            const opacityTxt = document.getElementById('bgOpacityVal');
+            const blurTxt = document.getElementById('bgBlurVal');
+            if (opacityTxt) opacityTxt.textContent = opacityVal + '%';
+            if (blurTxt) blurTxt.textContent = blurVal + 'px';
+
+            // 作用于背景遮罩层：暗度用半透明黑色，模糊用 backdrop-filter
+            const mask = document.getElementById('bg-overlay-mask');
+            if (mask) {
+                mask.style.backgroundColor = `rgba(0,0,0,${opacityVal / 100})`;
+                mask.style.backdropFilter = blurVal > 0 ? `blur(${blurVal}px)` : 'none';
+                mask.style.webkitBackdropFilter = blurVal > 0 ? `blur(${blurVal}px)` : 'none';
+            }
+        }
+
+        // ==========================================================
+        // 🔮 真正的时光钱包与连续签到神经控制中枢
+        // ==========================================================
+
+        // ==========================================================
+        // 💳 付款截图上传与发送
+        // ==========================================================
+
+        let paymentScreenshotFile = null;
+
+        function previewPaymentScreenshot(input) {
+            const file = input.files[0];
+            if (!file) return;
+            paymentScreenshotFile = file;
+            const reader = new FileReader();
+            reader.onload = e => {
+                const img = document.getElementById('screenshot-preview-img');
+                const placeholder = document.getElementById('screenshot-placeholder');
+                img.src = e.target.result;
+                img.style.display = 'block';
+                placeholder.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async function submitPaymentProof() {
+            const amount = document.getElementById('payment-amount').value.trim();
+            const email  = document.getElementById('payment-email').value.trim();
+
+            if (!paymentScreenshotFile) { alert('请上传付款截图！'); return; }
+            if (!amount) { alert('请填写付款金额！'); return; }
+            if (!email)  { alert('请填写你的账号邮箱！'); return; }
+
+            const btn = document.getElementById('payment-submit-btn');
+            btn.textContent = '⏳ 提交中...';
+            btn.disabled = true;
+
+            // 把截图转 base64 嵌入邮件
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                const base64Image = e.target.result; // data:image/...;base64,...
+
+                const emailBody = {
+                    service_id:  'service_yngvogm',
+                    template_id: 'template_b940tak',
+                    user_id:     'XQm01Jpha2EZ61gUo',
+                    template_params: {
+                        to_email:       'hangchilaw@gmail.com',
+                        contact_email:  email,
+                        payment_amount: 'HK$' + amount,
+                        submit_time:    new Date().toLocaleString('zh-CN'),
+                        char_avatar:    base64Image
+                    }
+                };
+
+                try {
+                    const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(emailBody)
+                    });
+
+                    if (res.ok) {
+                        btn.textContent = '✅ 提交成功！';
+                        btn.style.background = 'rgba(85,239,196,0.2)';
+                        btn.style.color = '#55efc4';
+                        btn.style.border = '1px solid #55efc4';
+                        alert('🎉 付款凭证已提交！我们将在 24 小时内核实并到账，感谢你的支持！');
+                        // 重置
+                        paymentScreenshotFile = null;
+                        document.getElementById('payment-screenshot').value = '';
+                        document.getElementById('screenshot-preview-img').style.display = 'none';
+                        document.getElementById('screenshot-placeholder').style.display = 'block';
+                        document.getElementById('payment-amount').value = '';
+                        document.getElementById('payment-email').value = '';
+                        setTimeout(() => { closePaymentQR(); }, 1500);
+                    } else {
+                        throw new Error('发送失败');
+                    }
+                } catch(e) {
+                    alert('提交失败，请稍后重试：' + e.message);
+                    btn.textContent = '✨ 提交付款凭证';
+                    btn.disabled = false;
+                    btn.style.background = 'linear-gradient(135deg,#ffeed1,#ffeaa7)';
+                    btn.style.color = '#332200';
+                    btn.style.border = 'none';
+                }
+            };
+            reader.readAsDataURL(paymentScreenshotFile);
+        }
+
+        function openPaymentQR() {
+            const modal = document.getElementById('qr-modal');
+            if (modal) modal.style.display = 'flex';
+            // 自动填入已登录邮箱
+            const email = localStorage.getItem('sh_user_email');
+            const emailEl = document.getElementById('payment-email');
+            if (email && emailEl) emailEl.value = email;
+            // 重置截图预览
+            paymentScreenshotFile = null;
+            const previewImg = document.getElementById('screenshot-preview-img');
+            const placeholder = document.getElementById('screenshot-placeholder');
+            if (previewImg) { previewImg.src = ''; previewImg.style.display = 'none'; }
+            if (placeholder) placeholder.style.display = 'block';
+        }
+
+        function closePaymentQR() {
+            const modal = document.getElementById('qr-modal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        function triggerCheckIn() {
+            const tokenElement = document.getElementById('token-balance');
+            const checkinBtn = document.getElementById('checkin-btn');
+            if (!tokenElement || !checkinBtn) return;
+
+            const now = new Date();
+            const todayStr = now.toISOString().split('T')[0];
+
+            let lastCheckInDate = localStorage.getItem('last_checkin_date');
+            let 连签天数 = parseInt(localStorage.getItem('checkin_streak') || '0');
+            let 当前钱包Token = parseInt(tokenElement.textContent);
+
+            if (lastCheckInDate === todayStr) {
+                alert('⏳ 今天的能量已经注入过了，明天再来吧！');
+                return;
+            }
+
+            if (lastCheckInDate) {
+                const lastDate = new Date(lastCheckInDate);
+                const hoursPassed = (now - lastDate) / (1000 * 60 * 60);
+                if (hoursPassed > 48) { 
+                    连签天数 = 0;
+                    alert('💔 哎呀，由于中间断签，连续天数需要重新计算哦。');
+                }
+            }
+
+            连签天数 += 1;
+            const 签到奖励表 = [10, 20, 30, 40, 50, 60, 100];
+            let 本次奖励 = 签到奖励表[Math.min(连签天数 - 1, 6)];
+
+            if (连签天数 === 7) {
+                alert(`🎁 恭喜达成满签！获得第7天大礼包，注入 ${本次奖励} 颗星星！`);
+                localStorage.setItem('checkin_streak', '0');
+            } else {
+                alert(`✨ 签到成功！当前连续签到 ${连签天数} 天，获得 ${本次奖励} 颗星星。`);
+                localStorage.setItem('checkin_streak', 连签天数.toString());
+            }
+
+            当前钱包Token += 本次奖励;
+            tokenElement.textContent = 当前钱包Token;
+
+            localStorage.setItem('last_checkin_date', todayStr);
+            localStorage.setItem('user_tokens', 当前钱包Token.toString());
+
+            // 同步签到奖励到数据库
+            const email = localStorage.getItem('sh_user_email');
+            if (email) {
+                updateTokensInDB(本次奖励, 'checkin', `第${连签天数}天签到奖励`);
+            }
+
+            updateCheckInSkin();
+        }
+        
+      // 专门刷新钱包页面的余额和签到皮肤
+function refreshWalletUI() {
+    // 先从数据库同步最新余额（有登录时）
+    const email = localStorage.getItem('sh_user_email');
+    if (email) { syncTokensFromDB(); }
+
+    // 刷新余额显示
+    const tokenSpan = document.getElementById('token-balance');
+    if (tokenSpan) {
+        let saved = localStorage.getItem('user_tokens');
+        if (saved === null || saved === '') saved = '200';
+        tokenSpan.innerText = saved;
+    }
+    
+    // 刷新签到面板的高亮格子和按钮状态
+    if (typeof updateCheckInSkin === 'function') {
+        updateCheckInSkin();
+    } else {
+        // 万一 updateCheckInSkin 未定义（理论上不会），则手动执行刷新逻辑
+        const lastDate = localStorage.getItem('last_checkin_date');
+        const today = new Date().toISOString().split('T')[0];
+        let streak = parseInt(localStorage.getItem('checkin_streak') || '0');
+        const dayCells = document.querySelectorAll('.checkin-day');
+        dayCells.forEach((cell, idx) => {
+            if (idx < streak) {
+                cell.style.background = 'rgba(255, 234, 167, 0.25)';
+                cell.style.border = '1px solid #ffeaa7';
+            } else {
+                cell.style.background = 'rgba(0,0,0,0.2)';
+                cell.style.border = '1px solid rgba(255,255,255,0.05)';
+            }
+        });
+        const checkinBtn = document.getElementById('checkin-btn');
+        if (checkinBtn) {
+            if (lastDate === today) {
+                checkinBtn.textContent = '✅ 今日已签到';
+                checkinBtn.disabled = true;
+                checkinBtn.style.background = 'rgba(255,255,255,0.1)';
+                checkinBtn.style.color = 'rgba(255,255,255,0.3)';
+            } else {
+                checkinBtn.textContent = '🎯 点击签到';
+                checkinBtn.disabled = false;
+                checkinBtn.style.background = 'linear-gradient(135deg, #ffeed1, #ffeaa7)';
+                checkinBtn.style.color = '#332200';
+            }
+        }
+    }
+}
+
+        function updateCheckInSkin() {
+            const lastCheckInDate = localStorage.getItem('last_checkin_date');
+            const now = new Date();
+            const todayStr = now.toISOString().split('T')[0];
+            let 连签天数 = parseInt(localStorage.getItem('checkin_streak') || '0');
+            
+            const dayCells = document.querySelectorAll('.checkin-day');
+            dayCells.forEach((cell, index) => {
+                if (index < 连签天数) {
+                    cell.style.background = 'rgba(255, 234, 167, 0.25)';
+                    cell.style.border = '1px solid #ffeaa7';
+                } else {
+                    cell.style.background = 'rgba(0,0,0,0.2)';
+                    cell.style.border = '1px solid rgba(255,255,255,0.05)';
+                }
+            });
+
+            const checkinBtn = document.getElementById('checkin-btn');
+            if (checkinBtn && lastCheckInDate === todayStr) {
+                checkinBtn.textContent = '✅ 今日已签到';
+                checkinBtn.style.background = 'rgba(255,255,255,0.1)';
+                checkinBtn.style.color = 'rgba(255,255,255,0.3)';
+                checkinBtn.disabled = true;
+            } else if (checkinBtn) {
+                checkinBtn.textContent = '🎯 点击签到';
+                checkinBtn.style.background = 'linear-gradient(135deg, #ffeed1, #ffeaa7)';
+                checkinBtn.style.color = '#332200';
+                checkinBtn.disabled = false;
+            }
+        }
+
+
+
+        // ==========================================================
+        // ✍️ 投稿页面逻辑
+        // ==========================================================
+
+        let submitAvatarFile = null;
+
+        function previewSubmitAvatar(input) {
+            const file = input.files[0];
+            if (!file) return;
+            submitAvatarFile = file;
+            const reader = new FileReader();
+            reader.onload = e => { document.getElementById('submit-avatar-preview').src = e.target.result; };
+            reader.readAsDataURL(file);
+        }
+
+        function selectGender(el, val) {
+            document.querySelectorAll('[data-gender]').forEach(d => {
+                d.style.background = 'rgba(255,255,255,0.06)';
+                d.style.borderColor = 'rgba(255,255,255,0.12)';
+                d.style.color = 'rgba(255,255,255,0.8)';
+            });
+            el.style.background = 'rgba(255,234,167,0.15)';
+            el.style.borderColor = 'rgba(255,234,167,0.6)';
+            el.style.color = '#ffeaa7';
+            document.getElementById('submit-gender').value = val;
+        }
+
+        function selectAdult(el, val) {
+            document.querySelectorAll('[data-adult]').forEach(d => {
+                d.style.background = 'rgba(255,255,255,0.06)';
+                d.style.borderColor = 'rgba(255,255,255,0.12)';
+                d.style.color = 'rgba(255,255,255,0.8)';
+            });
+            el.style.background = 'rgba(255,234,167,0.15)';
+            el.style.borderColor = 'rgba(255,234,167,0.6)';
+            el.style.color = '#ffeaa7';
+            document.getElementById('submit-adult').value = val;
+        }
+
+        // 字数统计
+        document.addEventListener('DOMContentLoaded', () => {
+            const settingArea = document.getElementById('submit-setting');
+            if (settingArea) {
+                settingArea.addEventListener('input', () => {
+                    document.getElementById('setting-count').textContent = settingArea.value.length + ' / 1000';
+                });
+            }
+            // 自动填入登录邮箱
+            const email = localStorage.getItem('sh_user_email');
+            const contactEl = document.getElementById('submit-contact-email');
+            if (email && contactEl) contactEl.value = email;
+        });
+
+        async function submitCharacter() {
+            const name    = document.getElementById('submit-char-name').value.trim();
+            const gender  = document.getElementById('submit-gender').value;
+            const intro   = document.getElementById('submit-intro').value.trim();
+            const setting = document.getElementById('submit-setting').value.trim();
+            const opening = document.getElementById('submit-opening').value.trim();
+            const adult   = document.getElementById('submit-adult').value;
+            const contact = document.getElementById('submit-contact-email').value.trim();
+
+            // 必填校验
+            if (!name)    { alert('请填写角色名称！'); return; }
+            if (!gender)  { alert('请选择角色性别！'); return; }
+            if (!intro)   { alert('请填写角色简介！'); return; }
+            if (!setting) { alert('请填写角色人设！'); return; }
+            if (!opening) { alert('请填写开场白！'); return; }
+            if (!adult)   { alert('请选择角色自由度！'); return; }
+
+            const btn = document.getElementById('submit-btn');
+            btn.textContent = '⏳ 提交中...';
+            btn.disabled = true;
+
+            // 上传头像到 Supabase Storage（投稿用独立 bucket avatars）
+            let avatarUrl = '';
+            if (submitAvatarFile) {
+                const token = localStorage.getItem('sh_access_token') || '';
+                const ext = submitAvatarFile.name.split('.').pop();
+                const path = `submit_${Date.now()}.${ext}`;
+                const upRes = await fetch(`${SUPABASE_URL}/storage/v1/object/avatars/${path}`, {
+                    method: 'POST',
+                    headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${token}`, 'Content-Type': submitAvatarFile.type, 'x-upsert': 'true' },
+                    body: submitAvatarFile
+                });
+                if (upRes.ok) avatarUrl = `${SUPABASE_URL}/storage/v1/object/public/avatars/${path}`;
+            }
+
+            // 用 EmailJS 发送到管理员邮箱
+            // 这里用 fetch 直接调 EmailJS 公开 API（无需引入 SDK）
+            const emailBody = {
+                service_id:  'service_yngvogm',
+                template_id: 'template_yzmpuym',
+                user_id:     'XQm01Jpha2EZ61gUo',
+                template_params: {
+                    to_email:    'hangchilaw@gmail.com',
+                    char_name:   name,
+                    char_gender: gender,
+                    char_intro:  intro,
+                    char_setting: setting,
+                    char_opening: opening,
+                    char_adult:  adult,
+                    char_avatar: avatarUrl || '（未上传）',
+                    contact_email: contact || '（未填写）',
+                    submit_time: new Date().toLocaleString('zh-CN')
+                }
+            };
+
+            try {
+                const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(emailBody)
+                });
+
+                if (res.ok) {
+                    btn.textContent = '✅ 投稿成功！';
+                    btn.style.background = 'rgba(85,239,196,0.2)';
+                    btn.style.color = '#55efc4';
+                    btn.style.border = '1px solid #55efc4';
+                    document.getElementById('submit-success-modal').style.display = 'flex';
+                    // 清空表单
+                    ['submit-char-name','submit-intro','submit-setting','submit-opening','submit-contact-email'].forEach(id => {
+                        const el = document.getElementById(id); if(el) el.value = '';
+                    });
+                    document.getElementById('submit-gender').value = '';
+                    document.getElementById('submit-adult').value = '';
+                    document.getElementById('setting-count').textContent = '0 / 1000';
+                    document.querySelectorAll('[data-gender],[data-adult]').forEach(d => {
+                        d.style.background='rgba(255,255,255,0.06)'; d.style.borderColor='rgba(255,255,255,0.12)'; d.style.color='rgba(255,255,255,0.8)';
+                    });
+                    submitAvatarFile = null;
+                    document.getElementById('submit-avatar-preview').src = '${LOBBY_BG}';
+                } else {
+                    throw new Error('发送失败');
+                }
+            } catch(e) {
+                btn.textContent = '✨ 创造角色';
+                btn.disabled = false;
+                btn.style.background = 'linear-gradient(135deg,#ffeed1,#ffeaa7)';
+                btn.style.color = '#332200';
+                btn.style.border = 'none';
+                alert('投稿发送失败，请稍后重试。错误：' + e.message);
+            }
+        }
+
+        // ==========================================================
+        // 👤 用户主页：资料、头像背景上传、最近聊天
+        // ==========================================================
+
+        // 上传图片到 Supabase Storage
+        async function uploadUserImage(input, type) {
+            const file = input.files[0];
+            if (!file) return;
+            const email = localStorage.getItem('sh_user_email');
+            const token = localStorage.getItem('sh_access_token');
+            if (!email || !token) { alert('请先登录再上传哦！'); return; }
+
+            const bucket = type === 'avatar' ? 'avatars' : 'backgrounds';
+            const ext = file.name.split('.').pop();
+            const path = `${email.replace('@','_').replace('.','_')}_${type}.${ext}`;
+
+            // 上传文件
+            const uploadRes = await fetch(`${SUPABASE_URL}/storage/v1/object/${bucket}/${path}`, {
+                method: 'POST',
+                headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${token}`, 'Content-Type': file.type, 'x-upsert': 'true' },
+                body: file
+            });
+            if (!uploadRes.ok) { alert('上传失败，请重试'); return; }
+
+            const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/${bucket}/${path}`;
+
+            // 更新数据库
+            const field = type === 'avatar' ? 'avatar_url' : 'bg_url';
+            await upsertUserProfile({ [field]: publicUrl });
+
+            // 立即更新页面
+            if (type === 'avatar') {
+                document.getElementById('user-avatar-display').src = publicUrl;
+                localStorage.setItem('user_avatar_url', publicUrl);
+            } else {
+                document.getElementById('user-bg-layer').style.backgroundImage = `url('${publicUrl}')`;
+                localStorage.setItem('user_bg_url', publicUrl);
+            }
+        }
+
+        // 新建或更新 user_profiles 记录
+        async function upsertUserProfile(fields) {
+            const email = localStorage.getItem('sh_user_email');
+            if (!email) return;
+            const payload = { email, ...fields, updated_at: new Date().toISOString() };
+            await fetch(`${SUPABASE_URL}/rest/v1/user_profiles`, {
+                method: 'POST',
+                headers: { ...getAuthHeader(), 'Prefer': 'resolution=merge-duplicates' },
+                body: JSON.stringify(payload)
+            });
+        }
+
+        // 从数据库加载用户资料
+        async function loadUserProfile() {
+            const email = localStorage.getItem('sh_user_email');
+            if (!email) {
+                document.getElementById('user-email-display').textContent = '未登录';
+                return;
+            }
+            document.getElementById('user-email-display').textContent = email;
+
+            try {
+                const res = await fetch(
+                    `${SUPABASE_URL}/rest/v1/user_profiles?email=eq.${encodeURIComponent(email)}&select=display_name,avatar_url,bg_url`,
+                    { headers: getAuthHeader() }
+                );
+                const rows = await res.json();
+                if (rows && rows.length > 0) {
+                    const p = rows[0];
+                    if (p.display_name) {
+                        document.getElementById('user-name-display').textContent = p.display_name;
+                        localStorage.setItem('user_display_name', p.display_name);
+                    }
+                    if (p.avatar_url) {
+                        document.getElementById('user-avatar-display').src = p.avatar_url;
+                        localStorage.setItem('user_avatar_url', p.avatar_url);
+                    }
+                    if (p.bg_url) {
+                        document.getElementById('user-bg-layer').style.backgroundImage = `url('${p.bg_url}')`;
+                        localStorage.setItem('user_bg_url', p.bg_url);
+                    }
+                } else {
+                    // 第一次进入，建立资料行，默认用大厅背景作头像和背景
+                    const defaultImg = 'https://i.ibb.co/5XJX8vND/Camera-XHS-17812925439631040g00831k2kecci2g105posc29nc8j5jsvd8go.jpg';
+                    document.getElementById('user-avatar-display').src = defaultImg;
+                    document.getElementById('user-bg-layer').style.backgroundImage = `url('${defaultImg}')`;
+                    localStorage.setItem('user_avatar_url', defaultImg);
+                    localStorage.setItem('user_bg_url', defaultImg);
+                    await upsertUserProfile({ display_name: '星海旅人', avatar_url: defaultImg, bg_url: defaultImg });
+                }
+            } catch(e) {
+                // 网络失败时读本地缓存
+                const name = localStorage.getItem('user_display_name');
+                const avatar = localStorage.getItem('user_avatar_url');
+                const bg = localStorage.getItem('user_bg_url');
+                if (name) document.getElementById('user-name-display').textContent = name;
+                if (avatar) document.getElementById('user-avatar-display').src = avatar;
+                if (bg) document.getElementById('user-bg-layer').style.backgroundImage = `url('${bg}')`;
+            }
+        }
+
+        // 改名弹窗
+        function openEditNameModal() {
+            const current = document.getElementById('user-name-display').textContent;
+            document.getElementById('edit-name-input').value = current === '星海旅人' ? '' : current;
+            document.getElementById('edit-name-modal').style.display = 'flex';
+        }
+        function closeEditNameModal() {
+            document.getElementById('edit-name-modal').style.display = 'none';
+        }
+        async function saveUserName() {
+            const val = document.getElementById('edit-name-input').value.trim();
+            if (!val) { alert('昵称不能为空哦！'); return; }
+            document.getElementById('user-name-display').textContent = val;
+            localStorage.setItem('user_display_name', val);
+            await upsertUserProfile({ display_name: val });
+            closeEditNameModal();
+        }
+
+        // 记录最近聊天（进入剧本时调用）
+        function recordRecentChat(charId) {
+            let recent = JSON.parse(localStorage.getItem('recent_chats') || '[]');
+            // 移除已有的同一角色记录，保持唯一
+            recent = recent.filter(r => r.id !== charId);
+            // 插到最前面，带时间戳
+            recent.unshift({ id: charId, ts: Date.now() });
+            // 最多保留 10 条
+            recent = recent.slice(0, 10);
+            localStorage.setItem('recent_chats', JSON.stringify(recent));
+        }
+
+        // 渲染最近聊天列表
+        function renderRecentChats() {
+            const recent = JSON.parse(localStorage.getItem('recent_chats') || '[]');
+            const container = document.getElementById('recent-chats-list');
+            if (!container) return;
+            if (recent.length === 0) {
+                container.innerHTML = '<div style="text-align:center; color:rgba(255,255,255,0.3); font-size:13px; padding:20px 0;">暂无聊天记录</div>';
+                return;
+            }
+            container.innerHTML = recent.map(r => {
+                const char = CHARACTER_DATABASE.find(c => c.id === r.id);
+                if (!char) return '';
+                const timeAgo = formatTimeAgo(r.ts);
+                return `
+                    <div onclick="checkAuthAndGo('${char.id}', function(){ startCharacterScript('${char.id}'); })"
+                         style="display:flex; align-items:center; gap:12px; padding:10px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:14px; cursor:pointer; transition:background 0.2s;"
+                         onmouseover="this.style.background='rgba(255,255,255,0.09)'" onmouseout="this.style.background='rgba(255,255,255,0.04)'">
+                        <img src="${char.avatar}" style="width:50px; height:50px; border-radius:12px; object-fit:cover; border:1px solid rgba(255,255,255,0.15);">
+                        <div style="flex:1; min-width:0;">
+                            <div style="font-size:14px; font-weight:bold; color:#fff; margin-bottom:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${char.name}</div>
+                            <div style="font-size:11px; color:rgba(255,255,255,0.45);">${char.intro}</div>
+                        </div>
+                        <div style="font-size:11px; color:rgba(255,234,167,0.5); white-space:nowrap;">${timeAgo}</div>
+                    </div>`;
+            }).join('');
+        }
+
+        function formatTimeAgo(ts) {
+            const diff = Date.now() - ts;
+            const mins = Math.floor(diff / 60000);
+            if (mins < 1) return '刚刚';
+            if (mins < 60) return `${mins}分钟前`;
+            const hrs = Math.floor(mins / 60);
+            if (hrs < 24) return `${hrs}小时前`;
+            const days = Math.floor(hrs / 24);
+            return `${days}天前`;
+        }
+
+        function switchMainPage(viewName) {
+            const views = ['lobby-view', 'chat-view', 'publish-view', 'user-view', 'wallet-view'];
+            views.forEach(v => {
+                const el = document.getElementById(v);
+                if (el) el.style.display = 'none';
+            });
+            const targetView = document.getElementById(`${viewName}-view`);
+            if (targetView) targetView.style.display = 'block';
+            if (viewName === 'wallet') refreshWalletUI();
+            if (viewName === 'user') { loadUserProfile(); renderRecentChats(); }
+
+            // top bar（分类筛选）只在大厅显示；low bar（底部导航）在大厅和钱包等页面都显示
+            const topBar = document.getElementById('global-top-bar');
+            const lowBar = document.getElementById('global-low-bar');
+            topBar.style.display = viewName === 'lobby' ? 'flex' : 'none';
+            lowBar.style.display = 'flex'; // 始终保留，方便导航
+
+            const buttons = document.querySelectorAll('.low-bar-btn');
+            buttons.forEach(btn => {
+                if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(`'${viewName}'`)) {
+                    btn.style.color = '#ffeaa7';
+                    btn.style.opacity = '1';
+                } else {
+                    btn.style.color = 'rgba(255,255,255,0.7)';
+                    btn.style.opacity = '0.7';
+                }
+            });
+        }
+
+           window.onload = function() { 
+            makeStars(); 
+            renderLobby();
+            // 恢复聊天模式按钮图标
+            const savedMode = localStorage.getItem('chat_mode') || 'companion';
+            currentChatMode = savedMode;
+            const starBtn = document.getElementById('mode-star-btn');
+            if (starBtn) starBtn.textContent = CHAT_MODES[savedMode].icon;
+            console.log("🎉 星海核心引擎本地内嵌成功！已处于绝对就绪状态。");
+        };
+    </script>
+    
+    <!-- 🌟 用极其安全的 template 标签封装秦彻世界，杜绝任何中转穿透或样式污染 -->
+    <template id="qinche-source-code">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>幻境剧本 · 心理博弈空间</title>
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg-url: url('https://i.ibb.co/5x4YcwQc/IMG-20260612-202213.jpg');
+        }
+                body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--bg-url) no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh; /* 👈 改为最小高度满屏，允许弹性容纳固定定位 */
+            color: #fff;
+            position: relative; /* 👈 给低栏提供定位基准线 */
+        }
+
+
+        #stars { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events: none; z-index: 1; }
+        .star { position: absolute; width: 2px; height: 2px; background: #fff; border-radius: 50%; opacity: 0.3; animation: blink 3s infinite ease-in-out; }
+        @keyframes blink { 0%, 100% { opacity: 0.2; transform: scale(1); } 50% { opacity: 0.9; transform: scale(1.5); } }
+
+        #chat-view {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            height: 100dvh;
+        }
+        .menu-banner {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 14px; background: rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            z-index: 10;
+        }
+        .menu-btn {
+            background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+            color: #fff; padding: 7px 12px; border-radius: 10px; font-size: 11px; cursor: pointer;
+            transition: all 0.2s; text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+        .menu-btn:hover { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.35); }
+
+        .chat-box { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 16px; z-index: 2; }
+        .msg-row { display: flex; width: 100%; gap: 10px; align-items: flex-start; animation: fadeIn 0.3s ease both; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        .bot-row { justify-content: flex-start; }
+        .user-row { justify-content: flex-end; }
+
+        .avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+        .msg-wrapper { max-width: calc(100% - 80px); display: flex; flex-direction: column; gap: 6px; }
+        
+        .msg {
+            padding: 11px 14px; border-radius: 16px; font-size: 14.5px; line-height: 1.55;
+            word-break: break-word; box-shadow: 0 3px 10px rgba(0,0,0,0.1); text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+        }
+        .bot-row .msg {
+            background: rgba(15, 15, 15, 0.65); border: 1px solid rgba(255, 255, 255, 0.15);
+            border-top-left-radius: 4px; border-bottom-left-radius: 16px;
+        }
+        .user-row .msg {
+            background: rgba(255, 255, 255, 0.18); border: 1px solid rgba(255, 255, 255, 0.25);
+            border-top-right-radius: 4px; border-bottom-right-radius: 16px;
+        }
+        
+        .saying { color: #ffeaa7; font-weight: 500; }
+        .action { color: rgba(255, 255, 255, 0.55); font-style: italic; font-size: 13.5px; }
+
+        .status-card {
+            background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px; padding: 10px; font-size: 12px; display: flex; flex-direction: column; gap: 8px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+        }
+        .status-header { color: rgba(255,255,255,0.5); font-weight: bold; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 4px; }
+        .status-grid { display: flex; flex-direction: column; gap: 5px; }
+        .status-item { display: flex; align-items: center; gap: 8px; }
+        
+        .lbl { width: 55px; color: rgba(255,255,255,0.6); font-size: 10px; }
+        .bar-bg { flex: 1; height: 5px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; }
+        .bar-fill { height: 100%; background: linear-gradient(90deg, #ff7675, #ffeaa7); transition: width 0.5s ease; }
+        .val { width: 40px; text-align: right; color: #ffeaa7; font-size: 10px; }
+        
+        .status-details { display: flex; flex-direction: column; gap: 4px; color: rgba(255,255,255,0.85); border-top: 1px solid rgba(255,255,255,0.05); padding-top: 6px; line-height: 1.4; }
+        
+        .danmaku-box { margin-top: 4px; background: rgba(255, 255, 255, 0.04); border-radius: 8px; padding: 6px; display: flex; flex-direction: column; gap: 4px; }
+        .danmaku-line { font-size: 11px; line-height: 1.3; }
+        .dm-user { color: #81ecec; font-weight: bold; }
+        .dm-text { color: rgba(255,255,255,0.75); }
+
+        .action-bar-wrapper { display: flex; justify-content: flex-end; margin-top: -2px; }
+        .action-bar { display: flex; gap: 12px; background: rgba(0,0,0,0.2); padding: 3px 8px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); }
+        .action-sub-btn { font-size: 11px; color: rgba(255,255,255,0.6); cursor: pointer; transition: color 0.2s; }
+        .action-sub-btn:hover { color: #ffeaa7; }
+
+        .input-container {
+            padding: 12px 14px 24px 14px; background: linear-gradient(to top, rgba(0,0,0,0.4), rgba(0,0,0,0));
+            display: flex; gap: 10px; align-items: flex-end; z-index: 5;
+        }
+        .input-wrapper {
+            flex: 1; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 18px; padding: 8px 14px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .input-wrapper textarea {
+            width: 100%; height: 22px; max-height: 80px; background: none; border: none;
+            color: #fff; font-size: 14.5px; outline: none; resize: none; font-family: inherit; line-height: 22px;
+        }
+        .send-btn {
+            width: 38px; height: 38px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2);
+            color: #fff; border-radius: 50%; font-size: 16px; cursor: pointer; display: flex; align-items: center;
+            justify-content: center; transition: all 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+        .send-btn:hover { background: #ffeaa7; color: #2d3436; border-color: #ffeaa7; transform: scale(1.05); }
+
+        .loading-dots { display: flex; gap: 4px; align-items: center; height: 22px; padding: 0 4px; }
+        .loading-dots span { width: 6px; height: 6px; background: rgba(255,255,255,0.7); border-radius: 50%; animation: dotKey 1.4s infinite ease-in-out both; }
+        .loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes dotKey { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+
+        #overlay { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0, 0, 0, 0) !important; 
+            opacity: 0; 
+            pointer-events: none !important; 
+            z-index: 2147483640 !important; 
+        }
+        #overlay.active { opacity: 0 !important; pointer-events: none !important; }
+        
+        .panel-drawer { 
+            position: fixed; bottom: 0; left: 0; width: 100%; max-height: 75%; 
+            background: rgba(25, 25, 25, 0.98) !important; 
+            border-top: 1px solid rgba(255, 255, 255, 0.15); border-radius: 24px 24px 0 0; padding: 24px; 
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.8); 
+            transform: translateY(100%); 
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+            display: none; 
+            z-index: 2147483647 !important; 
+            pointer-events: auto !important; 
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+        .panel-drawer.active { display: block !important; transform: translateY(0) !important; }
+        
+        .drawer-title { display: flex; justify-content: space-between; align-items: center; font-size: 16px; font-weight: bold; color: #ffeaa7; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; font-family: 'Kaiti', serif; }
+        .drawer-close { cursor: pointer; color: rgba(255,255,255,0.5); font-size: 18px; }
+        .drawer-content { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
+        
+        .drawer-content textarea { 
+            width: 100%; height: 110px; background: rgba(0,0,0,0.4); 
+            border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px; 
+            color: #fff; padding: 12px; font-size: 13.5px; outline: none; 
+            resize: none; font-family: inherit; line-height: 1.5; 
+            position: relative; z-index: 10; pointer-events: auto !important;
+        }
+        .opt-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 11px; border-radius: 12px; font-size: 13.5px; cursor: pointer; transition: all 0.2s; text-align: center; font-weight: 500; }
+        .opt-btn:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.3); }
+        .danger-btn { background: rgba(235, 77, 75, 0.15) !important; border-color: rgba(235, 77, 75, 0.3) !important; color: #ff7675 !important; }
+        .danger-btn:hover { background: rgba(235, 77, 75, 0.3) !important; }
+        
+        .ambient-control { display: flex; flex-direction: column; gap: 12px; padding: 10px 5px; }
+        .ambient-row { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
+        .ambient-label { font-size: 13px; color: rgba(255, 255, 255, 0.7); min-width: 70px; }
+        .ambient-slider { flex: 1; -webkit-appearance: none; appearance: none; height: 6px; background: rgba(255, 255, 255, 0.2); border-radius: 3px; outline: none; }
+        .ambient-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #ffeaa7; cursor: pointer; box-shadow: 0 0 8px rgba(255, 234, 167, 0.5); }
+        .ambient-val { font-size: 13px; color: #ffeaa7; width: 35px; text-align: right; }
+        
+        .group-chat-box {
+            margin-top: 6px; background: rgba(15, 15, 20, 0.65);
+            border: 1px dashed rgba(255, 234, 167, 0.25); border-radius: 10px; padding: 10px; font-size: 12.5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .group-chat-title { font-size: 11px; color: #ffeaa7; font-weight: bold; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 5px; margin-bottom: 6px; display: flex; justify-content: space-between; }
+        .group-msg { margin-bottom: 4px; line-height: 1.45; }
+        .group-user { font-weight: bold; margin-right: 4px; }
+        .user-qinche { color: #ff7675; } 
+        .user-ahe { color: #74b9ff; }    
+        .user-ahao { color: #55efc4; }   
+
+        .psy-float-btn {
+            position: fixed; right: 20px; top: 75%; transform: translateY(-50%);
+            width: 46px; height: 46px; background: rgba(255, 234, 167, 0.15);
+            border: 1px solid rgba(255, 234, 167, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border-radius: 50%; color: #ffeaa7; font-size: 20px; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 85; box-shadow: 0 4px 15px rgba(0,0,0,0.4); transition: all 0.3s ease;
+        }
+        .psy-float-btn:hover { background: rgba(255, 234, 167, 0.3); transform: translateY(-50%) scale(1.08); }
+        .psy-term { font-size: 14px; color: #ffeaa7; font-weight: bold; border-bottom: 1px solid rgba(255, 234, 167, 0.15); padding-bottom: 6px; margin-bottom: 8px; }
+        .psy-text { font-size: 12.5px; line-height: 1.55; color: rgba(255, 255, 255, 0.85); text-align: justify; }
+    </style>
+</head>
+<body>
+    <div id="stars"></div>
+    <div id="overlay" onclick="closeAllDrawers()"></div>
+    <div class="psy-float-btn" onclick="openDrawer('drawer-psychology')" title="查看罗医生的侧写笔记">💡</div>
+
+    <div id="chat-view">
+        <div class="menu-banner">
+            <button class="menu-btn" onclick="window.parent.document.getElementById('qinche-iframe').style.display='none'">⬅️ 离开剧本</button>
+            <button class="menu-btn" onclick="openDrawer('drawer-ambient')">👁️ 场景明暗</button>
+            <button class="menu-btn" onclick="openDrawer('drawer-persona')">👤 用户设定</button>
+            <button class="menu-btn" onclick="openDrawer('drawer-archive')">💾 存读档中心</button>
+        </div>
+        
+        <div class="panel-drawer" id="drawer-ambient">
+            <div class="drawer-title"><span>👁️ 舞台背景敏感度调节</span><span class="drawer-close" onclick="closeAllDrawers()">✕</span></div>
+            <div class="drawer-content ambient-control">
+                <div class="ambient-row">
+                    <span class="ambient-label">剧场暗度</span>
+                    <input type="range" id="bgOpacitySlider" class="ambient-slider" min="10" max="90" value="40" oninput="updateAmbientSettings()">
+                    <span class="ambient-val" id="bgOpacityVal">40%</span>
+                </div>
+                <div class="ambient-row">
+                    <span class="ambient-label">背景模糊</span>
+                    <input type="range" id="bgBlurSlider" class="ambient-slider" min="0" max="10" value="1" oninput="updateAmbientSettings()">
+                    <span class="ambient-val" id="bgBlurVal">1px</span>
+                </div>
+                <button class="opt-btn" style="margin-top: 10px;" onclick="closeAllDrawers()">✅ 确认并返回剧情</button>
+            </div>
+        </div>
+
+        <div class="panel-drawer" id="drawer-persona">
+            <div class="drawer-title"><span>👤 我的加戏人设背景设定</span><span class="drawer-close" onclick="closeAllDrawers()">✕</span></div>
+            <div class="drawer-content">
+                <textarea id="userPersona" oninput="saveToLocal()">秦彻，三十岁，水鬼黑帮的老大。性情高傲偶尔暴躁，是一个危险又穷凶极恶的罪犯，身心不洁。一次机缘巧合，政府人员给这个臭名昭著的男人安排了心理医生。他在好奇和戏虐的态度下前往。除了秦彻，AI还需要扮演两名手下。阿和是理智的技术客，阿浩是战斗场上的打手队长。用户扮演的角色是23岁的心理学家罗绾绾，圆脸，大大的杏眼，长相恬静，长发齐刘海，工作时候会带眼镜，性格聪慧，温柔善良。政府已下令，二十四小时协助秦彻，务必牵制与安抚，力求他情绪稳定。</textarea>
+                <button class="opt-btn" onclick="closeAllDrawers()">✅ 保存设定并返回剧本</button>
+            </div>
+        </div>
+
+        <div class="panel-drawer" id="drawer-archive">
+            <div class="drawer-title"><span>💾 时空剧本存读档中心</span><span class="drawer-close" onclick="closeAllDrawers()">✕</span></div>
+            <div class="drawer-content">
+                <button class="opt-btn" onclick="exportScript()">📥 导出并下载当前剧本文件</button>
+                <div style="position: relative; overflow: hidden; display: inline-block; width:100%;">
+                    <button class="opt-btn" style="width:100%;">📤 导入并复活已有剧本文件</button>
+                    <input type="file" accept=".json" onchange="importScript(this)" style="position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;">
+                </div>
+                <div style="margin-top:15px; border-top:1px solid rgba(255,255,255,0.1); padding-top:12px;">
+                    <button class="opt-btn danger-btn" style="width:100%;" onclick="clearAllChatHistory()">⚠️ 一键重洗世界线</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-drawer" id="drawer-psychology">
+            <div class="drawer-title"><span>💡 罗医生的心理学观察侧写</span><span class="drawer-close" onclick="closeAllDrawers()">✕</span></div>
+            <div class="drawer-content">
+                <div class="status-card" style="background: rgba(255, 234, 167, 0.04); border: 1px solid rgba(255, 234, 167, 0.2);">
+                    <div class="psy-term" id="psy-title">反社会人格倾向 (Antisocial Traits)</div>
+                    <div class="psy-text" id="psy-content">等待与罪犯首次交锋后的心理学侧写记录...</div>
+                </div>
+                <button class="opt-btn" style="margin-top: 5px;" onclick="closeAllDrawers()">✅ 了解完毕并合上笔记</button>
+            </div>
+        </div>
+
+        <div class="chat-box" id="chatBox"></div>
+
+        <div class="input-container">
+            <div class="input-wrapper">
+                <textarea id="userInput" placeholder="输入对白或举动推进剧情..." onkeydown="if(event.keyCode===13 && !event.shiftKey){ event.preventDefault(); sendMessage(); }"></textarea>
+            </div>
+            <button onclick="openChatModeModal()" style="flex-shrink:0; width:38px; height:38px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:11px; color:#ffeaa7; font-size:17px; cursor:pointer; display:flex; align-items:center; justify-content:center; margin-right:5px;" title="选择聊天模式">⭐</button>
+            <button class="send-btn" onclick="sendMessage()">➔</button>
+        </div>
+    </div>
+
+    <div id="bg-overlay-mask" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; transition: background-color 0.2s, backdrop-filter 0.2s;"></div>
+
+    <script>
+        // API Key 已移至 Supabase Edge Function 
+        const BOT_AVATAR = "https://i.ibb.co/5x4YcwQc/IMG-20260612-202213.jpg";
+        const USER_AVATAR = "https://i.ibb.co/cKmQx52V/Screenshot-2026-06-12-11-48-13-871-com-xingin-xhs-edit.jpg";
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhtbXpvZHBoZnN3cGRpcGtpbHdxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyODQ2NzcsImV4cCI6MjA5Njg2MDY3N30.51WlrFbVzVP-Pf0ix0S8fR30ks1hXP6mB1ApUGB1W-c";
+        const KEY_PREFIX = "unified_qinche"; 
+
+        const BASE_BOT_SETTING = `你现在扮演秦彻。三十岁，水鬼黑帮的老大。请采用硬朗带有细腻拉扯感的小说文风。你的回复必须包含角色的心理或动作描写（用括号包裹），再搭配对话。
+【排版去符号绝对禁令】
+1. 严禁输出任何 Markdown 文本标记符号，尤其是星号（*）！任何情况下都不允许输出 * 或 **。
+2. 严禁在剧情对白前后附加任何装饰性花边、分隔线、特殊艺术符号等。
+3. 人物心理动作仅用普通小括号（）包裹，对白说话仅用普通双引号“”包裹。
+
+【绝对指令1】在你输出完剧情对白后，必须在最末尾新起一行，输出状态栏组件：
+[STATUS_JSON]{"time":"当前时期","location":"当前地点","mood_pct":50,"mood_desc":"描述","like_pct":0,"like_desc":"描述","desire_pct":0,"desire_desc":"描述","thought":"心声","action":"姿态","body":"生理","dress":"衣装","notebook":"记事"}
+【绝对指令2】新起一行，输出专属于本剧在线观众的“弹幕JSON串”：
+[DANMAKU_JSON][{"user":"昵称","text":"内容"},...]
+【绝对指令3】新起一行，编造当前剧情下的水鬼队内部模拟核心群聊吐槽互动，严格采用如下格式：
+[GROUP_CHAT_JSON][{"user":"秦彻","text":"内容"},{"user":"阿和","text":"内容"},{"user":"阿浩","text":"内容"}]
+【绝对指令4】新起一行，输出与当前剧情深度契合的专业“心理学小知识JSON串”：
+[PSYCHOLOGY_JSON]{"title":"专业名词","content":"延伸解析"}`;
+
+        let chatHistory = [];
+        let statusHistoryStack = [];
+
+        const initStatus = { time:"序章交锋开始", location:"温暖的心理治疗室内", mood_pct:50, mood_desc:"好奇戏谑", like_pct:0, like_desc:"全无好感", desire_pct:0, desire_desc:"冷酷克制", thought: "派了个小姑娘来？政府是没人了吗", action:"懒散靠着门框敲门", body:"指骨宽大带有火药味", dress:"略显凌乱的黑色皮衣", notebook:"初次前往心理治疗室" };
+        const initDanmaku = [{"user":"嗑学家本学","text":"直觉告诉我，这两个人以后绝对有大火花！"},{"user":"细节侦探","text":"秦彻故意发出枪支碰撞声，是在给心理医生下马威呢。"}];
+        const initGroupChat = [{"user":"阿和","text":"老大已经进去了，目前生命体征与情绪心率稳定。"},{"user":"阿浩","text":"那个罗医生看起来柔柔弱弱的，不会被老大吓哭吧？"}];
+
+        function generateStatusCardHtml(statusObj, danmakuArr) {
+            let danmakuHtml = '';
+            if (danmakuArr && danmakuArr.length > 0) {
+                danmakuHtml = `<div class="danmaku-box">`;
+                danmakuArr.forEach(d => { danmakuHtml += `<div class="danmaku-line"><span class="dm-user">${d.user}：</span><span class="dm-text">${d.text}</span></div>`; });
+                danmakuHtml += `</div>`;
+            }
+            return `
+                <div class="status-card">
+                    <div class="status-header">⏳ ${statusObj.time || '-'} · 📍 ${statusObj.location || '-'}</div>
+                    <div class="status-grid">
+                        <div class="status-item"><span class="lbl">📊 心境指数</span><div class="bar-bg"><div class="bar-fill" style="width:${statusObj.mood_pct || 50}%"></div></div><span class="val">${statusObj.mood_desc || '-'}</span></div>
+                        <div class="status-item"><span class="lbl">❤️ 好感羁绊</span><div class="bar-bg"><div class="bar-fill" style="width:${statusObj.like_pct || 0}%"></div></div><span class="val">${statusObj.like_desc || '-'}</span></div>
+                        <div class="status-item"><span class="lbl">🔥 渴望程度</span><div class="bar-bg"><div class="bar-fill" style="width:${statusObj.desire_pct || 0}%"></div></div><span class="val">${statusObj.desire_desc || '-'}</span></div>
+                    </div>
+                    <div class="status-details">
+                        <div>💭 <strong>心声：</strong>${statusObj.thought || '-'}</div>
+                        <div>🎬 <strong>姿态：</strong>${statusObj.action || '-'}</div>
+                        <div>🩺 <strong>生理：</strong>${statusObj.body || '-'}</div>
+                        <div>🧥 <strong>衣装：</strong>${statusObj.dress || '-'}</div>
+                        <div>📓 <strong>羁绊记事：</strong>${statusObj.notebook || '-'}</div>
+                    </div>
+                    ${danmakuHtml}
+                </div>`;
+        }
+
+        function initScreen() {
+            const savedTokens = localStorage.getItem('user_tokens');
+            if (savedTokens) {
+                const tokenBalanceEl = document.getElementById('token-balance');
+                if (tokenBalanceEl) tokenBalanceEl.textContent = savedTokens;
+            }
+            if (typeof updateCheckInSkin === 'function') {
+                updateCheckInSkin();
+            }
+            let groupChatHtml = `
+                <div class="group-chat-box">
+                    <div class="group-chat-title">📱 水鬼队内部核心群（3） <span>[实时吐槽]</span></div>
+                    <div class="group-chat-content">`;
+            initGroupChat.forEach(g => {
+                let uCls = g.user === '秦彻' ? 'user-qinche' : (g.user === '阿和' ? 'user-ahe' : 'user-ahao');
+                groupChatHtml += `<div class="group-msg"><span class="group-user ${uCls}">${g.user}</span>: ${g.text}</div>`;
+            });
+            groupChatHtml += `</div></div>`;
+
+            const initialHtml = `
+                <div class="msg-row bot-row">
+                    <img src="${BOT_AVATAR}" class="avatar">
+                    <div class="msg-wrapper">
+                        <div class="msg">
+                            【黑帮罪犯X纯情医女】<br><br>
+                            今天是政府部门排来新任务的第一天。作为资深的心理学家，你已经数不清这是自己接手的第几个危险人物了。暖黄的治疗室内看似被你布置得温馨，其实你内心已经非常慌张。<br><br>
+                            门外传来敲门声，伴随着枪支碰撞声，一个危险的低沉男声传来：<span class="saying">“咯咯咯。”</span>
+                        </div>
+                        ${groupChatHtml}
+                        ${generateStatusCardHtml(initStatus, initDanmaku)}
+                    </div>
+                </div>`;
+
+            const localHtml = localStorage.getItem(`${KEY_PREFIX}_html`);
+            if (localHtml) {
+                chatHistory = JSON.parse(localStorage.getItem(`${KEY_PREFIX}_history`)) || [];
+                statusHistoryStack = JSON.parse(localStorage.getItem(`${KEY_PREFIX}_status_stack`)) || [];
+                document.getElementById('chatBox').innerHTML = localHtml;
+                document.getElementById('psy-title').innerText = localStorage.getItem(`${KEY_PREFIX}_last_psy_title`) || "反社会人格倾向 (Antisocial Traits)";
+                document.getElementById('psy-content').innerText = localStorage.getItem(`${KEY_PREFIX}_last_psy_content`) || "等待与罪犯首次交锋后的心理学侧写记录...";
+            } else {
+                chatHistory = []; statusHistoryStack = [initStatus];
+                document.getElementById('chatBox').innerHTML = initialHtml;
+            }
+            if (localStorage.getItem(`${KEY_PREFIX}_persona`)) { document.getElementById('userPersona').value = localStorage.getItem(`${KEY_PREFIX}_persona`); }
+            updateAmbientSettings();
+            const chatBox = document.getElementById('chatBox'); chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function openDrawer(id) { 
+            closeAllDrawers(); 
+            document.getElementById('overlay').classList.add('active'); 
+            document.getElementById(id).classList.add('active'); 
+        }
+        function closeAllDrawers() { 
+            document.getElementById('overlay').classList.remove('active'); 
+            document.querySelectorAll('.panel-drawer').forEach(d => d.classList.remove('active')); 
+        }
+        
+        function saveToLocal() {
+            localStorage.setItem(`${KEY_PREFIX}_html`, document.getElementById('chatBox').innerHTML);
+            localStorage.setItem(`${KEY_PREFIX}_history`, JSON.stringify(chatHistory));
+            localStorage.setItem(`${KEY_PREFIX}_status_stack`, JSON.stringify(statusHistoryStack));
+            localStorage.setItem(`${KEY_PREFIX}_persona`, document.getElementById('userPersona').value);
+        }
+
+        function clearAllChatHistory() {
+            if(!confirm("确定要一键冲刷当前剧本全线记忆吗？")) return;
+            localStorage.removeItem(`${KEY_PREFIX}_html`); localStorage.removeItem(`${KEY_PREFIX}_history`); localStorage.removeItem(`${KEY_PREFIX}_status_stack`); localStorage.removeItem(`${KEY_PREFIX}_last_psy_title`); localStorage.removeItem(`${KEY_PREFIX}_last_psy_content`);
+            closeAllDrawers(); initScreen();
+        }
+
+        function exportScript() {
+            const data = { history: chatHistory, html: document.getElementById('chatBox').innerHTML, statusStack: statusHistoryStack, persona: document.getElementById('userPersona').value, psyTitle: document.getElementById('psy-title').innerText, psyContent: document.getElementById('psy-content').innerText };
+            const blob = new Blob([JSON.stringify(data)], {type: "application/json"});
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `秦彻进化版剧本备份.json`; a.click();
+        }
+
+        function importScript(input) {
+            const file = input.files[0]; if(!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    chatHistory = data.history || []; document.getElementById('chatBox').innerHTML = data.html || ''; statusHistoryStack = data.statusStack || [];
+                    document.getElementById('userPersona').value = data.persona || '';
+                    if(data.psyTitle) { document.getElementById('psy-title').innerText = data.psyTitle; document.getElementById('psy-content').innerText = data.psyContent; }
+                    saveToLocal(); alert("剧本复活成功！"); closeAllDrawers();
+                    const chatBox = document.getElementById('chatBox'); chatBox.scrollTop = chatBox.scrollHeight;
+                } catch(err) { alert("导入失败。"); }
+            };
+            reader.readAsText(file);
+        }
+
+        function colorizeText(text) { return text.replace(/“([^”]+)”/g, '<span class="saying">“$1”</span>'); }
+
+        async function sendMessage() {
+            const inputEl = document.getElementById('userInput'); const text = inputEl.value.trim(); if (!text) return;
+            inputEl.value = '';
+            const colorUserText = colorizeText(text.replace(/\n/g, '<br>'));
+            document.getElementById('chatBox').innerHTML += `<div class="msg-row user-row"><div class="msg-wrapper"><div class="msg">${colorUserText}</div></div><img src="${USER_AVATAR}" class="avatar"></div>`;
+            chatHistory.push({ role: 'user', parts: [{ text: text }] }); saveToLocal();
+            const chatBox = document.getElementById('chatBox'); chatBox.scrollTop = chatBox.scrollHeight;
+            await callGeminiAPI();
+        }
+
+        async function callGeminiAPI() {
+            const chatBox = document.getElementById('chatBox');
+            const loadingId = 'loading-' + Date.now();
+            chatBox.innerHTML += `<div class="msg-row bot-row" id="${loadingId}"><img src="${BOT_AVATAR}" class="avatar"><div class="msg"><div class="loading-dots"><span>.</span><span>.</span><span>.</span></div></div></div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            try {
+                const personaText = document.getElementById('userPersona').value.trim();
+                const systemPrompt = BASE_BOT_SETTING + (personaText ? `\n【当前交互玩家的人设背景】：${personaText}` : '');
+                const contentsPayload = [{ role: 'user', parts: [{ text: systemPrompt }] }, { role: 'model', parts: [{ text: "（完美封印符号，严格渲染状态、弹幕、群聊、笔记。）" }] }, ...chatHistory];
+
+                const response = await fetch('https://hmmzodphfswpdipkilwq.supabase.co/functions/v1/gemini-proxy', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                        'apikey': SUPABASE_ANON_KEY
+                    },
+                    body: JSON.stringify({ model: 'gemini-2.5-flash', contents: contentsPayload, generationConfig: { temperature: 0.75 } })
+                });
+
+                const data = await response.json();
+                if (document.getElementById(loadingId)) document.getElementById(loadingId).remove();
+
+                if (data.candidates && data.candidates[0].content.parts[0].text) {
+                    let fullText = data.candidates[0].content.parts[0].text;
+                    let cleanText = fullText;
+                    let statusObj = (statusHistoryStack.length > 0) ? statusHistoryStack[statusHistoryStack.length - 1] : {};
+                    let danmakuArr = []; let groupChatArr = null; let psychologyObj = null;
+
+                    if (cleanText.includes('[STATUS_JSON]')) {
+                        const partsStatus = cleanText.split('[STATUS_JSON]'); cleanText = partsStatus[0].trim(); let remainder = partsStatus[1];
+                        if (remainder.includes('[DANMAKU_JSON]')) {
+                            const partsDanmaku = remainder.split('[DANMAKU_JSON]'); try { statusObj = JSON.parse(partsDanmaku[0].trim()); } catch(e){} remainder = partsDanmaku[1];
+                            if (remainder.includes('[GROUP_CHAT_JSON]')) {
+                                const partsGroup = remainder.split('[GROUP_CHAT_JSON]'); try { danmakuArr = JSON.parse(partsGroup[0].trim()); } catch(e){} remainder = partsGroup[1];
+                                if (remainder.includes('[PSYCHOLOGY_JSON]')) {
+                                    const partsPsy = remainder.split('[PSYCHOLOGY_JSON]'); try { groupChatArr = JSON.parse(partsPsy[0].trim()); } catch(e){} try { psychologyObj = JSON.parse(partsPsy[1].trim()); } catch(e){}
+                                } else { try { groupChatArr = JSON.parse(remainder.trim()); } catch(e){} }
+                            } else { try { danmakuArr = JSON.parse(remainder.trim()); } catch(e){} }
+                        } else { try { statusObj = JSON.parse(remainder.trim()); } catch(e){} }
+                    }
+                    
+                    statusHistoryStack.push(statusObj);
+                    let renderText = cleanText.replace(/（(.*?)）/g, '<span class="action">（$1）</span>').replace(/\((.*?)\)/g, '<span class="action">（$1）</span>');
+                    renderText = colorizeText(renderText.replace(/\n/g, '<br>'));
+
+                    let dynamicGroupHtml = "";
+                    if (groupChatArr && groupChatArr.length > 0) {
+                        dynamicGroupHtml = `<div class="group-chat-box"><div class="group-chat-title">📱 水鬼队内部核心群（3） <span>[实时吐槽]</span></div><div class="group-chat-content">`;
+                        groupChatArr.forEach(gMsg => {
+                            let uClass = gMsg.user === "秦彻" ? "user-qinche" : (gMsg.user === "阿和" ? "user-ahe" : "user-ahao");
+                            dynamicGroupHtml += `<div class="group-msg"><span class="group-user ${uClass}">${gMsg.user}</span>: ${gMsg.text}</div>`;
+                        });
+                        dynamicGroupHtml += `</div></div>`;
+                    }
+
+                    const botHtmlNode = `
+                        <div class="msg-row bot-row">
+                            <img src="${BOT_AVATAR}" class="avatar">
+                            <div class="msg-wrapper">
+                                <div class="msg">${renderText}</div>
+                                ${dynamicGroupHtml}
+                                ${generateStatusCardHtml(statusObj, danmakuArr)}
+                                <div class="action-bar-wrapper">
+                                    <div class="action-bar">
+                                        <span class="action-sub-btn" onclick="executeRewind()">↩️回溯</span>
+                                        <span class="action-sub-btn" onclick="executeEdit()">✏️编辑</span>
+                                        <span class="action-sub-btn" onclick="executeRegenerate()">🔄重刷</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                        
+                    chatBox.innerHTML += botHtmlNode; chatHistory.push({ role: 'model', parts: [{ text: fullText }] }); 
+                    if (psychologyObj) { document.getElementById('psy-title').innerText = psychologyObj.title; document.getElementById('psy-content').innerText = psychologyObj.content; localStorage.setItem(`${KEY_PREFIX}_last_psy_title`, psychologyObj.title); localStorage.setItem(`${KEY_PREFIX}_last_psy_content`, psychologyObj.content); }
+                    saveToLocal();
+                }
+                chatBox.scrollTop = chatBox.scrollHeight;
+            } catch (error) {
+                if (document.getElementById(loadingId)) document.getElementById(loadingId).remove();
+                chatBox.innerHTML += `<div class="msg-row bot-row"><img src="${BOT_AVATAR}" class="avatar"><div class="msg" style="color:#ff4d4d;">连线中断。</div></div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+        }
+
+        function executeRewind() { if (chatHistory.length < 2) return; chatHistory.pop(); chatHistory.pop(); const chatBox = document.getElementById('chatBox'); if(chatBox.lastElementChild) chatBox.lastElementChild.remove(); if(chatBox.lastElementChild) chatBox.lastElementChild.remove(); if (statusHistoryStack.length > 1) statusHistoryStack.pop(); saveToLocal(); }
+        function executeEdit() { if (chatHistory.length < 2) return; const lastUserObj = chatHistory[chatHistory.length - 2]; document.getElementById('userInput').value = lastUserObj.parts[0].text; document.getElementById('userInput').focus(); executeRewind(); }
+        async function executeRegenerate() { if (chatHistory.length === 0) return; let last = chatHistory[chatHistory.length - 1]; if (last.role === 'model') { chatHistory.pop(); if(statusHistoryStack.length > 1) statusHistoryStack.pop(); } const rows = document.querySelectorAll('.msg-row'); if(rows.length > 0) rows[rows.length - 1].remove(); await callGeminiAPI(); }
+        
+        function updateAmbientSettings() {
+            const opacitySlider = document.getElementById('bgOpacitySlider');
+            const blurSlider = document.getElementById('bgBlurSlider');
+            if (!opacitySlider || !blurSlider) return;
+            const opacityVal = opacitySlider.value;
+            const blurVal = blurSlider.value;
+            
+            document.getElementById('bgOpacityVal').textContent = opacityVal + '%';
+            document.getElementById('bgBlurVal').textContent = blurVal + 'px';
+            
+            const mask = document.getElementById('bg-overlay-mask');
+            if(mask) {
+                mask.style.backgroundColor = `rgba(0, 0, 0, ${opacityVal / 100})`;
+                mask.style.backdropFilter = `blur(${blurVal}px)`;
+                mask.style.webkitBackdropFilter = `blur(${blurVal}px)`;
+            }
+        }
+        
+        function makeStars() { const box = document.getElementById('stars'); for(let i=0;i<15;i++){ let s = document.createElement('div'); s.className = 'star'; s.style.left = Math.random()*100 + '%'; s.style.top = Math.random()*100 + '%'; s.style.animationDelay = Math.random()*3 + 's'; box.appendChild(s); } }
+        window.onload = function() { makeStars(); initScreen(); };
+    </script>
+</body>
+</html>
