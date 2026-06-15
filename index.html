@@ -1276,9 +1276,9 @@
                     // 用户第一次登录，在数据库建立钱包（默认200）
                     await authFetch(`${SUPABASE_URL}/rest/v1/user_wallets`, {
                         method: 'POST',
-                        body: JSON.stringify({ email, tokens: 200 })
+                        body: JSON.stringify({ email, tokens: 100 })
                     });
-                    localStorage.setItem('user_tokens', '200');
+                    localStorage.setItem('user_tokens', '100');
                 }
             } catch(e) { console.warn('syncTokensFromDB 失败，使用本地余额', e); }
         }
