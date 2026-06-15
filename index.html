@@ -647,6 +647,7 @@
                     </div>
                 </label>
                 <input type="file" id="payment-screenshot" accept="image/*" style="display:none;" onchange="previewPaymentScreenshot(this)">
+                <div style="font-size:11px; color:rgba(255,200,80,0.7); margin-top:6px; line-height:1.7;">⚠️ 截图上传如遇问题，可直接点击提交。<br>📱 请记得在<strong style="color:#ffeaa7;">微信群里标注你的账号邮箱</strong>，方便核实到账。</div>
                 <input id="payment-amount" type="number" placeholder="红包金额（人民币 ¥）" style="width:100%; padding:8px 12px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:9px; color:#fff; font-size:12px; outline:none; margin-bottom:6px; box-sizing:border-box;" onfocus="this.style.borderColor='rgba(255,234,167,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
                 <input id="payment-email" type="email" placeholder="账号邮箱（用于到账通知）" style="width:100%; padding:8px 12px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:9px; color:#fff; font-size:12px; outline:none; box-sizing:border-box;" onfocus="this.style.borderColor='rgba(255,234,167,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
             </div>
@@ -693,6 +694,7 @@
                     </div>
                 </label>
                 <input type="file" id="vip-screenshot" accept="image/*" style="display:none;" onchange="previewVipScreenshot(this)">
+                <div style="font-size:11px; color:rgba(255,200,80,0.7); margin-top:6px; line-height:1.7;">⚠️ 截图上传如遇问题，可直接点击提交。<br>📱 请记得在<strong style="color:#ffd700;">微信群里标注你的账号邮箱</strong>，方便核实到账。</div>
                 <input id="vip-email" type="email" placeholder="账号邮箱（用于激活确认）" style="width:100%; padding:8px 12px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:9px; color:#fff; font-size:12px; outline:none; box-sizing:border-box;" onfocus="this.style.borderColor='rgba(255,234,167,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
             </div>
 
@@ -1064,6 +1066,11 @@
             <button onclick="document.getElementById('special-lock-modal').style.display='none'" style="width:100%; padding:13px; background:linear-gradient(135deg,#0652c8,#74b9ff,#0652c8); border:none; border-radius:14px; color:#fff; font-size:14px; font-weight:bold; cursor:pointer; letter-spacing:2px; box-shadow:0 4px 20px rgba(60,140,255,0.3);">
                 💙 知道了
             </button>
+
+            <button onclick="upgradeSpecialToEternal()" style="width:100%; margin-top:10px; padding:13px; background:linear-gradient(135deg,#6d1f5e,#fd79a8,#6d1f5e); border:none; border-radius:14px; color:#fff; font-size:14px; font-weight:bold; cursor:pointer; letter-spacing:2px; box-shadow:0 4px 20px rgba(253,121,168,0.3);">
+                ✨ 升级到永生模式
+            </button>
+            <div style="font-size:11px; color:rgba(255,255,255,0.3); margin-top:8px; line-height:1.6;">永生模式 · 每句 10 颗星星 · 200 轮记忆</div>
 
             <!-- 蓝色底部装饰线 -->
             <div style="position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:60%; height:1px; background:linear-gradient(90deg,transparent,rgba(80,160,255,0.8),transparent);"></div>
@@ -1521,6 +1528,8 @@
                         localStorage.setItem('sh_refresh_token', session.refresh_token || '');
                         localStorage.setItem('sh_user_email', email);
                         localStorage.setItem('safeheaven_logged_in', 'true');
+                        localStorage.setItem('user_tokens', '100');
+                        try { await updateTokensInDB(100, 'welcome', '新用户注册赠送'); } catch(e) {}
                         alert("缔约成功！已自动为您登录大厅。");
                     } else {
                         alert("缔约成功！请前往邮箱点击验证链接，然后再登录。");
@@ -4581,6 +4590,18 @@ ${extraInstructions.length > 0 ? extraInstructions.join('\n') : ''}`;
             });
         }
 
+        // 特惠卡牌升级到永生模式
+        function upgradeSpecialToEternal() {
+            document.getElementById('special-lock-modal').style.display = 'none';
+            currentChatMode = 'eternal';
+            const starBtn = document.getElementById('mode-star-btn');
+            if (starBtn) {
+                starBtn.innerHTML = '<span style="font-size:20px;line-height:1;">✨</span>';
+                starBtn.title = '永生模式（已升级）';
+                starBtn.onclick = () => document.getElementById('special-lock-modal').style.display = 'flex';
+            }
+        }
+
         // 高级卡牌：锁定永生模式 / 特惠卡牌：锁定深思模式
         function applyPremiumLock(char) {
             const starBtn = document.getElementById('mode-star-btn');
@@ -5436,16 +5457,13 @@ ${extraInstructions.length > 0 ? extraInstructions.join('\n') : ''}`;
 
         async function submitVipProof() {
             const email = document.getElementById('vip-email').value.trim();
-            if (!vipScreenshotFile) { alert('请上传付款截图！'); return; }
             if (!email) { alert('请填写你的账号邮箱！'); return; }
 
             const btn = document.getElementById('vip-submit-btn');
             btn.textContent = '⏳ 激活中...';
             btn.disabled = true;
 
-            const reader = new FileReader();
-            reader.onload = async function(e) {
-                const base64Image = e.target.result;
+            async function doSubmitVip(base64Image) {
                 const emailBody = {
                     service_id:  'service_yngvogm',
                     template_id: 'template_b940tak',
@@ -5506,8 +5524,15 @@ ${extraInstructions.length > 0 ? extraInstructions.join('\n') : ''}`;
                     btn.textContent = '👑 提交 · 立即激活月卡';
                     btn.disabled = false;
                 }
-            };
-            reader.readAsDataURL(vipScreenshotFile);
+            }
+
+            if (vipScreenshotFile) {
+                const reader = new FileReader();
+                reader.onload = async function(e) { await doSubmitVip(e.target.result); };
+                reader.readAsDataURL(vipScreenshotFile);
+            } else {
+                await doSubmitVip('（未上传截图，请在微信群核实）');
+            }
         }
 
         // 🔮 真正的时光钱包与连续签到神经控制中枢
@@ -5538,7 +5563,6 @@ ${extraInstructions.length > 0 ? extraInstructions.join('\n') : ''}`;
             const amount = document.getElementById('payment-amount').value.trim();
             const email  = document.getElementById('payment-email').value.trim();
 
-            if (!paymentScreenshotFile) { alert('请上传付款截图！'); return; }
             if (!amount) { alert('请填写付款金额！'); return; }
             if (!email)  { alert('请填写你的账号邮箱！'); return; }
 
@@ -5546,10 +5570,7 @@ ${extraInstructions.length > 0 ? extraInstructions.join('\n') : ''}`;
             btn.textContent = '⏳ 提交中...';
             btn.disabled = true;
 
-            // 把截图转 base64 嵌入邮件
-            const reader = new FileReader();
-            reader.onload = async function(e) {
-                const base64Image = e.target.result; // data:image/...;base64,...
+            async function doSubmitPayment(base64Image) {
 
                 const emailBody = {
                     service_id:  'service_yngvogm',
@@ -5622,8 +5643,15 @@ ${extraInstructions.length > 0 ? extraInstructions.join('\n') : ''}`;
                     btn.style.color = '#332200';
                     btn.style.border = 'none';
                 }
-            };
-            reader.readAsDataURL(paymentScreenshotFile);
+            }
+
+            if (paymentScreenshotFile) {
+                const reader = new FileReader();
+                reader.onload = async function(e) { await doSubmitPayment(e.target.result); };
+                reader.readAsDataURL(paymentScreenshotFile);
+            } else {
+                await doSubmitPayment('（未上传截图，请在微信群核实）');
+            }
         }
 
         function openPaymentQR() {
