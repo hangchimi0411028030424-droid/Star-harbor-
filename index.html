@@ -501,7 +501,12 @@
             <div style="background: rgba(0,0,0,0.2); border-radius: 16px; padding: 15px; text-align: center;">
                 <div style="font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 5px;">⭐ 剩余星星</div>
                 <div id="token-balance" style="font-size: 32px; font-weight: bold; color: #fff; font-family: monospace;">200</div>
-                
+                <div id="vip-status-badge" style="display:none; margin-top:10px; background:linear-gradient(135deg,rgba(255,234,167,0.15),rgba(255,180,0,0.1)); border:1px solid rgba(255,234,167,0.4); border-radius:12px; padding:8px 12px;">
+                    <div style="font-size:13px; color:#ffd700; font-weight:bold;">👑 月卡会员</div>
+                    <div id="vip-expire-text" style="font-size:11px; color:rgba(255,255,255,0.6); margin-top:3px;"></div>
+                    <div style="font-size:10px; color:rgba(255,200,80,0.7); margin-top:2px;">签到每天 +30星 · 第7天 +200星</div>
+                </div>
+                <div id="non-vip-badge" style="margin-top:10px; font-size:10px; color:rgba(255,255,255,0.35);">普通会员 · 签到每天 +15星 · 第7天 +60星</div>
             </div>
         </div>
 
@@ -514,25 +519,25 @@
             
             <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 15px;">
                 <div class="checkin-day" style="background: rgba(0,0,0,0.2); border-radius: 12px; padding: 10px 5px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
-                    <div style="font-size: 11px; color: rgba(255,255,255,0.5);">第1天</div><div style="font-size: 16px; margin: 4px 0;">✨</div><div style="font-size: 11px; color: #ffeaa7;">+10</div>
+                    <div style="font-size: 11px; color: rgba(255,255,255,0.5);">第1天</div><div style="font-size: 16px; margin: 4px 0;">✨</div><div style="font-size: 11px; color: #ffeaa7;">+15</div>
                 </div>
                 <div class="checkin-day" style="background: rgba(0,0,0,0.2); border-radius: 12px; padding: 10px 5px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
-                    <div style="font-size: 11px; color: rgba(255,255,255,0.5);">第2天</div><div style="font-size: 16px; margin: 4px 0;">✨</div><div style="font-size: 11px; color: #ffeaa7;">+10</div>
+                    <div style="font-size: 11px; color: rgba(255,255,255,0.5);">第2天</div><div style="font-size: 16px; margin: 4px 0;">✨</div><div style="font-size: 11px; color: #ffeaa7;">+15</div>
                 </div>
                 <div class="checkin-day" style="background: rgba(0,0,0,0.2); border-radius: 12px; padding: 10px 5px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
-                    <div style="font-size: 11px; color: rgba(255,255,255,0.5);">第3天</div><div style="font-size: 16px; margin: 4px 0;">✨</div><div style="font-size: 11px; color: #ffeaa7;">+10</div>
+                    <div style="font-size: 11px; color: rgba(255,255,255,0.5);">第3天</div><div style="font-size: 16px; margin: 4px 0;">✨</div><div style="font-size: 11px; color: #ffeaa7;">+15</div>
                 </div>
                 <div class="checkin-day" style="background: rgba(0,0,0,0.2); border-radius: 12px; padding: 10px 5px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
-                    <div style="font-size: 11px; color: rgba(255,255,255,0.5);">第4天</div><div style="font-size: 16px; margin: 4px 0;">✨</div><div style="font-size: 11px; color: #ffeaa7;">+10</div>
+                    <div style="font-size: 11px; color: rgba(255,255,255,0.5);">第4天</div><div style="font-size: 16px; margin: 4px 0;">✨</div><div style="font-size: 11px; color: #ffeaa7;">+15</div>
                 </div>
                 <div class="checkin-day" style="background: rgba(0,0,0,0.2); border-radius: 12px; padding: 10px 5px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
-                    <div style="font-size: 11px; color: rgba(255,255,255,0.5);">第5天</div><div style="font-size: 16px; margin: 4px 0;">✨</div><div style="font-size: 11px; color: #ffeaa7;">+10</div>
+                    <div style="font-size: 11px; color: rgba(255,255,255,0.5);">第5天</div><div style="font-size: 16px; margin: 4px 0;">✨</div><div style="font-size: 11px; color: #ffeaa7;">+15</div>
                 </div>
                 <div class="checkin-day" style="background: rgba(0,0,0,0.2); border-radius: 12px; padding: 10px 5px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
-                    <div style="font-size: 11px; color: rgba(255,255,255,0.5);">第6天</div><div style="font-size: 16px; margin: 4px 0;">✨</div><div style="font-size: 11px; color: #ffeaa7;">+10</div>
+                    <div style="font-size: 11px; color: rgba(255,255,255,0.5);">第6天</div><div style="font-size: 16px; margin: 4px 0;">✨</div><div style="font-size: 11px; color: #ffeaa7;">+15</div>
                 </div>
                 <div class="checkin-day" style="grid-column: span 2; background: linear-gradient(135deg, rgba(255,234,167,0.1), rgba(255,118,117,0.1)); border-radius: 12px; padding: 10px 5px; text-align: center; border: 1px solid rgba(255,234,167,0.3);">
-                    <div style="font-size: 11px; color: #ff7675; font-weight: bold;">🎁 第7天大礼包</div><div style="font-size: 16px; margin: 4px 0;">🎉</div><div style="font-size: 11px; color: #fff; font-weight: bold;">+50 星星</div>
+                    <div style="font-size: 11px; color: #ff7675; font-weight: bold;">🎁 第7天大礼包</div><div style="font-size: 16px; margin: 4px 0;">🎉</div><div style="font-size: 11px; color: #fff; font-weight: bold;">+60 星星</div>
                 </div>
             </div>
 
@@ -572,6 +577,14 @@
                     <div style="background: linear-gradient(135deg,#ffeaa7,#ffcc02); color: #332200; font-size: 12px; font-weight: bold; padding: 6px 12px; border-radius: 10px;">￥33.00</div>
                 </div>
             </div>
+                <!-- 套餐 4 月卡 -->
+                <div onclick="openVipPayment()" style="background: linear-gradient(135deg,rgba(255,180,0,0.08),rgba(255,234,167,0.04)); border: 1px solid rgba(255,234,167,0.3); border-radius: 16px; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: background 0.2s; margin-top:12px;" onmouseover="this.style.background='rgba(255,234,167,0.1)'" onmouseout="this.style.background='linear-gradient(135deg,rgba(255,180,0,0.08),rgba(255,234,167,0.04))'">
+                    <div>
+                        <div style="font-size: 14px; font-weight: bold; color:#ffd700;">👑 星海月卡（+1000 星星）</div>
+                        <div style="font-size: 11px; color: rgba(255,234,167,0.6); margin-top: 2px;">30天会员 · 签到加倍 · 专属徽章</div>
+                    </div>
+                    <div style="background: linear-gradient(135deg,#ffd700,#ffcc02); color: #332200; font-size: 12px; font-weight: bold; padding: 6px 12px; border-radius: 10px;">￥36.00</div>
+                </div>
         </div>
 
     </div> <!-- 💡 完美闭合 #wallet-view 主容器 -->
@@ -620,6 +633,52 @@
         </div>
     </div>
 
+
+    <!-- 👑 月卡付款弹窗 -->
+    <div id="vip-modal" onclick="closeVipPayment()" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.85); backdrop-filter:blur(15px); -webkit-backdrop-filter:blur(15px); z-index:9999; justify-content:center; align-items:flex-start; overflow-y:auto;">
+        <div onclick="event.stopPropagation()" style="background:rgba(30,20,5,0.95); border:1px solid rgba(255,234,167,0.35); border-radius:24px; padding:18px 16px; text-align:center; width:88%; max-width:320px; margin:12px auto 20px auto; box-shadow:0 10px 40px rgba(0,0,0,0.6);">
+            <div style="font-size:24px; margin-bottom:4px;">👑</div>
+            <h4 style="color:#ffd700; font-size:15px; letter-spacing:2px; margin-bottom:4px;">星海月卡</h4>
+            <p style="color:rgba(255,255,255,0.55); font-size:11px; line-height:1.6; margin-bottom:12px;">扫码入群发红包 ￥36<br>上传截图即可自动激活月卡 ⭐</p>
+
+            <!-- 福利说明 -->
+            <div style="background:rgba(255,234,167,0.05); border:1px solid rgba(255,234,167,0.2); border-radius:12px; padding:10px; margin-bottom:12px; text-align:left;">
+                <div style="font-size:11px; color:#ffd700; font-weight:bold; margin-bottom:6px;">👑 月卡专属福利</div>
+                <div style="font-size:11px; color:rgba(255,255,255,0.75); line-height:1.8;">
+                    ✨ 立即到账 <span style="color:#ffd700; font-weight:bold;">+1000 星星</span><br>
+                    📅 签到每天 <span style="color:#ffd700;">+30星</span>，第7天 <span style="color:#ffd700;">+200星</span><br>
+                    ⏳ 有效期 <span style="color:#ffd700;">30天</span>，到期自动恢复普通会员<br>
+                    👑 专属月卡徽章显示
+                </div>
+            </div>
+
+            <!-- 二维码 -->
+            <div style="background:#fff; border-radius:12px; padding:8px; display:inline-block; margin-bottom:12px; box-shadow:0 4px 20px rgba(0,0,0,0.3);">
+                <img src="https://i.ibb.co/zVLFvLrJ/Screenshot-2026-06-14-14-26-47-849-com-tencent-mm-edit.jpg" style="width:160px; height:160px; display:block; border-radius:6px; object-fit:contain;">
+                <div style="font-size:11px; color:#666; margin-top:4px; letter-spacing:1px;">微信扫码入群 · 发红包 ￥36</div>
+            </div>
+
+            <!-- 上传截图 -->
+            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:14px; padding:12px; margin-bottom:12px; text-align:left;">
+                <div style="font-size:12px; color:#ffd700; margin-bottom:8px; font-weight:600;">📎 上传付款截图</div>
+                <label for="vip-screenshot" style="display:block; cursor:pointer;">
+                    <div id="vip-preview-box" style="width:100%; height:70px; background:rgba(255,255,255,0.05); border:2px dashed rgba(255,234,167,0.3); border-radius:10px; display:flex; align-items:center; justify-content:center; margin-bottom:8px; overflow:hidden; position:relative;">
+                        <img id="vip-preview-img" src="" style="display:none; width:100%; height:100%; object-fit:cover; border-radius:8px;">
+                        <div id="vip-placeholder" style="text-align:center; color:rgba(255,255,255,0.35); font-size:11px; line-height:1.8;">📷<br>点击选择截图</div>
+                    </div>
+                </label>
+                <input type="file" id="vip-screenshot" accept="image/*" style="display:none;" onchange="previewVipScreenshot(this)">
+                <input id="vip-email" type="email" placeholder="账号邮箱（用于激活确认）" style="width:100%; padding:8px 12px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:9px; color:#fff; font-size:12px; outline:none; box-sizing:border-box;" onfocus="this.style.borderColor='rgba(255,234,167,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
+            </div>
+
+            <button id="vip-submit-btn" onclick="submitVipProof()" style="width:100%; padding:11px; background:linear-gradient(135deg,#c8960c,#ffd700,#c8960c); border:none; border-radius:12px; color:#1a0800; font-size:14px; font-weight:bold; cursor:pointer; letter-spacing:2px;">
+                👑 提交 · 立即激活月卡
+            </button>
+            <div style="margin-top:10px;">
+                <span onclick="closeVipPayment()" style="font-size:12px; color:rgba(255,255,255,0.4); cursor:pointer;">取消</span>
+            </div>
+        </div>
+    </div>
 
     <!-- 👤 用户主页 -->
     <div id="user-view" style="display:none; overflow-y:auto; height:100vh; height:100dvh; padding-bottom:80px; position:relative; z-index:2;">
@@ -1310,6 +1369,17 @@
                     localStorage.setItem('user_tokens', '100');
                 }
             } catch(e) { console.warn('syncTokensFromDB 失败，使用本地余额', e); }
+            // 同步VIP状态
+            try {
+                const vipRes = await authFetch(
+                    `${SUPABASE_URL}/rest/v1/user_wallets?email=eq.${encodeURIComponent(localStorage.getItem('sh_user_email'))}&select=vip_expire_at`
+                );
+                const vipData = await vipRes.json();
+                if (vipData && vipData[0] && vipData[0].vip_expire_at) {
+                    localStorage.setItem('vip_expire_at', vipData[0].vip_expire_at);
+                }
+            } catch(e) {}
+            if (typeof refreshVipStatusUI === 'function') refreshVipStatusUI();
         }
 
         // 扣除或增加 token，同时写消费记录
@@ -5213,6 +5283,158 @@ ${extraInstructions.length > 0 ? extraInstructions.join('\n') : ''}`;
         }
 
         // ==========================================================
+        // ========================================================
+        // 👑 月卡系统
+        // ========================================================
+        let vipScreenshotFile = null;
+
+        function openVipPayment() {
+            document.getElementById('vip-modal').style.display = 'flex';
+            // 自动填入已登录邮箱
+            const email = localStorage.getItem('sh_user_email');
+            if (email) document.getElementById('vip-email').value = email;
+        }
+
+        function closeVipPayment() {
+            document.getElementById('vip-modal').style.display = 'none';
+        }
+
+        function previewVipScreenshot(input) {
+            const file = input.files[0];
+            if (!file) return;
+            vipScreenshotFile = file;
+            const reader = new FileReader();
+            reader.onload = e => {
+                const img = document.getElementById('vip-preview-img');
+                const placeholder = document.getElementById('vip-placeholder');
+                img.src = e.target.result;
+                img.style.display = 'block';
+                placeholder.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async function activateVIP(email) {
+            // 写入 vip_expire_at 到 Supabase（30天后到期）
+            const expireDate = new Date();
+            expireDate.setDate(expireDate.getDate() + 30);
+            const expireStr = expireDate.toISOString();
+            try {
+                await authFetch(
+                    `${SUPABASE_URL}/rest/v1/user_wallets?email=eq.${encodeURIComponent(email)}`,
+                    {
+                        method: 'PATCH',
+                        body: JSON.stringify({ vip_expire_at: expireStr, updated_at: new Date().toISOString() })
+                    }
+                );
+                // 存到本地
+                localStorage.setItem('vip_expire_at', expireStr);
+                return true;
+            } catch(e) {
+                console.warn('activateVIP 失败', e);
+                // 即使DB失败，本地也先激活
+                localStorage.setItem('vip_expire_at', expireStr);
+                return false;
+            }
+        }
+
+        function refreshVipStatusUI() {
+            const vipExpire = localStorage.getItem('vip_expire_at');
+            const isVip = vipExpire && new Date(vipExpire) > new Date();
+            const badge = document.getElementById('vip-status-badge');
+            const nonVip = document.getElementById('non-vip-badge');
+            if (!badge) return;
+            if (isVip) {
+                badge.style.display = 'block';
+                if (nonVip) nonVip.style.display = 'none';
+                const expire = new Date(vipExpire);
+                const y = expire.getFullYear();
+                const m = String(expire.getMonth()+1).padStart(2,'0');
+                const d = String(expire.getDate()).padStart(2,'0');
+                const el = document.getElementById('vip-expire-text');
+                if (el) el.textContent = `有效期至 ${y}-${m}-${d}`;
+            } else {
+                badge.style.display = 'none';
+                if (nonVip) nonVip.style.display = 'block';
+            }
+        }
+
+        async function submitVipProof() {
+            const email = document.getElementById('vip-email').value.trim();
+            if (!vipScreenshotFile) { alert('请上传付款截图！'); return; }
+            if (!email) { alert('请填写你的账号邮箱！'); return; }
+
+            const btn = document.getElementById('vip-submit-btn');
+            btn.textContent = '⏳ 激活中...';
+            btn.disabled = true;
+
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                const base64Image = e.target.result;
+                const emailBody = {
+                    service_id:  'service_yngvogm',
+                    template_id: 'template_b940tak',
+                    user_id:     'XQm01Jpha2EZ61gUo',
+                    template_params: {
+                        to_email:       'hangchilaw@gmail.com',
+                        contact_email:  email,
+                        payment_amount: '月卡 ¥36',
+                        submit_time:    new Date().toLocaleString('zh-CN'),
+                        char_avatar:    base64Image
+                    }
+                };
+
+                try {
+                    const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(emailBody)
+                    });
+
+                    if (res.ok) {
+                        // 1. 到账1000星星
+                        const userEmail = localStorage.getItem('sh_user_email');
+                        let creditMsg = '';
+                        if (userEmail) {
+                            await updateTokensInDB(1000, 'recharge', '月卡激活赠送1000星星');
+                            creditMsg = '\n⭐ 已到账 1000 颗星星！';
+                        } else {
+                            const cur = parseInt(localStorage.getItem('user_tokens') || '0');
+                            localStorage.setItem('user_tokens', (cur + 1000).toString());
+                            const el = document.getElementById('token-balance');
+                            if (el) el.textContent = cur + 1000;
+                            creditMsg = '\n⭐ 已到账 1000 颗星星（请登录以同步）！';
+                        }
+
+                        // 2. 激活月卡
+                        await activateVIP(userEmail || email);
+                        refreshVipStatusUI();
+
+                        btn.textContent = '✅ 月卡已激活！';
+                        btn.style.background = 'rgba(85,239,196,0.2)';
+                        btn.style.color = '#55efc4';
+                        btn.style.border = '1px solid #55efc4';
+                        alert('👑 月卡激活成功！' + creditMsg + '\n有效期30天，签到奖励已升级！');
+
+                        // 重置
+                        vipScreenshotFile = null;
+                        document.getElementById('vip-screenshot').value = '';
+                        document.getElementById('vip-preview-img').style.display = 'none';
+                        document.getElementById('vip-placeholder').style.display = 'block';
+                        document.getElementById('vip-email').value = '';
+                        setTimeout(() => { closeVipPayment(); btn.textContent = '👑 提交 · 立即激活月卡'; btn.disabled = false; btn.style = ''; }, 2000);
+                    } else {
+                        throw new Error('发送失败');
+                    }
+                } catch(err) {
+                    alert('提交失败，请重试或联系客服。');
+                    btn.textContent = '👑 提交 · 立即激活月卡';
+                    btn.disabled = false;
+                }
+            };
+            reader.readAsDataURL(vipScreenshotFile);
+        }
+
         // 🔮 真正的时光钱包与连续签到神经控制中枢
         // ==========================================================
 
@@ -5384,7 +5606,12 @@ ${extraInstructions.length > 0 ? extraInstructions.join('\n') : ''}`;
             }
 
             连签天数 += 1;
-            const 签到奖励表 = [10, 10, 10, 10, 10, 10, 50];
+            // 检查是否月卡会员
+            const vipExpire = localStorage.getItem('vip_expire_at');
+            const isVip = vipExpire && new Date(vipExpire) > new Date();
+            const 签到奖励表 = isVip
+                ? [30, 30, 30, 30, 30, 30, 200]   // 月卡：每天30星，第7天200星
+                : [15, 15, 15, 15, 15, 15, 60];    // 普通：每天15星，第7天60星
             let 本次奖励 = 签到奖励表[Math.min(连签天数 - 1, 6)];
 
             if (连签天数 === 7) {
@@ -6471,7 +6698,7 @@ function refreshWalletUI() {
         }
         
         function makeStars() { const box = document.getElementById('stars'); for(let i=0;i<15;i++){ let s = document.createElement('div'); s.className = 'star'; s.style.left = Math.random()*100 + '%'; s.style.top = Math.random()*100 + '%'; s.style.animationDelay = Math.random()*3 + 's'; box.appendChild(s); } }
-        window.onload = function() { makeStars(); initScreen(); };
+        window.onload = function() { makeStars(); initScreen(); refreshVipStatusUI(); };
     </script>
 </body>
 </html>
