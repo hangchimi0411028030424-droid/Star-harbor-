@@ -1,2 +1,2 @@
-# Star-harbor-
-Ai chat platform 
+# 星辰大海
+亲爱的夫人请稍等，网页更新中，马上大法特法~
