@@ -9358,7 +9358,7 @@ ${S_FORBIDDEN}${S_FORMAT}${S_STATUS_NOTE}${S_WORLD_MODERN}${S_UNSAFE}`,
             } else {
                 // 如果第一次登录没数据，确保显示 200
                 const tokenBalanceEl = document.getElementById('token-balance');
-                if (tokenBalanceEl) tokenBalanceEl.textContent = '200';
+                if (tokenBalanceEl) tokenBalanceEl.textContent = '0';
             }
             if (typeof updateCheckInSkin === 'function') {
                 updateCheckInSkin();
@@ -10757,7 +10757,7 @@ function refreshWalletUI() {
     const tokenSpan = document.getElementById('token-balance');
     if (tokenSpan) {
         let saved = localStorage.getItem('user_tokens');
-        if (saved === null || saved === '') saved = '200';
+        if (saved === null || saved === '') saved = '0';
         tokenSpan.innerText = saved;
     }
     
