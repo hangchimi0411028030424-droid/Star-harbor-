@@ -9119,11 +9119,9 @@ ${S_FORBIDDEN}${S_FORMAT}${S_STATUS_NOTE}${S_WORLD_MODERN}${S_UNSAFE}`,
         async function tryApplyInviteCode(code, email) {
             const result = await validateAndRewardInviteCode(code, email);
             if (result.ok) {
-                const curTok = parseInt(localStorage.getItem('user_tokens') || '100');
-                const newTok = curTok + 30;
-                localStorage.setItem('user_tokens', String(newTok));
+                
                 addLedgerRecord(30, '填写邀请码奖励 +30⭐');
-                try { await updateTokensInDB(newTok, 'invite_bonus', '填写邀请码奖励'); } catch(e) {}
+                try { try { await updateTokensInDB(30, 'invite_bonus', '填写邀请码奖励'); } catch(e) {} } catch(e) {}
                 alert('🎉 缔约成功！邀请码验证通过，已获得 +30 星星 ⭐');
             } else {
                 // 失败：给用户选择重试或跳过
