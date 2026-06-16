@@ -1783,9 +1783,9 @@
                         method: 'POST',
                         body: JSON.stringify({ email, tokens: amount })
                     });
-                    localStorage.setItem('user_tokens', '9999');
+                    localStorage.setItem('user_tokens', String(amount));
                     const el = document.getElementById('token-balance');
-                    if (el) el.textContent = 9999;
+                    if (el) el.textContent = amount;
                     return true;
                 }
 
