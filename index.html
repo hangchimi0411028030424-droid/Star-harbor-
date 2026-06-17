@@ -1289,48 +1289,106 @@
     </div>
 
     <!-- 🌿 剧情分支弹窗 -->
-    <div id="branch-modal" onclick="if(event.target===this)this.style.display='none'" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); z-index:9999999; align-items:center; justify-content:center;">
-        <div onclick="event.stopPropagation()" style="background:linear-gradient(145deg,rgba(10,15,30,0.98),rgba(5,10,25,0.99)); border:1px solid rgba(255,255,255,0.12); border-radius:28px; padding:30px 24px; width:88%; max-width:340px; text-align:center; box-shadow:0 0 40px rgba(160,130,255,0.1);">
-            <div style="font-size:36px; margin-bottom:10px;">🌿</div>
-            <h3 style="font-size:18px; font-weight:400; color:#c9b8ff; letter-spacing:3px; margin-bottom:6px;">剧情分支</h3>
-            <p style="font-size:11px; color:rgba(255,255,255,0.3); margin-bottom:22px;">开辟新路线，或回到分叉口</p>
+    <style>
+        .branch-overlay {
+            position:fixed; inset:0;
+            background:rgba(8,6,20,0.55);
+            backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px);
+            z-index:9999999; display:none;
+            align-items:center; justify-content:center;
+        }
+        .branch-panel {
+            background:rgba(255,255,255,0.07);
+            backdrop-filter:blur(40px) saturate(160%);
+            -webkit-backdrop-filter:blur(40px) saturate(160%);
+            border:1px solid rgba(255,255,255,0.18);
+            border-radius:28px;
+            box-shadow:0 8px 48px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.15);
+            padding:28px 22px 22px;
+            width:88%; max-width:340px;
+            text-align:center; position:relative; overflow:hidden;
+        }
+        .branch-panel::before {
+            content:''; position:absolute; top:0; left:10%; right:10%; height:1px;
+            background:linear-gradient(90deg,transparent,rgba(255,255,255,0.35),transparent);
+        }
+        .branch-btn {
+            width:100%; padding:13px 16px;
+            backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+            border-radius:14px; font-size:13px; cursor:pointer;
+            text-align:left; transition:all 0.2s; border:1px solid transparent;
+        }
+        .branch-btn:active{transform:scale(0.98);}
+        .branch-name-input {
+            width:100%; padding:10px 14px; box-sizing:border-box;
+            background:rgba(255,255,255,0.08);
+            border:1px solid rgba(255,255,255,0.15);
+            border-radius:12px; color:#fff; font-size:13px; outline:none;
+        }
+        .branch-name-input:focus{border-color:rgba(180,160,255,0.5);background:rgba(255,255,255,0.12);}
+        .branch-name-input::placeholder{color:rgba(255,255,255,0.3);}
+        .branch-item {
+            background:rgba(255,255,255,0.06);
+            backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+            border:1px solid rgba(255,255,255,0.12);
+            border-radius:14px; padding:12px 14px;
+            display:flex; align-items:center; gap:8px;
+        }
+    </style>
 
-            <div style="display:flex; flex-direction:column; gap:10px;">
-                <!-- 当前节点开分支 -->
-                <button onclick="createBranchAt('current')" style="width:100%; padding:14px 16px; background:rgba(180,160,255,0.1); border:1px solid rgba(180,160,255,0.3); border-radius:14px; color:#c9b8ff; font-size:13px; cursor:pointer; text-align:left; transition:all 0.2s;">
-                    <div style="font-weight:bold; margin-bottom:3px;">🌱 在此节点开新分支</div>
-                    <div style="font-size:11px; color:rgba(180,160,255,0.4);">保存当前进度，从这里探索不同走向</div>
-                </button>
+    <!-- 主弹窗 -->
+    <div id="branch-modal" class="branch-overlay" onclick="if(event.target===this)this.style.display='none'">
+        <div class="branch-panel" onclick="event.stopPropagation()">
+            <div style="font-size:28px;margin-bottom:8px;filter:drop-shadow(0 0 10px rgba(180,160,255,0.6));">🌿</div>
+            <h3 style="font-size:17px;font-weight:400;color:#fff;letter-spacing:3px;margin-bottom:4px;">剧情分支</h3>
+            <p style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:18px;">开辟新路线，或回到分叉口</p>
 
-                <!-- 重新开 -->
-                <button onclick="createBranchAt('restart')" style="width:100%; padding:14px 16px; background:rgba(255,234,167,0.08); border:1px solid rgba(255,234,167,0.2); border-radius:14px; color:#ffeaa7; font-size:13px; cursor:pointer; text-align:left; transition:all 0.2s;">
-                    <div style="font-weight:bold; margin-bottom:3px;">🔄 从头开新分支</div>
-                    <div style="font-size:11px; color:rgba(255,234,167,0.4);">保存当前剧情，从起点重新演绎</div>
-                </button>
-
-                <!-- 分隔线 -->
-                <div style="border-top:1px solid rgba(255,255,255,0.08); margin:4px 0;"></div>
-
-                <!-- 查看已有分支 -->
-                <button onclick="viewBranches()" style="width:100%; padding:14px 16px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:14px; color:rgba(255,255,255,0.6); font-size:13px; cursor:pointer; text-align:left; transition:all 0.2s;">
-                    <div style="font-weight:bold; margin-bottom:3px;">📂 查看所有分支</div>
-                    <div style="font-size:11px; color:rgba(255,255,255,0.3);">切换回已保存的分支剧情</div>
-                </button>
+            <div style="text-align:left;margin-bottom:14px;">
+                <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:6px;">✏️ 为这条分支命名（选填）</div>
+                <input id="branch-name-input" class="branch-name-input" type="text" placeholder="例：告白那条线 / 逃跑结局…" maxlength="20">
             </div>
 
-            <button onclick="document.getElementById('branch-modal').style.display='none'" style="width:100%; margin-top:16px; padding:11px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:12px; color:rgba(255,255,255,0.4); font-size:13px; cursor:pointer;">取消</button>
+            <div style="display:flex;flex-direction:column;gap:9px;">
+                <button class="branch-btn" onclick="branchSaveCurrent()"
+                    style="background:rgba(180,160,255,0.12);border-color:rgba(180,160,255,0.28);color:#d4c8ff;">
+                    <div style="font-weight:600;margin-bottom:2px;">🌱 保存当前节点</div>
+                    <div style="font-size:11px;color:rgba(180,160,255,0.5);">保存此刻进度，可随时切换回来</div>
+                </button>
+                <button class="branch-btn" onclick="branchSaveAndRestart()"
+                    style="background:rgba(255,234,167,0.08);border-color:rgba(255,234,167,0.22);color:#ffeaa7;">
+                    <div style="font-weight:600;margin-bottom:2px;">🔄 保存并从头开始</div>
+                    <div style="font-size:11px;color:rgba(255,234,167,0.4);">保存当前剧情，从起点重新演绎</div>
+                </button>
+                <div style="border-top:1px solid rgba(255,255,255,0.07);margin:2px 0;"></div>
+                <button class="branch-btn" onclick="branchList()"
+                    style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.1);color:rgba(255,255,255,0.65);">
+                    <div style="font-weight:600;margin-bottom:2px;">📂 查看所有分支</div>
+                    <div style="font-size:11px;color:rgba(255,255,255,0.3);">切换回已保存的分支剧情</div>
+                </button>
+            </div>
+            <button onclick="document.getElementById('branch-modal').style.display='none'"
+                style="width:100%;margin-top:14px;padding:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:12px;color:rgba(255,255,255,0.35);font-size:12px;cursor:pointer;letter-spacing:1px;">
+                取 消
+            </button>
         </div>
     </div>
 
-    <!-- 📂 分支列表弹窗 -->
-    <div id="branch-list-modal" onclick="if(event.target===this)this.style.display='none'" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); z-index:99999999; align-items:center; justify-content:center;">
-        <div onclick="event.stopPropagation()" style="background:linear-gradient(145deg,rgba(10,15,30,0.98),rgba(5,10,25,0.99)); border:1px solid rgba(255,255,255,0.12); border-radius:28px; padding:28px 20px; width:90%; max-width:360px; max-height:80vh; overflow-y:auto; text-align:center; box-shadow:0 0 40px rgba(160,130,255,0.1);">
-            <h3 style="font-size:16px; color:#c9b8ff; letter-spacing:2px; margin-bottom:18px;">📂 分支列表</h3>
-            <div id="branch-list-container" style="display:flex; flex-direction:column; gap:8px; margin-bottom:16px;"></div>
-            <button onclick="document.getElementById('branch-list-modal').style.display='none'" style="width:100%; padding:11px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:12px; color:rgba(255,255,255,0.4); font-size:13px; cursor:pointer;">关闭</button>
+    <!-- 分支列表弹窗 -->
+    <div id="branch-list-modal" class="branch-overlay" style="z-index:99999999;" onclick="if(event.target===this)this.style.display='none'">
+        <div class="branch-panel" onclick="event.stopPropagation()"
+            style="max-width:360px;width:90%;max-height:80vh;display:flex;flex-direction:column;padding:24px 20px 20px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-shrink:0;">
+                <h3 style="font-size:16px;color:#fff;letter-spacing:2px;font-weight:400;">📂 分支列表</h3>
+                <span onclick="document.getElementById('branch-list-modal').style.display='none'"
+                    style="color:rgba(255,255,255,0.4);font-size:18px;cursor:pointer;padding:4px;">✕</span>
+            </div>
+            <div id="branch-list-container" style="display:flex;flex-direction:column;gap:8px;overflow-y:auto;flex:1;margin-bottom:14px;"></div>
+            <button onclick="document.getElementById('branch-list-modal').style.display='none'"
+                style="width:100%;padding:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:12px;color:rgba(255,255,255,0.35);font-size:12px;cursor:pointer;letter-spacing:1px;flex-shrink:0;">
+                关 闭
+            </button>
         </div>
     </div>
-
     <!-- 🌟 新用户引导弹窗 -->
     <div id="onboarding-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); z-index:99999999; align-items:center; justify-content:center; overflow-y:auto;">
         <div onclick="event.stopPropagation()" style="position:relative; background:linear-gradient(145deg,rgba(10,8,25,0.98),rgba(5,5,20,0.99)); border:1px solid rgba(255,234,167,0.3); border-radius:28px; padding:32px 24px 28px 24px; width:90%; max-width:360px; margin:20px auto; text-align:center; box-shadow:0 0 60px rgba(255,200,80,0.1);">
@@ -8974,80 +9032,150 @@ ${S_FORBIDDEN}${S_FORMAT}${S_STATUS_NOTE}${S_WORLD_MODERN}${S_UNSAFE}`,
         }
 
         // ============================================================
-        // 🌿 剧情分支
         // ============================================================
-        function getBranchKey() {
-            const prefix = CONFIG.KEY_PREFIX || 'perfectchar_unknown';
-            return prefix + '_branches';
+        // 🌿 分支系统 — 存储设计：
+        //   branches index : {KEY_PREFIX}_branches       → [{id, label, createdAt, roundCount}]
+        //   branch history : {KEY_PREFIX}_br_{id}_hist   → JSON
+        //   branch stack   : {KEY_PREFIX}_br_{id}_stack  → JSON
+        //   branch html    : {KEY_PREFIX}_br_{id}_html   → string
+        // ============================================================
+
+        function _brPrefix()  { return CONFIG.KEY_PREFIX || 'perfectchar_unknown'; }
+        function _brIdxKey()  { return _brPrefix() + '_branches'; }
+        function _brHistKey(id)  { return _brPrefix() + '_br_' + id + '_hist'; }
+        function _brStackKey(id) { return _brPrefix() + '_br_' + id + '_stack'; }
+        function _brHtmlKey(id)  { return _brPrefix() + '_br_' + id + '_html'; }
+
+        function _brLoadIndex() {
+            try { return JSON.parse(localStorage.getItem(_brIdxKey()) || '[]'); } catch(e) { return []; }
         }
-        function getAllBranches() {
-            try { return JSON.parse(localStorage.getItem(getBranchKey()) || '[]'); } catch(e) { return []; }
+        function _brSaveIndex(idx) {
+            localStorage.setItem(_brIdxKey(), JSON.stringify(idx));
         }
+
+        // 保存一条分支快照，返回新 id
+        function _brSnapshot(label) {
+            const id = 'br_' + Date.now();
+            // history: 用内存里的 chatHistory（最准确）
+            localStorage.setItem(_brHistKey(id),  JSON.stringify(chatHistory));
+            localStorage.setItem(_brStackKey(id), JSON.stringify(statusHistoryStack));
+            // html: 直接读 DOM
+            const html = document.getElementById('chatBox') ? document.getElementById('chatBox').innerHTML : '';
+            localStorage.setItem(_brHtmlKey(id), html);
+            // 写入索引
+            const idx = _brLoadIndex();
+            idx.push({ id, label, createdAt: Date.now(), roundCount: Math.floor(chatHistory.length / 2) });
+            _brSaveIndex(idx);
+            return id;
+        }
+
+        // 恢复一条分支快照到当前聊天
+        function _brRestore(id) {
+            const hist  = JSON.parse(localStorage.getItem(_brHistKey(id))  || '[]');
+            const stack = JSON.parse(localStorage.getItem(_brStackKey(id)) || '[]');
+            const html  = localStorage.getItem(_brHtmlKey(id)) || '';
+            // 同步写回主存档（供页面刷新恢复）
+            const p = _brPrefix();
+            localStorage.setItem(p + '_history',      JSON.stringify(hist));
+            localStorage.setItem(p + '_status_stack', JSON.stringify(stack));
+            if (html) localStorage.setItem(p + '_html', html);
+            else      localStorage.removeItem(p + '_html');
+            // 直接渲染，不走 startCharacterScript 的 localStorage 读取路径
+            chatHistory        = hist;
+            statusHistoryStack = stack;
+            document.getElementById('chatBox').innerHTML = html || '';
+            document.getElementById('chatBox').scrollTop = document.getElementById('chatBox').scrollHeight;
+        }
+
         function openBranchModal() {
             document.getElementById('branch-modal').style.display = 'flex';
         }
-        function createBranchAt(type) {
+
+        // 🌱 保存当前节点分支（不离开当前剧情）
+        function branchSaveCurrent() {
+            const nameEl = document.getElementById('branch-name-input');
+            const name = nameEl && nameEl.value.trim();
+            if (nameEl) nameEl.value = '';
+            const label = name || ('节点 · ' + new Date().toLocaleString('zh-CN', {month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}) + '（第' + Math.floor(chatHistory.length/2) + '轮）');
+            _brSnapshot(label);
             document.getElementById('branch-modal').style.display = 'none';
-            const prefix = CONFIG.KEY_PREFIX || 'perfectchar_unknown';
-            const currentHistory = JSON.parse(localStorage.getItem(prefix + '_history') || '[]');
-            const branches = getAllBranches();
-            const branchId = 'branch_' + Date.now();
-            const label = type === 'restart'
-                ? '从起点分支 · ' + new Date().toLocaleString('zh-CN', {month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})
-                : '当前节点分支 · ' + new Date().toLocaleString('zh-CN', {month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}) + '（第' + currentHistory.length + '条）';
-            branches.push({ id: branchId, label, history: type === 'restart' ? [] : currentHistory, createdAt: Date.now() });
-            localStorage.setItem(getBranchKey(), JSON.stringify(branches));
-            if (type === 'restart') {
-                localStorage.setItem(prefix + '_history', '[]');
-                if (CONFIG.CURRENT_CHAR) startCharacterScript(CONFIG.CURRENT_CHAR.id);
-            } else {
-                alert('✅ 分支已保存！你可以继续当前剧情，随时从分支列表切换回来。');
-            }
-        }
-        function viewBranches() {
-            document.getElementById('branch-modal').style.display = 'none';
-            const branches = getAllBranches();
-            const container = document.getElementById('branch-list-container');
-            if (branches.length === 0) {
-                container.innerHTML = '<div style="color:rgba(255,255,255,0.3); font-size:13px; padding:20px 0;">还没有保存任何分支</div>';
-            } else {
-                container.innerHTML = '';
-                [...branches].reverse().forEach(b => {
-                    const el = document.createElement('div');
-                    el.style.cssText = 'background:rgba(255,255,255,0.05); border:1px solid rgba(180,160,255,0.2); border-radius:12px; padding:12px 14px; text-align:left; display:flex; align-items:center; gap:10px;';
-                    el.innerHTML = `<div style="flex:1;">
-                        <div style="font-size:13px; color:#c9b8ff; margin-bottom:3px;">${b.label}</div>
-                        <div style="font-size:11px; color:rgba(255,255,255,0.3);">${b.history.length} 条记录</div>
-                    </div>
-                    <button onclick="loadBranch('${b.id}')" style="flex-shrink:0; padding:6px 12px; background:rgba(180,160,255,0.15); border:1px solid rgba(180,160,255,0.3); border-radius:8px; color:#c9b8ff; font-size:12px; cursor:pointer;">切换</button>
-                    <button onclick="deleteBranch('${b.id}')" style="flex-shrink:0; padding:6px 10px; background:rgba(255,100,100,0.1); border:1px solid rgba(255,100,100,0.2); border-radius:8px; color:rgba(255,120,120,0.7); font-size:12px; cursor:pointer;">删除</button>`;
-                    container.appendChild(el);
-                });
-            }
-            document.getElementById('branch-list-modal').style.display = 'flex';
-        }
-        function loadBranch(branchId) {
-            const branches = getAllBranches();
-            const branch = branches.find(b => b.id === branchId);
-            if (!branch) return;
-            const prefix = CONFIG.KEY_PREFIX || 'perfectchar_unknown';
-            // 保存当前为临时分支
-            const currentHistory = JSON.parse(localStorage.getItem(prefix + '_history') || '[]');
-            if (currentHistory.length > 0) {
-                const tempBranches = getAllBranches();
-                tempBranches.push({ id: 'branch_' + Date.now(), label: '自动保存 · 切换前', history: currentHistory, createdAt: Date.now() });
-                localStorage.setItem(getBranchKey(), JSON.stringify(tempBranches));
-            }
-            localStorage.setItem(prefix + '_history', JSON.stringify(branch.history));
-            document.getElementById('branch-list-modal').style.display = 'none';
-            if (CONFIG.CURRENT_CHAR) startCharacterScript(CONFIG.CURRENT_CHAR.id);
-        }
-        function deleteBranch(branchId) {
-            let branches = getAllBranches().filter(b => b.id !== branchId);
-            localStorage.setItem(getBranchKey(), JSON.stringify(branches));
-            viewBranches();
+            alert('✅ 分支「' + label + '」已保存！继续当前剧情，随时可从分支列表切换回来。');
         }
 
+        // 🔄 保存当前并从头开始
+        function branchSaveAndRestart() {
+            const nameEl = document.getElementById('branch-name-input');
+            const name = nameEl && nameEl.value.trim();
+            if (nameEl) nameEl.value = '';
+            const label = name || ('存档 · ' + new Date().toLocaleString('zh-CN', {month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}));
+            _brSnapshot(label);
+            document.getElementById('branch-modal').style.display = 'none';
+            // 清空主存档，重进角色
+            const p = _brPrefix();
+            localStorage.removeItem(p + '_history');
+            localStorage.removeItem(p + '_html');
+            localStorage.removeItem(p + '_status_stack');
+            if (CONFIG.CURRENT_CHAR) startCharacterScript(CONFIG.CURRENT_CHAR.id);
+        }
+
+        // 📂 打开分支列表
+        function branchList() {
+            document.getElementById('branch-modal').style.display = 'none';
+            _brRenderList();
+            document.getElementById('branch-list-modal').style.display = 'flex';
+        }
+
+        function _brRenderList() {
+            const idx = _brLoadIndex();
+            const container = document.getElementById('branch-list-container');
+            if (idx.length === 0) {
+                container.innerHTML = '<div style="text-align:center;color:rgba(255,255,255,0.3);font-size:13px;padding:24px 0;">还没有保存任何分支</div>';
+                return;
+            }
+            container.innerHTML = '';
+            [...idx].reverse().forEach(b => {
+                const el = document.createElement('div');
+                el.className = 'branch-item';
+                el.innerHTML = `
+                    <div style="flex:1;min-width:0;">
+                        <div id="blabel-${b.id}" style="font-size:13px;color:#e0d8ff;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${b.label}</div>
+                        <div style="font-size:10px;color:rgba(255,255,255,0.25);margin-top:2px;">${b.roundCount || 0} 轮对话</div>
+                    </div>
+                    <button onclick="branchRename('${b.id}')" title="重命名"
+                        style="flex-shrink:0;width:28px;height:28px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:rgba(255,255,255,0.4);font-size:12px;cursor:pointer;">✏️</button>
+                    <button onclick="branchSwitch('${b.id}')"
+                        style="flex-shrink:0;padding:5px 12px;background:rgba(180,160,255,0.12);border:1px solid rgba(180,160,255,0.28);border-radius:8px;color:#c9b8ff;font-size:12px;cursor:pointer;font-weight:500;">切换</button>
+                    <button onclick="branchDelete('${b.id}')"
+                        style="flex-shrink:0;width:28px;height:28px;background:rgba(255,80,80,0.08);border:1px solid rgba(255,80,80,0.18);border-radius:8px;color:rgba(255,120,120,0.6);font-size:12px;cursor:pointer;">🗑</button>`;
+                container.appendChild(el);
+            });
+        }
+
+        function branchRename(id) {
+            const idx = _brLoadIndex();
+            const entry = idx.find(b => b.id === id);
+            if (!entry) return;
+            const newName = prompt('重命名分支：', entry.label);
+            if (newName === null) return;
+            entry.label = newName.trim() || entry.label;
+            _brSaveIndex(idx);
+            const el = document.getElementById('blabel-' + id);
+            if (el) el.textContent = entry.label;
+        }
+
+        function branchSwitch(id) {
+            document.getElementById('branch-list-modal').style.display = 'none';
+            _brRestore(id);
+        }
+
+        function branchDelete(id) {
+            const idx = _brLoadIndex().filter(b => b.id !== id);
+            _brSaveIndex(idx);
+            localStorage.removeItem(_brHistKey(id));
+            localStorage.removeItem(_brStackKey(id));
+            localStorage.removeItem(_brHtmlKey(id));
+            _brRenderList();
+        }
 
         function renderLobby() {
           const savedTokens = localStorage.getItem('user_tokens');
@@ -9263,6 +9391,7 @@ ${extraInstructions.length > 0 ? extraInstructions.join('\n') : ''}`;
 
             document.getElementById('chat-view').style.display = 'flex';
 
+            // 优先使用直接传入的数据（来自分支切换），否则从 localStorage 读
             const localHtml = localStorage.getItem(`${CONFIG.KEY_PREFIX}_html`);
             if (localHtml) {
                 chatHistory = JSON.parse(localStorage.getItem(`${CONFIG.KEY_PREFIX}_history`)) || [];
