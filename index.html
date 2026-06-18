@@ -1763,25 +1763,34 @@
         }
 
         // 自动刷新过期的 access_token
+        let _refreshInFlight = null; // 如果已经有一次刷新在进行中，后面的调用都跟着等这一次，不各自抢着刷新
         async function refreshAccessToken() {
-            const refreshToken = localStorage.getItem('sh_refresh_token');
-            if (!refreshToken) return false;
+            if (_refreshInFlight) return _refreshInFlight;
+            _refreshInFlight = (async () => {
+                const refreshToken = localStorage.getItem('sh_refresh_token');
+                if (!refreshToken) return false;
+                try {
+                    const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
+                        body: JSON.stringify({ refresh_token: refreshToken })
+                    });
+                    if (!res.ok) return false;
+                    const data = await res.json();
+                    if (data.access_token) {
+                        localStorage.setItem('sh_access_token', data.access_token);
+                        if (data.refresh_token) localStorage.setItem('sh_refresh_token', data.refresh_token);
+                        console.log('✅ Token 自动刷新成功');
+                        return true;
+                    }
+                    return false;
+                } catch(e) { return false; }
+            })();
             try {
-                const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
-                    body: JSON.stringify({ refresh_token: refreshToken })
-                });
-                if (!res.ok) return false;
-                const data = await res.json();
-                if (data.access_token) {
-                    localStorage.setItem('sh_access_token', data.access_token);
-                    if (data.refresh_token) localStorage.setItem('sh_refresh_token', data.refresh_token);
-                    console.log('✅ Token 自动刷新成功');
-                    return true;
-                }
-                return false;
-            } catch(e) { return false; }
+                return await _refreshInFlight;
+            } finally {
+                _refreshInFlight = null;
+            }
         }
 
         // 带自动刷新的 fetch 封装
@@ -9130,6 +9139,7 @@ async function syncHeatToDB(weekKey, charId) {
         }
         function saveFavorites(favs) {
             localStorage.setItem('user_favorites', JSON.stringify(favs));
+            upsertUserProfile({ favorites: favs });
         }
         function toggleFavorite(charId, btn) {
             let favs = getFavorites();
@@ -11539,11 +11549,16 @@ function refreshWalletUI() {
             const email = localStorage.getItem('sh_user_email');
             if (!email) return;
             const payload = { email, ...fields, updated_at: new Date().toISOString() };
-            await fetch(`${SUPABASE_URL}/rest/v1/user_profiles`, {
-                method: 'POST',
-                headers: { ...getAuthHeader(), 'Prefer': 'resolution=merge-duplicates' },
-                body: JSON.stringify(payload)
-            });
+            try {
+                const res = await authFetch(`${SUPABASE_URL}/rest/v1/user_profiles`, {
+                    method: 'POST',
+                    headers: { 'Prefer': 'resolution=merge-duplicates' },
+                    body: JSON.stringify(payload)
+                });
+                if (!res.ok) console.error('❌ 用户资料同步被数据库拒绝，状态码：', res.status, await res.text().catch(()=>''));
+            } catch(e) {
+                console.warn('用户资料同步失败（网络问题）', e);
+            }
         }
 
         // 从数据库加载用户资料
@@ -11556,9 +11571,8 @@ function refreshWalletUI() {
             document.getElementById('user-email-display').textContent = email;
 
             try {
-                const res = await fetch(
-                    `${SUPABASE_URL}/rest/v1/user_profiles?email=eq.${encodeURIComponent(email)}&select=display_name,avatar_url,bg_url`,
-                    { headers: getAuthHeader() }
+                const res = await authFetch(
+                    `${SUPABASE_URL}/rest/v1/user_profiles?email=eq.${encodeURIComponent(email)}&select=display_name,avatar_url,bg_url,favorites,recent_chats`
                 );
                 const rows = await res.json();
                 if (rows && rows.length > 0) {
@@ -11575,6 +11589,14 @@ function refreshWalletUI() {
                         document.getElementById('user-bg-layer').style.backgroundImage = `url('${p.bg_url}')`;
                         localStorage.setItem('user_bg_url', p.bg_url);
                     }
+                    if (!localStorage.getItem('user_favorites') && p.favorites) {
+                        localStorage.setItem('user_favorites', JSON.stringify(p.favorites));
+                    }
+                    if (!localStorage.getItem('recent_chats') && p.recent_chats) {
+                        localStorage.setItem('recent_chats', JSON.stringify(p.recent_chats));
+                    }
+                    renderFavorites();
+                    renderRecentChats();
                 } else {
                     // 第一次进入，建立资料行，默认用大厅背景作头像和背景
                     const defaultImg = 'https://i.ibb.co/5XJX8vND/Camera-XHS-17812925439631040g00831k2kecci2g105posc29nc8j5jsvd8go.jpg';
@@ -11616,13 +11638,11 @@ function refreshWalletUI() {
         // 记录最近聊天（进入剧本时调用）
         function recordRecentChat(charId) {
             let recent = JSON.parse(localStorage.getItem('recent_chats') || '[]');
-            // 移除已有的同一角色记录，保持唯一
             recent = recent.filter(r => r.id !== charId);
-            // 插到最前面，带时间戳
             recent.unshift({ id: charId, ts: Date.now() });
-            // 最多保留 10 条
             recent = recent.slice(0, 10);
             localStorage.setItem('recent_chats', JSON.stringify(recent));
+            upsertUserProfile({ recent_chats: recent });
         }
 
         // 渲染最近聊天列表
