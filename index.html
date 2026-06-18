@@ -1538,7 +1538,7 @@
                         保留 <strong style="color:#fff;">200 轮</strong>记忆 · 永续传承<br>
                         超限时保留首10轮 + 最近 30 轮<br>
                         <span style="color:#fd79a8;">+ AI 自动生成重大事件记事本</span><br>
-                        <span style="color:#fd79a8;">✍️ 回复字数 180~250 字（强制）</span>
+                        <span style="color:#fd79a8;">✍️ 回复字数 180~300 字（强制）</span>
                     </div>
                 </div>
 
@@ -9593,7 +9593,7 @@ ${S_FORBIDDEN}${S_FORMAT}${S_STATUS_NOTE}${S_WORLD_MODERN}${S_UNSAFE}`,
 
 【文风与格式绝对指令】
 你的回复必须采用沉浸式中文小说文风，细腻、有张力、带拉扯感，禁止机械式问答。每次回复必须以【第三人称】书写，用「他」「她」「它」等称呼角色，不得用「我」自称。每次回复必须包含动作/心理描写和对白，两者交织呈现。
-回复正文字数限制（叙事+对白，不含JSON）：陪伴模式100字以内，深思模式200字以内，永生模式300字以内。
+回复正文字数限制（叙事+对白，不含JSON）：陪伴模式70字以内，深思模式150字以内，永生模式300字以内。
 
 【绝对禁令——夺权禁止】
 你只能描写以下内容：
@@ -10380,7 +10380,7 @@ ${extraInstructions.length > 0 ? extraInstructions.join('\n') : ''}`;
                 const WORD_COUNT_RULES = {
                     companion: `\n【回复字数强制规定】每次回复的正文（不含状态栏JSON）必须在50~70个汉字之间，不得少于50字，不得超过70字，这是硬性要求，必须严格执行。`,
                     deep:      `\n【回复字数强制规定】每次回复的正文（不含状态栏JSON）必须在100~120个汉字之间，不得少于100字，不得超过120字，这是硬性要求，必须严格执行。`,
-                    eternal:   `\n【回复字数强制规定】每次回复的正文（不含状态栏JSON）必须在180~250个汉字之间，不得少于180字，不得超过250字，这是硬性要求，必须严格执行。`
+                    eternal:   `\n【回复字数强制规定】每次回复的正文（不含状态栏JSON）必须在180~250个汉字之间，不得少于180字，不得超过300字，这是硬性要求，必须严格执行。`
                 };
                 const wordCountRule = WORD_COUNT_RULES[currentChatMode] || WORD_COUNT_RULES.companion;
                 const systemPrompt = CONFIG.BASE_BOT_SETTING + (personaText ? `\n【当前交互玩家的人设背景】：${personaText}` : '') + modeNote + wordCountRule;
