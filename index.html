@@ -10328,10 +10328,19 @@ ${extraInstructions.length > 0 ? extraInstructions.join('\n') : ''}`;
             // 按当前模式计算消耗
             const modeCfg = CHAT_MODES[currentChatMode];
             const cost = modeCfg.cost;
-            const currentTokens = parseInt(localStorage.getItem('user_tokens') || '0');
+            let currentTokens = parseInt(localStorage.getItem('user_tokens') || '0');
             if (currentTokens < cost) {
-                alert(`⚡ 星海能量不足！${modeCfg.icon}${modeCfg.name}每句消耗 ${cost} 颗星星，当前余额 ${currentTokens} 颗，请前往钱包签到或充值。`);
-                return;
+                // 本地缓存的余额不够时，先去数据库确认一次最新余额，
+                // 避免登录/注册后本地缓存还没来得及刷新就被误判为"余额不足"
+                const _email = localStorage.getItem('sh_user_email');
+                if (_email) {
+                    try { await syncTokensFromDB(); } catch(e) {}
+                    currentTokens = parseInt(localStorage.getItem('user_tokens') || '0');
+                }
+                if (currentTokens < cost) {
+                    alert(`⚡ 星海能量不足！${modeCfg.icon}${modeCfg.name}每句消耗 ${cost} 颗星星，当前余额 ${currentTokens} 颗，请前往钱包签到或充值。`);
+                    return;
+                }
             }
 
             inputEl.value = '';
