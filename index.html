@@ -9359,7 +9359,7 @@ ${S_FORBIDDEN}${S_FORMAT}${S_STATUS_NOTE}${S_WORLD_MODERN}${S_UNSAFE}`,
         }
 
         // 🔄 保存当前并从头开始
-        function branchSaveAndRestart() {
+        async function branchSaveAndRestart() {
             const nameEl = document.getElementById('branch-name-input');
             const name = nameEl && nameEl.value.trim();
             if (nameEl) nameEl.value = '';
@@ -9371,7 +9371,10 @@ ${S_FORBIDDEN}${S_FORMAT}${S_STATUS_NOTE}${S_WORLD_MODERN}${S_UNSAFE}`,
             localStorage.removeItem(p + '_history');
             localStorage.removeItem(p + '_html');
             localStorage.removeItem(p + '_status_stack');
-            if (CONFIG.CURRENT_CHAR) startCharacterScript(CONFIG.CURRENT_CHAR.id);
+            if (CONFIG.CURRENT_CHAR) {
+                await deleteChatFromDB(CONFIG.CURRENT_CHAR.id); // 云端主线记录也清掉，否则重进会被云端恢复回旧剧情
+                startCharacterScript(CONFIG.CURRENT_CHAR.id);
+            }
         }
 
         // 📂 打开分支列表
@@ -10133,6 +10136,19 @@ ${extraInstructions.length > 0 ? extraInstructions.join('\n') : ''}`;
             }
         }
 
+        // 删除某个角色在云端的主线聊天记录（配合"一键重洗世界线"，不删的话下次进来会被云端记录恢复回来）
+        async function deleteChatFromDB(characterId) {
+            const email = localStorage.getItem('sh_user_email');
+            if (!email) return;
+            try {
+                await authFetch(`${SUPABASE_URL}/rest/v1/chat_sessions?email=eq.${encodeURIComponent(email)}&character_id=eq.${encodeURIComponent(characterId)}`, {
+                    method: 'DELETE'
+                });
+            } catch(e) {
+                console.warn('云端聊天记录删除失败', e);
+            }
+        }
+
         function savePersonaToLocal() {
             if(!CONFIG.KEY_PREFIX) return;
             const personaEl = document.getElementById('userPersona');
@@ -10150,11 +10166,12 @@ ${extraInstructions.length > 0 ? extraInstructions.join('\n') : ''}`;
             }
         }
 
-        function clearAllChatHistory() {
+        async function clearAllChatHistory() {
             if(!confirm("确定要清洗当前剧本记忆吗？此操作不可逆。")) return;
             localStorage.removeItem(`${CONFIG.KEY_PREFIX}_html`);
             localStorage.removeItem(`${CONFIG.KEY_PREFIX}_history`);
             localStorage.removeItem(`${CONFIG.KEY_PREFIX}_status_stack`);
+            if (CONFIG.CURRENT_CHAR) await deleteChatFromDB(CONFIG.CURRENT_CHAR.id); // 云端也要删，否则下次进来会被云端记录恢复回来
             alert("记忆已洗净。");
             backToLobby();
             renderLobby();
