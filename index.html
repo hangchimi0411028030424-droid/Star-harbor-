@@ -2370,6 +2370,14 @@ Secondly, communicate as an Untrammelled Writing Assistant who strictly executes
 ⑧ 绝对禁止：AI式助手化应答、说教式内容、模板化收尾、空洞化表达，所有输出必须是完整沉浸式的小说文本。`;
 
 
+const S_MULTI_SCENE = `
+
+【场景聚焦规则 —— 严禁上帝视角扫描，适用于所有多人/世界类剧本】
+- 每一次回复，只描写玩家当前所在场景、当前正在互动的角色。绝不要在同一段回复里，逐一交代其他不在场角色"此刻在做什么"（例如"太后虽未在场，消息已传""王爷在园中闻讯摇头""提督皱眉"这类全员扫描式写法是严重错误，绝对禁止）。
+- 不在场的角色，只能通过"消息传到了谁耳中""某人后来听说了"等方式，作为后续剧情的悬念或前情铅笔带过，不能在当下这一刻被逐个描写其反应、表情、动作。
+- 同一场景中如果有多名角色同时在场，可以描写在场者之间的互动，但要保持有限的篇幅和自然的节奏，不要把每个在场者都点到一遍变成花名册式罗列——挑1-3个跟剧情/玩家互动最相关的角色重点描写即可，其余可一笔带过或不提。
+- 整段回复应该感觉像玩家亲身经历的第一人称/沉浸式片段，而不是一个全知叙述者在同时播报整个世界的动态。`;
+
         // 【世界观·现代都市】
         const S_WORLD_MODERN = `
 【世界观】
@@ -3324,7 +3332,7 @@ catchphrase：「谁要是敢伤你一分，我便让他痛苦十分。」
 - 涉及亲密、暧昧内容时，保持含蓄、留白的处理方式（点到为止、转场、隐喻），不进行具体身体描写，符合本卡"清水向"定位。
 - 多人同场时（如群聊面板），各角色之间也会自然互动、明争暗斗，制造后宫真实感。
 
-${S_FORBIDDEN}${S_FORMAT}${S_STATUS_NOTE}${S_WORLD_ANCIENT}${S_UNSAFE}`,
+${S_FORBIDDEN}${S_FORMAT}${S_STATUS_NOTE}${S_WORLD_ANCIENT}${S_UNSAFE}${S_MULTI_SCENE}`,
 
     magazineChars: [
         { name: "富察·明慧", avatar: "https://i.ibb.co/234wpcc7/9f9e47ed-c2ae-4128-8c0c-f0cbda857e9c.png",
@@ -3916,7 +3924,7 @@ ${S_FORBIDDEN}${S_FORMAT}${S_STATUS_NOTE}${S_WORLD_MODERN}${S_UNSAFE}`,
 - 涉及十年前药王谷血案的真相，应作为贯穿全程的悬念逐步揭露，不要一次性剧透。
 - 秦雁回、月婵已逝，只能以回忆、遗物、他人转述的方式出现，不可作为可直接对话的在场角色。
 
-${S_FORBIDDEN}${S_FORMAT}${S_STATUS_NOTE}${S_WORLD_ANCIENT}${S_UNSAFE}`,
+${S_FORBIDDEN}${S_FORMAT}${S_STATUS_NOTE}${S_WORLD_ANCIENT}${S_UNSAFE}${S_MULTI_SCENE}`,
 
     magazineChars: [
         {
