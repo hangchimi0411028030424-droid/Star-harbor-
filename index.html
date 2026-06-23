@@ -3402,12 +3402,12 @@ ${S_FORBIDDEN}${S_FORMAT}${S_STATUS_NOTE}${S_WORLD_ANCIENT}${S_UNSAFE}`,
           appearance: "二十六岁，身姿挺拔，剑眉星目，常穿御前侍卫皂色劲装。",
           background: "富察家的希望之星，耿直常与姐姐意见相左。",
           personality: "忠勇正直，背负家族使命内心矛盾。", catchphrase: "这不合规矩……也罢。" },
-        { name: "爱新觉罗·永璇（守礼）", avatar: "https://i.ibb.co/QvvD3Xdd/fd4089a9-ca0c-450e-93d7-cb3c3e3539e0.png",
+        { name: "爱新觉罗·永璇", avatar: "https://i.ibb.co/QvvD3Xdd/fd4089a9-ca0c-450e-93d7-cb3c3e3539e0.png",
           intro: "温润如竹的年长皇子，才学出众的后起之秀。", quote: "学生不敢。",
           appearance: "二十二岁，身姿清瘦修长，面容清俊儒雅，常穿竹青藏蓝常服。",
           background: "慎嫔之子，性格与母亲截然相反，自幼喜爱读书。",
           personality: "温文尔雅，谦逊有礼，内心敏感。", catchphrase: "学生不敢。" },
-        { name: "爱新觉罗·永璇（暗恋）", avatar: "https://i.ibb.co/XkYmZbD8/e9684d68-1410-4cf1-85b7-39435c0f8aaa.png",
+        { name: "爱新觉罗·永机", avatar: "https://i.ibb.co/XkYmZbD8/e9684d68-1410-4cf1-85b7-39435c0f8aaa.png",
           intro: "表面守礼，内心燃烧悖德火焰的皇子。", quote: "这江山，与你，我都要。",
           appearance: "二十二岁，面容与守礼版一致，眼神中多了侵略性与占有欲。",
           background: "压抑宫廷中长大，权力渴望与痴恋交织。",
@@ -12471,11 +12471,11 @@ ${extraInstructions.length > 0 ? extraInstructions.join('\n') : ''}`;
                             </div>
                         </div>
                         <div class="mag-char-scroll">
+                            ${c.intro ? `<div class="mag-char-section"><div class="mag-char-section-label">简介</div><div class="mag-char-section-text">${c.intro}</div></div>` : ''}
                             ${c.appearance ? `<div class="mag-char-section"><div class="mag-char-section-label">外形</div><div class="mag-char-section-text">${c.appearance}</div></div>` : ''}
                             ${c.background ? `<div class="mag-char-section"><div class="mag-char-section-label">背景故事</div><div class="mag-char-section-text">${c.background}</div></div>` : ''}
                             ${c.personality ? `<div class="mag-char-section"><div class="mag-char-section-label">性格</div><div class="mag-char-section-text">${c.personality}</div></div>` : ''}
                             ${c.catchphrase ? `<div class="mag-char-section"><div class="mag-char-section-label">口头禅</div><div class="mag-char-section-text">"${c.catchphrase}"</div></div>` : ''}
-                            ${(!c.appearance && !c.background && !c.personality && !c.catchphrase) ? `<div class="mag-char-section"><div class="mag-char-section-text">${c.intro || ''}</div></div>` : ''}
                         </div>
                     </div>`);
                 const backCoverHtml = `<div class="mag-back-cover" style="flex:1; display:flex;"><div class="mag-back-cover-text">全 本 完</div></div>`;
