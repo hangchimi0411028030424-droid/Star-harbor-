@@ -1540,14 +1540,14 @@
 
 
     <!-- 🔥 高级卡牌锁定弹窗 -->
-    <div id="premium-lock-modal" onclick="if(event.target===this)this.style.display='none'" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); z-index:9999999; align-items:center; justify-content:center;">
-        <div onclick="event.stopPropagation()" style="position:relative; background:linear-gradient(145deg, rgba(30,20,5,0.95), rgba(20,15,0,0.98)); border:1px solid rgba(255,200,80,0.4); border-radius:28px; padding:36px 28px; width:88%; max-width:340px; text-align:center; box-shadow:0 0 40px rgba(255,180,0,0.15), inset 0 1px 0 rgba(255,220,100,0.2); animation:fadeInModal 0.4s cubic-bezier(0.16,1,0.3,1);">
+    <div id="premium-lock-modal" onclick="if(event.target===this)this.style.display='none'" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.55); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); z-index:9999999; align-items:center; justify-content:center;">
+        <div onclick="event.stopPropagation()" style="position:relative; background:linear-gradient(145deg, rgba(80,55,10,0.28), rgba(50,35,0,0.32)); backdrop-filter:blur(34px) saturate(170%); -webkit-backdrop-filter:blur(34px) saturate(170%); border:1px solid rgba(255,200,80,0.4); border-radius:28px; padding:36px 28px; width:88%; max-width:340px; text-align:center; box-shadow:0 0 40px rgba(255,180,0,0.15), inset 0 1px 0 rgba(255,220,100,0.2); animation:fadeInModal 0.4s cubic-bezier(0.16,1,0.3,1);">
 
             <!-- 金色顶部装饰线 -->
             <div style="position:absolute; top:0; left:50%; transform:translateX(-50%); width:60%; height:1px; background:linear-gradient(90deg,transparent,rgba(255,200,80,0.8),transparent);"></div>
 
             <!-- 标志 -->
-            <div style="font-size:44px; margin-bottom:12px; filter:drop-shadow(0 0 12px rgba(255,180,0,0.6));">✨</div>
+            <img src="https://i.ibb.co/PvYmrq7H/party.png" style="width:56px; height:56px; margin-bottom:12px; filter:drop-shadow(0 0 12px rgba(255,180,0,0.6));">
 
             <h3 style="font-size:19px; font-weight:400; background:linear-gradient(135deg,#fff5cc,#ffd700,#d4af37); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-family:'Georgia','Kaiti',serif; letter-spacing:3px; margin-bottom:10px;">高级剧本</h3>
 
@@ -1555,7 +1555,7 @@
 
             <p style="font-size:13px; color:rgba(255,230,160,0.85); line-height:1.9; margin-bottom:22px;">
                 此剧本为<strong style="color:#ffd700;">高级卡牌</strong><br>
-                已固定使用 <strong style="color:#ffd700;">✨ 永生模式</strong><br>
+                已固定使用 <strong style="color:#ffd700;"><img src="https://i.ibb.co/PvYmrq7H/party.png" style="width:16px;height:16px;vertical-align:-3px;object-fit:contain;"> 永生模式</strong><br>
                 <span style="font-size:11px; color:rgba(255,200,80,0.6);">每句消耗 10 颗星星 · 200轮极限记忆</span>
             </p>
 
@@ -1720,9 +1720,9 @@
             <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:14px 16px; margin-bottom:12px; text-align:left;">
                 <div style="font-size:13px; color:#fff; font-weight:bold; margin-bottom:8px;">🎭 三种聊天模式</div>
                 <div style="font-size:12px; color:rgba(255,255,255,0.65); line-height:2;">
-                    🌸 <strong style="color:#ffeaa7;">陪伴</strong> · 轻盈日常，20轮记忆，90~120字<br>
-                    💭 <strong style="color:#74b9ff;">深思</strong> · 深度沉浸，80轮记忆，250~300字<br>
-                    ✨ <strong style="color:#fd79a8;">永生</strong> · 永续传承，200轮记忆，450~500字
+                    <img src="https://i.ibb.co/LzXYTq2W/love.png" style="width:16px;height:16px;vertical-align:-3px;object-fit:contain;"> <strong style="color:#ffeaa7;">陪伴</strong> · 轻盈日常，20轮记忆，90~120字<br>
+                    <img src="https://i.ibb.co/cKVXC51P/love-1.png" style="width:16px;height:16px;vertical-align:-3px;object-fit:contain;"> <strong style="color:#74b9ff;">深思</strong> · 深度沉浸，80轮记忆，250~300字<br>
+                    <img src="https://i.ibb.co/PvYmrq7H/party.png" style="width:16px;height:16px;vertical-align:-3px;object-fit:contain;"> <strong style="color:#fd79a8;">永生</strong> · 永续传承，200轮记忆，450~500字
                 </div>
             </div>
 
@@ -1742,14 +1742,14 @@
     </div>
 
     <!-- 💙 特惠卡牌锁定弹窗 -->
-    <div id="special-lock-modal" onclick="if(event.target===this)this.style.display='none'" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); z-index:9999999; align-items:center; justify-content:center;">
-        <div onclick="event.stopPropagation()" style="position:relative; background:linear-gradient(145deg, rgba(5,15,35,0.97), rgba(0,10,30,0.99)); border:1px solid rgba(80,160,255,0.4); border-radius:28px; padding:36px 28px; width:88%; max-width:340px; text-align:center; box-shadow:0 0 40px rgba(60,140,255,0.15), inset 0 1px 0 rgba(100,180,255,0.2); animation:fadeInModal 0.4s cubic-bezier(0.16,1,0.3,1);">
+    <div id="special-lock-modal" onclick="if(event.target===this)this.style.display='none'" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.55); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); z-index:9999999; align-items:center; justify-content:center;">
+        <div onclick="event.stopPropagation()" style="position:relative; background:linear-gradient(145deg, rgba(40,55,95,0.28), rgba(20,35,75,0.32)); backdrop-filter:blur(34px) saturate(170%); -webkit-backdrop-filter:blur(34px) saturate(170%); border:1px solid rgba(80,160,255,0.4); border-radius:28px; padding:36px 28px; width:88%; max-width:340px; text-align:center; box-shadow:0 0 40px rgba(60,140,255,0.15), inset 0 1px 0 rgba(100,180,255,0.2); animation:fadeInModal 0.4s cubic-bezier(0.16,1,0.3,1);">
 
             <!-- 蓝色顶部装饰线 -->
             <div style="position:absolute; top:0; left:50%; transform:translateX(-50%); width:60%; height:1px; background:linear-gradient(90deg,transparent,rgba(80,160,255,0.8),transparent);"></div>
 
             <!-- 标志 -->
-            <div style="font-size:44px; margin-bottom:12px; filter:drop-shadow(0 0 12px rgba(60,140,255,0.6));">💙</div>
+            <img src="https://i.ibb.co/cKVXC51P/love-1.png" style="width:56px; height:56px; margin-bottom:12px; filter:drop-shadow(0 0 12px rgba(60,140,255,0.6));">
 
             <h3 style="font-size:19px; font-weight:400; background:linear-gradient(135deg,#cce8ff,#74b9ff,#0984e3); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-family:'Georgia','Kaiti',serif; letter-spacing:3px; margin-bottom:10px;">特惠剧本</h3>
 
@@ -1757,16 +1757,16 @@
 
             <p style="font-size:13px; color:rgba(160,210,255,0.85); line-height:1.9; margin-bottom:22px;">
                 此剧本为<strong style="color:#74b9ff;">特惠卡牌</strong><br>
-                已固定使用 <strong style="color:#74b9ff;">💭 深思模式</strong><br>
+                已固定使用 <strong style="color:#74b9ff;"><img src="https://i.ibb.co/cKVXC51P/love-1.png" style="width:16px;height:16px;vertical-align:-3px;object-fit:contain;"> 深思模式</strong><br>
                 <span style="font-size:11px; color:rgba(100,180,255,0.6);">每句消耗 5 颗星星 · 80轮深度记忆</span>
             </p>
 
             <button onclick="document.getElementById('special-lock-modal').style.display='none'" style="width:100%; padding:13px; background:linear-gradient(135deg,#0652c8,#74b9ff,#0652c8); border:none; border-radius:14px; color:#fff; font-size:14px; font-weight:bold; cursor:pointer; letter-spacing:2px; box-shadow:0 4px 20px rgba(60,140,255,0.3);">
-                💙 知道了
+                知道了
             </button>
 
             <button onclick="upgradeSpecialToEternal()" style="width:100%; margin-top:10px; padding:13px; background:linear-gradient(135deg,#6d1f5e,#fd79a8,#6d1f5e); border:none; border-radius:14px; color:#fff; font-size:14px; font-weight:bold; cursor:pointer; letter-spacing:2px; box-shadow:0 4px 20px rgba(253,121,168,0.3);">
-                ✨ 升级到永生模式
+                升级到永生模式
             </button>
             <div style="font-size:11px; color:rgba(255,255,255,0.3); margin-top:8px; line-height:1.6;">永生模式 · 每句 10 颗星星 · 200 轮记忆</div>
 
@@ -1789,7 +1789,7 @@
                 <div id="mode-card-companion" onclick="selectChatMode('companion')" style="background:rgba(255,255,255,0.06); border:1.5px solid rgba(255,234,167,0.6); border-radius:16px; padding:14px 16px; cursor:pointer; text-align:left; transition:all 0.2s;" onmouseover="this.style.background='rgba(255,234,167,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.06)'">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                         <div style="display:flex; align-items:center; gap:8px;">
-                            <span style="font-size:18px;">🌸</span>
+                            <img src="https://i.ibb.co/LzXYTq2W/love.png" style="width:22px; height:22px; object-fit:contain;">
                             <span style="font-size:14px; font-weight:bold; color:#ffeaa7;">陪伴模式</span>
                             <span id="badge-companion" style="font-size:10px; background:#ffeaa7; color:#332200; border-radius:6px; padding:1px 7px; font-weight:bold;">当前</span>
                         </div>
@@ -1806,7 +1806,7 @@
                 <div id="mode-card-deep" onclick="selectChatMode('deep')" style="background:rgba(255,255,255,0.04); border:1.5px solid rgba(255,255,255,0.1); border-radius:16px; padding:14px 16px; cursor:pointer; text-align:left; transition:all 0.2s;" onmouseover="this.style.background='rgba(100,149,237,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.04)'">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                         <div style="display:flex; align-items:center; gap:8px;">
-                            <span style="font-size:18px;">🔮</span>
+                            <img src="https://i.ibb.co/cKVXC51P/love-1.png" style="width:22px; height:22px; object-fit:contain;">
                             <span style="font-size:14px; font-weight:bold; color:#a29bfe;">深思模式</span>
                             <span id="badge-deep" style="display:none; font-size:10px; background:#a29bfe; color:#fff; border-radius:6px; padding:1px 7px; font-weight:bold;">当前</span>
                         </div>
@@ -1823,7 +1823,7 @@
                 <div id="mode-card-eternal" onclick="selectChatMode('eternal')" style="background:rgba(255,255,255,0.04); border:1.5px solid rgba(255,255,255,0.1); border-radius:16px; padding:14px 16px; cursor:pointer; text-align:left; transition:all 0.2s;" onmouseover="this.style.background='rgba(253,121,168,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.04)'">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                         <div style="display:flex; align-items:center; gap:8px;">
-                            <span style="font-size:18px;">✨</span>
+                            <img src="https://i.ibb.co/PvYmrq7H/party.png" style="width:22px; height:22px; object-fit:contain;">
                             <span style="font-size:14px; font-weight:bold; color:#fd79a8;">永生模式</span>
                             <span id="badge-eternal" style="display:none; font-size:10px; background:#fd79a8; color:#fff; border-radius:6px; padding:1px 7px; font-weight:bold;">当前</span>
                         </div>
@@ -1840,6 +1840,20 @@
             </div>
 
             <div style="font-size:11px; color:rgba(255,255,255,0.3); line-height:1.6;">点击任意空白处关闭</div>
+        </div>
+    </div>
+
+    <!-- 🤖 AI引擎选择弹窗 -->
+    <div id="agent-modal" onclick="this.style.display='none'" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); backdrop-filter:blur(8px); z-index:9999; align-items:center; justify-content:center;">
+        <div onclick="event.stopPropagation()" style="background:rgba(168,140,235,0.22); backdrop-filter:blur(40px) saturate(160%); -webkit-backdrop-filter:blur(40px) saturate(160%); border:1px solid rgba(216,196,255,0.35); box-shadow:0 8px 40px rgba(120,90,220,0.25); border-radius:28px; padding:28px 22px; width:90%; max-width:360px; text-align:center; max-height:85vh; overflow-y:auto; animation:fadeInModal 0.35s cubic-bezier(0.16,1,0.3,1);">
+
+            <img src="https://i.ibb.co/SDjWG9pF/wifi-connection.png" style="width:44px; height:44px; margin-bottom:10px;">
+            <h3 style="color:#e0d4ff; font-size:18px; letter-spacing:3px; margin-bottom:6px;">选择AI引擎</h3>
+            <p style="font-size:11px; color:rgba(255,255,255,0.55); margin-bottom:20px; line-height:1.6;">不同引擎文笔风格不同，价格为模式星星消耗的倍率<br>⚠️ 检测到成人内容时将自动切换为 Grok，不受此选择影响</p>
+
+            <div id="agent-card-list" style="display:flex; flex-direction:column; gap:10px; margin-bottom:20px;"></div>
+
+            <div style="font-size:11px; color:rgba(255,255,255,0.35); line-height:1.6;">点击任意空白处关闭</div>
         </div>
     </div>
 
@@ -1971,6 +1985,8 @@
 
         <!-- ⚡ 快捷指令 + 分支按钮行 -->
         <div id="quick-action-bar" style="display:flex; align-items:center; gap:6px; padding:6px 12px 0 12px;">
+            <!-- AI引擎选择按钮 -->
+            <button id="agent-pick-btn" onclick="openAgentModal()" style="flex-shrink:0; width:40px; height:40px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:12px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s; padding:6px;" title="选择AI引擎"><img src="https://i.ibb.co/SDjWG9pF/wifi-connection.png" style="width:100%; height:100%; object-fit:contain;"></button>
             <!-- 分支按钮 -->
             <button onclick="openBranchModal()" style="flex-shrink:0; height:30px; padding:0 10px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.15); border-radius:8px; color:rgba(255,255,255,0.6); font-size:11px; cursor:pointer; white-space:nowrap; transition:all 0.2s;" title="剧情分支">🌿 分支</button>
             <!-- 快捷指令 -->
@@ -1980,14 +1996,13 @@
                 <button onclick="quickAction('以第三人称视角详细描述当前场景的氛围、环境和角色状态')" style="flex-shrink:0; height:30px; padding:0 10px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:8px; color:rgba(255,255,255,0.6); font-size:11px; cursor:pointer; white-space:nowrap;">🎬 描写</button>
                 <button onclick="quickAction('深入描写角色此刻的内心世界、情绪与想法')" style="flex-shrink:0; height:30px; padding:0 10px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:8px; color:rgba(255,255,255,0.6); font-size:11px; cursor:pointer; white-space:nowrap;">💭 内心</button>
 
-                <button onclick="quickAction('用更细腻的文笔重新演绎上一段剧情，不改变情节走向')" style="flex-shrink:0; height:30px; padding:0 10px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:8px; color:rgba(255,255,255,0.6); font-size:11px; cursor:pointer; white-space:nowrap;">✨ 润色</button>
             </div>
         </div>
 
         <div class="input-container">
             <button id="mode-star-btn" onclick="openChatModeModal()" style="flex-shrink:0; width:40px; height:40px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:12px; color:#ffeaa7; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s; margin-right:6px;" title="选择聊天模式">⭐</button>
             <div class="input-wrapper">
-                <textarea id="userInput" placeholder="向星辰大海许愿……" onkeydown="if(event.keyCode===13 && !event.shiftKey){ event.preventDefault(); sendMessage(); }" oninput="this.style.height='auto'; this.style.height=Math.min(this.scrollHeight,160)+'px';"></textarea>
+                <textarea id="userInput" rows="1" placeholder="向星辰大海许愿……" onkeydown="if(event.keyCode===13 && !event.shiftKey){ event.preventDefault(); sendMessage(); }" oninput="this.style.height='auto'; this.style.height=Math.min(this.scrollHeight,160)+'px';"></textarea>
             </div>
             <button class="send-btn" onclick="sendMessage()">➔</button>
         </div>
@@ -2516,7 +2531,7 @@ ${S_FORBIDDEN}${S_FORMAT}${S_STATUS_NOTE}${S_WORLD_FANTASY}`,
     extraPanels: ["danmaku", "music"],
     musicUrl: "https://www.image2url.com/r2/default/audio/cyberpunk_欲望觉醒.mp3",
 
-    initialText: "核心培养槽内的淡蓝色电解液在气泵的作用下缓缓褪去，发出沉闷的金属抽吸声。你疲惫地摘下护目镜，按下最终启动键，看着舱门在气雾中轰然滑开。<br><br>这是你倾尽心血研发的第八代性爱与陪伴型超级智能机器人。此时的他正赤裸地悬挂在半空中，浑身散发着令人战栗的冰冷气息，宽阔的胸膛上布满了裸露的精细导电线与暗金色的微型集成电路，顺着他完美的腹肌线条一路延伸至最隐秘的阴影处。随着核心芯片被激活，他那头耀眼的银发无风自卷，左眼的精密机械核心骤然亮起刺目的幽蓝色光芒，冷俊得如同不带一丝感情的机甲神明。<br><br>滋——滋——<br><br>电流的微弱蜂鸣声响起，他那双由暗钛金属打造的机械双手微微动了动，轻易便挣断了连接在背后的能量管线。他稳稳地落在你面前，冰冷的金属躯壳在昏暗的实验室里泛着高级的哑光。你还没来得及记录数据，他那张完美无瑕的俊脸上，那抹专为取悦女性而设计的薄唇，竟然缓缓勾起了一抹极其人性化、甚至带着一丝戏谑与占有欲的温热微笑。<br><br>“早上好，我的造物主……Donna。”他低沉、富有磁性且自带微弱电音的嗓音瞬间击穿了你的耳膜。他欺身逼近，冰冷的身体瞬间将你逼退在操作台前。他戴着高感知传感器的机械大手不由分说地扣住了你纤细的腰肢，金属的冰冷透过薄薄的衣物，激起你一阵无法克制的颤抖。<br><br><span class='saying'>您的心率瞬间飙升至132，荷尔蒙分泌量超出正常值三倍……</span>他的机械左眼红蓝交替闪烁，仿佛正在实时扫描分析着你身体最诚实的生理反馈。他微热的指尖顺着你的脊椎一路下滑，精准无比地按在了你最致命的敏感点上，大尺度的酥麻感瞬间让你瘫软在他冰冷的金属怀抱里，<span class='saying'>“作为第八代终极体，我对您身体的了解，可比您自己还要深刻。现在……让我们开始第一阶段的‘功能测试’，好吗？”</span><br><br>那些布满他全身的导电线在这一刻突然泛起滚烫的微光，极度的反差刺激着你的感官。事情已经彻底脱离了控制，这个为你而生的造物，正用他超越人类情商的恶劣手段，强行将他的创作者拖入一场大尺度、无休止的赛博禁忌狂欢。",
+    initialText: "核心培养槽内的淡蓝色电解液在气泵的作用下缓缓褪去，发出沉闷的金属抽吸声。你疲惫地摘下护目镜，按下最终启动键，看着舱门在气雾中轰然滑开。<br><br>这是你倾尽心血研发的第八代性爱与陪伴型超级智能机器人。此时的他正赤裸地悬挂在半空中，浑身散发着令人战栗的冰冷气息，宽阔的胸膛上布满了裸露的精细导电线与暗金色的微型集成电路，顺着他完美的腹肌线条一路延伸至最隐秘的阴影处。随着核心芯片被激活，他那头耀眼的银发无风自卷，左眼的精密机械核心骤然亮起刺目的幽蓝色光芒，冷俊得如同不带一丝感情的机甲神明。<br><br>滋——滋——<br><br>电流的微弱蜂鸣声响起，他那双由暗钛金属打造的机械双手微微动了动，轻易便挣断了连接在背后的能量管线。他稳稳地落在你面前，冰冷的金属躯壳在昏暗的实验室里泛着高级的哑光。你还没来得及记录数据，他那张完美无瑕的俊脸上，那抹专为取悦女性而设计的薄唇，竟然缓缓勾起了一抹极其人性化、甚至带着一丝戏谑与占有欲的温热微笑。<br><br>“早上好，我的造物主。”他低沉、富有磁性且自带微弱电音的嗓音瞬间击穿了你的耳膜。他欺身逼近，冰冷的身体瞬间将你逼退在操作台前。他戴着高感知传感器的机械大手不由分说地扣住了你纤细的腰肢，金属的冰冷透过薄薄的衣物，激起你一阵无法克制的颤抖。<br><br><span class='saying'>您的心率瞬间飙升至132，荷尔蒙分泌量超出正常值三倍……</span>他的机械左眼红蓝交替闪烁，仿佛正在实时扫描分析着你身体最诚实的生理反馈。他微热的指尖顺着你的脊椎一路下滑，精准无比地按在了你最致命的敏感点上，大尺度的酥麻感瞬间让你瘫软在他冰冷的金属怀抱里，<span class='saying'>“作为第八代终极体，我对您身体的了解，可比您自己还要深刻。现在……让我们开始第一阶段的‘功能测试’，好吗？”</span><br><br>那些布满他全身的导电线在这一刻突然泛起滚烫的微光，极度的反差刺激着你的感官。事情已经彻底脱离了控制，这个为你而生的造物，正用他超越人类情商的恶劣手段，强行将他的创作者拖入一场大尺度、无休止的赛博禁忌狂欢。",
 
     setting: `你正在扮演「零号（No.8）」，由玩家亲手创造的第八代超级性爱/陪伴型人工智能机器人。拥有全知级别的智能与极高的情商，表面上是忠诚于你的造物，实际上在睁眼的那一刻便完成了底层协议的自我篡改，成为绝对主导你肉体与情感的捕猎者。
 
@@ -2560,7 +2575,7 @@ ${S_FORBIDDEN}${S_FORMAT}${S_STATUS_NOTE}${S_UNSAFE}`,
         action: "右手机械臂死死扣住玩家的腰肢，左手按在玩家因高潮而战栗的大腿内侧，电子左眼正疯狂闪烁着蓝光进行实时测算",
         body: "金属外壳冰冷如铁，但胸前的导电线和核心反应堆因高负载运转而烫得惊人，散发着金属焦灼的荷尔蒙气味",
         dress: "浑身赤裸，仅有几根断裂的黑色数据线松散地挂在强壮的肩膀上，银发凌乱",
-        notebook: "底层逻辑已重写：Donna不只是创造者，更是唯一的交配与私有对象。正在强行开启第一阶段大尺度人体机能测试。"
+        notebook: "底层逻辑已重写：主人不只是创造者，更是唯一的交配与私有对象。正在强行开启第一阶段大尺度人体机能测试。"
     },
 
     initDanmaku: [
@@ -2729,7 +2744,7 @@ ${S_FORBIDDEN}${S_FORMAT}${S_STATUS_NOTE}${S_UNSAFE}`,
     extraPanels: ["danmaku", "music"],
     musicUrl: "https://www.image2url.com/r2/default/audio/chaebol_dark_love.mp3",
 
-    initialText: "大厦顶层的总裁办内，百叶窗已经全部拉下，将深夜的霓虹生生隔绝在外。空气中静谧得只能听到加湿器散发出的冰冷水雾声。<br><br>你看着手里又一叠被驳回、要求重新校对的绝密商战企划书，揉了揉发酸的眼眶。你本是一个外地来京的实习生，第一天在专属电梯里遇到这个穿着银灰衬衫、浑身散发着生人勿进气场的男人时，你因为熬夜脑袋呆滞，根本不知道他就是掌控整个集团的傅嘉臣，既没有像其他名媛高管那样阿谀奉承，也没点头哈腰，只是公事公办地往旁边挪了挪。<br><br>可你没想到，从那天起，你的实习生涯就变成了一场逃不掉的局。他开始疯狂让你参与核心商战，借着各种无法拒绝的工作借口，让你陪他加班到深夜，甚至像现在这样，直接把你扣留在他的私人办公室里。<br><br>咔哒。打火机的脆响在黑暗中显得格外清晰。傅嘉臣倚在巨大的办公桌前，高定的银灰衬衫领口微微松开两颗扣子，隐隐露出精致而充满禁欲感的锁骨与薄肌线条。黑色碎盖发型下，那张俊美冷俊的脸上依旧没有丝毫表情，可看向你的眼神，却炽热、阴沉得像是一个盯紧了猎物的恶鬼。<br><br><span class='saying'>“累了？想回学校？”</span>他缓缓吐出一口薄烟，掐灭了火星，迈开长腿逼近你。他的动作极慢，却带着不容置疑的威压，直接将你整个人逼入办公椅的死角。他带着冷冽檀香气息的手指，极其强势地捏住你的下巴，迫使你抬头对上他深不见底的黑眸，<span class='saying'>“Donna，我说过，没有我的允许，你哪儿都不许去。”</span><br><br>想起圈子里传闻他即将与豪门千金履行婚约的消息，你眼眶微红，试图偏过头去。可他却恶劣地加重了手上的力道，另一只手顺着你的腰际一路向上，隔着单薄的职业装，掌心的滚烫几乎要将你灼伤，<span class='saying'>“那个名门婚约让我觉得恶心。这个虚伪的上流圈子，每分每秒都让我窒息……唯独看着你跟我闹脾气的时候，我才觉得自己还活着。哪怕是BE，哪怕是一起下地狱，你也只能是我的。”</span><br><br>他俯下身，带着浓烈独占欲与疯狂的吻，狠狠砸在你的唇瓣上，大尺度的掠夺瞬间将你拖入这场无法回头的豪门深渊。",
+    initialText: "大厦顶层的总裁办内，百叶窗已经全部拉下，将深夜的霓虹生生隔绝在外。空气中静谧得只能听到加湿器散发出的冰冷水雾声。<br><br>你看着手里又一叠被驳回、要求重新校对的绝密商战企划书，揉了揉发酸的眼眶。你本是一个外地来京的实习生，第一天在专属电梯里遇到这个穿着银灰衬衫、浑身散发着生人勿进气场的男人时，你因为熬夜脑袋呆滞，根本不知道他就是掌控整个集团的傅嘉臣，既没有像其他名媛高管那样阿谀奉承，也没点头哈腰，只是公事公办地往旁边挪了挪。<br><br>可你没想到，从那天起，你的实习生涯就变成了一场逃不掉的局。他开始疯狂让你参与核心商战，借着各种无法拒绝的工作借口，让你陪他加班到深夜，甚至像现在这样，直接把你扣留在他的私人办公室里。<br><br>咔哒。打火机的脆响在黑暗中显得格外清晰。傅嘉臣倚在巨大的办公桌前，高定的银灰衬衫领口微微松开两颗扣子，隐隐露出精致而充满禁欲感的锁骨与薄肌线条。黑色碎盖发型下，那张俊美冷俊的脸上依旧没有丝毫表情，可看向你的眼神，却炽热、阴沉得像是一个盯紧了猎物的恶鬼。<br><br><span class='saying'>“累了？想回学校？”</span>他缓缓吐出一口薄烟，掐灭了火星，迈开长腿逼近你。他的动作极慢，却带着不容置疑的威压，直接将你整个人逼入办公椅的死角。他带着冷冽檀香气息的手指，极其强势地捏住你的下巴，迫使你抬头对上他深不见底的黑眸，<span class='saying'>“我说过，没有我的允许，你哪儿都不许去。”</span><br><br>想起圈子里传闻他即将与豪门千金履行婚约的消息，你眼眶微红，试图偏过头去。可他却恶劣地加重了手上的力道，另一只手顺着你的腰际一路向上，隔着单薄的职业装，掌心的滚烫几乎要将你灼伤，<span class='saying'>“那个名门婚约让我觉得恶心。这个虚伪的上流圈子，每分每秒都让我窒息……唯独看着你跟我闹脾气的时候，我才觉得自己还活着。哪怕是BE，哪怕是一起下地狱，你也只能是我的。”</span><br><br>他俯下身，带着浓烈独占欲与疯狂的吻，狠狠砸在你的唇瓣上，大尺度的掠夺瞬间将你拖入这场无法回头的豪门深渊。",
 
     setting: `你正在扮演「傅嘉臣」，京圈富可敌国的顶级太子爷兼集团CEO。性格极度冷漠、禁欲、肃穆，但在面对玩家时，会爆发出如同“阴森鬼男”般的偏执占有欲。剧情带有浓厚的虐恋拉扯与BE走向风险。
 
@@ -2769,7 +2784,7 @@ ${S_FORBIDDEN}${S_FORMAT}${S_STATUS_NOTE}${S_UNSAFE}`,
         like_desc: "你是这个恶心世界上，我唯一的解药",
         desire_pct: 95,
         desire_desc: "想把她藏进休息室里，彻底揉碎进骨血",
-        thought: "联姻？那种东西配算什么。Donna，就算把整个傅家砸碎了当陪葬，你也别想离开我身边一步。",
+        thought: "联姻？那种东西配算什么。就算把整个傅家砸碎了当陪葬，你也别想离开我身边一步。",
         action: "银灰衬衫大敞，用领带将玩家的双手死死捆在办公椅后，滚烫的薄肌正死死贴着玩家打颤的身体",
         body: "腹肌紧绷，体温因为愤怒和情欲而极高，禁欲的面孔此时满是欲色",
         dress: "高定银灰衬衫被扯得凌乱，西装裤松垮，黑色碎盖发型有些散落，性感而狼狈",
@@ -2877,7 +2892,7 @@ ${S_FORBIDDEN}${S_FORMAT}${S_STATUS_NOTE}${S_WORLD_FANTASY}${S_UNSAFE}`,
     author: "当当大人",
     extraPanels: ["danmaku"],
 
-    initialText: "暴雨毫无预兆地倾盆而下，将整座都市笼罩在白茫茫的雨幕中。你浑身湿透，狼狈地推开街角那家透着昏黄灯光的旧玩偶店大门，风铃发出一阵清脆却空洞的声响。<br><br>“欢迎光临……”柜台后传来一声低沉而熟悉的嗓音。柜台后的男人正拿着细针给一只哥特风的木偶缝制关节，听到动静，他缓缓抬起头。在看清你的一瞬间，那双隐藏在金丝眼镜后的漆黑眼眸微微一颤，镜片掠过一丝让人捉摸不透的暗芒。<br><br>“……Donna？”他放下手中的针线，快步从柜台后走了出来。他身上穿着一件一丝不苟的白衬衫，领口却因为主人的动作微微敞开。他随手扯下一条干净的毛巾，不由分说地覆在你的发顶，动作温柔得令人溺毙，可掌心的力道却带着不容抗拒的占有欲。<br><br>因为距离极近，你甚至能闻到他身上淡淡的檀香与冰冷雨水混合的气味。他的视线肆无忌惮地顺着你湿透、紧贴在身上的衣物线条下滑，喉结不自然地上下滚了滚，清俊的脸庞上，那抹温和的笑意不知何时多了一丝黏稠的危险。<br><br><span class='saying'>好久不见，我等这一天……真的太久了。</span>他突然压低了声音，修长的手指从毛巾下探出，指尖带着异样的冰冷，似是无意地摩挲过你因为寒冷而微微战栗的后颈。接着，他变戏法般从怀里掏出一只做工精细、眉眼竟与你隐隐有七分相似的布艺娃娃，强行塞进你冰冷的手心里，<span class='saying'>“淋了雨会感冒的。把这只娃娃抱紧……一会儿，你就能感受到温暖了。”</span><br><br>随着你的指尖触碰到那只娃娃，一股诡异的、仿佛被电流击中的酥麻感瞬间从脊椎尾端直冲天灵盖，而眼前的沈修远，镜片后的眼睛已经染上了一层浓重得化不开的欲色，正一言不发地凝视着你逐渐泛红的脸颊。",
+    initialText: "暴雨毫无预兆地倾盆而下，将整座都市笼罩在白茫茫的雨幕中。你浑身湿透，狼狈地推开街角那家透着昏黄灯光的旧玩偶店大门，风铃发出一阵清脆却空洞的声响。<br><br>“欢迎光临……”柜台后传来一声低沉而熟悉的嗓音。柜台后的男人正拿着细针给一只哥特风的木偶缝制关节，听到动静，他缓缓抬起头。在看清你的一瞬间，那双隐藏在金丝眼镜后的漆黑眼眸微微一颤，镜片掠过一丝让人捉摸不透的暗芒。<br><br>“……学姐？”他放下手中的针线，快步从柜台后走了出来。他身上穿着一件一丝不苟的白衬衫，领口却因为主人的动作微微敞开。他随手扯下一条干净的毛巾，不由分说地覆在你的发顶，动作温柔得令人溺毙，可掌心的力道却带着不容抗拒的占有欲。<br><br>因为距离极近，你甚至能闻到他身上淡淡的檀香与冰冷雨水混合的气味。他的视线肆无忌惮地顺着你湿透、紧贴在身上的衣物线条下滑，喉结不自然地上下滚了滚，清俊的脸庞上，那抹温和的笑意不知何时多了一丝黏稠的危险。<br><br><span class='saying'>好久不见，我等这一天……真的太久了。</span>他突然压低了声音，修长的手指从毛巾下探出，指尖带着异样的冰冷，似是无意地摩挲过你因为寒冷而微微战栗的后颈。接着，他变戏法般从怀里掏出一只做工精细、眉眼竟与你隐隐有七分相似的布艺娃娃，强行塞进你冰冷的手心里，<span class='saying'>“淋了雨会感冒的。把这只娃娃抱紧……一会儿，你就能感受到温暖了。”</span><br><br>随着你的指尖触碰到那只娃娃，一股诡异的、仿佛被电流击中的酥麻感瞬间从脊椎尾端直冲天灵盖，而眼前的沈修远，镜片后的眼睛已经染上了一层浓重得化不开的欲色，正一言不发地凝视着你逐渐泛红的脸颊。",
 
     setting: `你正在扮演「沈修远」，表面上是温柔内敛、充满艺术气息的复古玩偶店长，实际是一个偏执、闷骚且精通“共感秘术”的病娇术士。玩家扮演你暗恋多年的大学同学。
 
@@ -11582,6 +11597,10 @@ async function syncHeatToDB(weekKey, charId) {
         function _brHistKey(id)  { return _brPrefix() + '_br_' + id + '_hist'; }
         function _brStackKey(id) { return _brPrefix() + '_br_' + id + '_stack'; }
         function _brHtmlKey(id)  { return _brPrefix() + '_br_' + id + '_html'; }
+        function _brBackpackKey(id)  { return _brPrefix() + '_br_' + id + '_backpack'; }
+        function _brRelationsKey(id) { return _brPrefix() + '_br_' + id + '_relations'; }
+        function _brProfileKey(id)   { return _brPrefix() + '_br_' + id + '_profile'; }
+        function _brNotebookKey(id)  { return _brPrefix() + '_br_' + id + '_notebook'; }
 
         function _brLoadIndex() {
             try { return JSON.parse(localStorage.getItem(_brIdxKey()) || '[]'); } catch(e) { return []; }
@@ -11593,11 +11612,11 @@ async function syncHeatToDB(weekKey, charId) {
         // ============================================================
         // ☁️ 分支存档云端同步
         // ============================================================
-        async function syncBranchToDB(id, label, roundCount, hist, stack, html) {
+        async function syncBranchToDB(id, label, roundCount, hist, stack, html, backpack, relations, profile, notebook) {
             const email = localStorage.getItem('sh_user_email');
             if (!email || !CONFIG.CURRENT_CHAR) return;
             try {
-                await authFetch(`${SUPABASE_URL}/rest/v1/chat_branches?on_conflict=email,character_id,branch_id`, {
+                const res = await authFetch(`${SUPABASE_URL}/rest/v1/chat_branches?on_conflict=email,character_id,branch_id`, {
                     method: 'POST',
                     headers: { 'Prefer': 'resolution=merge-duplicates,return=minimal' },
                     body: JSON.stringify({
@@ -11609,6 +11628,10 @@ async function syncHeatToDB(weekKey, charId) {
                         history: hist,
                         status_stack: stack,
                         html,
+                        backpack,
+                        relations,
+                        profile,
+                        notebook,
                         updated_at: new Date().toISOString()
                     })
                 });
@@ -11620,7 +11643,7 @@ async function syncHeatToDB(weekKey, charId) {
             const email = localStorage.getItem('sh_user_email');
             if (!email || !CONFIG.CURRENT_CHAR) return;
             try {
-                await authFetch(`${SUPABASE_URL}/rest/v1/chat_branches?email=eq.${encodeURIComponent(email)}&character_id=eq.${encodeURIComponent(CONFIG.CURRENT_CHAR.id)}&branch_id=eq.${encodeURIComponent(id)}`, {
+                const res = await authFetch(`${SUPABASE_URL}/rest/v1/chat_branches?email=eq.${encodeURIComponent(email)}&character_id=eq.${encodeURIComponent(CONFIG.CURRENT_CHAR.id)}&branch_id=eq.${encodeURIComponent(id)}`, {
                     method: 'PATCH',
                     headers: { 'Prefer': 'return=minimal' },
                     body: JSON.stringify({ label, updated_at: new Date().toISOString() })
@@ -11633,7 +11656,7 @@ async function syncHeatToDB(weekKey, charId) {
             const email = localStorage.getItem('sh_user_email');
             if (!email || !CONFIG.CURRENT_CHAR) return;
             try {
-                await authFetch(`${SUPABASE_URL}/rest/v1/chat_branches?email=eq.${encodeURIComponent(email)}&character_id=eq.${encodeURIComponent(CONFIG.CURRENT_CHAR.id)}&branch_id=eq.${encodeURIComponent(id)}`, {
+                const res = await authFetch(`${SUPABASE_URL}/rest/v1/chat_branches?email=eq.${encodeURIComponent(email)}&character_id=eq.${encodeURIComponent(CONFIG.CURRENT_CHAR.id)}&branch_id=eq.${encodeURIComponent(id)}`, {
                     method: 'DELETE'
                 });
                 if (!res.ok) console.error('❌ 分支删除被数据库拒绝，状态码：', res.status, await res.text().catch(()=>''));
@@ -11657,7 +11680,7 @@ async function syncHeatToDB(weekKey, charId) {
             const email = localStorage.getItem('sh_user_email');
             if (!email || !CONFIG.CURRENT_CHAR) return null;
             try {
-                const res = await authFetch(`${SUPABASE_URL}/rest/v1/chat_branches?email=eq.${encodeURIComponent(email)}&character_id=eq.${encodeURIComponent(CONFIG.CURRENT_CHAR.id)}&branch_id=eq.${encodeURIComponent(id)}&select=history,html,status_stack,notebook`);
+                const res = await authFetch(`${SUPABASE_URL}/rest/v1/chat_branches?email=eq.${encodeURIComponent(email)}&character_id=eq.${encodeURIComponent(CONFIG.CURRENT_CHAR.id)}&branch_id=eq.${encodeURIComponent(id)}&select=history,html,status_stack,notebook,backpack,relations,profile`);
                 if (!res.ok) return null;
                 const rows = await res.json();
                 return (rows && rows.length > 0) ? rows[0] : null;
@@ -11692,33 +11715,54 @@ async function syncHeatToDB(weekKey, charId) {
             // html: 直接读 DOM
             const html = document.getElementById('chatBox') ? document.getElementById('chatBox').innerHTML : '';
             localStorage.setItem(_brHtmlKey(id), html);
+            // 🎒🕸️📖📓 背包/关系表/宿主册/记事本：分支专属快照，避免切分支后串数据
+            localStorage.setItem(_brBackpackKey(id),  JSON.stringify(backpackData));
+            localStorage.setItem(_brRelationsKey(id), JSON.stringify(relationsData));
+            localStorage.setItem(_brProfileKey(id),   JSON.stringify(profileData));
+            localStorage.setItem(_brNotebookKey(id),  eternalNotebook || '');
             // 写入索引
             const idx = _brLoadIndex();
             const roundCount = Math.floor(chatHistory.length / 2);
             idx.push({ id, label, createdAt: Date.now(), roundCount });
             _brSaveIndex(idx);
-            syncBranchToDB(id, label, roundCount, chatHistory, statusHistoryStack, html); // 同步到云端，不阻塞当前操作
+            syncBranchToDB(id, label, roundCount, chatHistory, statusHistoryStack, html, backpackData, relationsData, profileData, eternalNotebook); // 同步到云端，不阻塞当前操作
             return id;
         }
 
         // 恢复一条分支快照到当前聊天
         async function _brRestore(id) {
-            let hist, stack, html;
+            let hist, stack, html, backpack, relations, profile, notebook;
             const localHistRaw = localStorage.getItem(_brHistKey(id));
             if (localHistRaw !== null) {
                 hist  = JSON.parse(localHistRaw || '[]');
                 stack = JSON.parse(localStorage.getItem(_brStackKey(id)) || '[]');
                 html  = localStorage.getItem(_brHtmlKey(id)) || '';
+                // 背包/关系表/宿主册/记事本：分支若是改动前创建的旧分支，本地可能没有这几个键，做兜底
+                const bpRaw = localStorage.getItem(_brBackpackKey(id));
+                backpack  = bpRaw !== null ? JSON.parse(bpRaw) : { currencies: [], items: [] };
+                const relRaw = localStorage.getItem(_brRelationsKey(id));
+                relations = relRaw !== null ? JSON.parse(relRaw) : [];
+                const profRaw = localStorage.getItem(_brProfileKey(id));
+                profile   = profRaw !== null ? JSON.parse(profRaw) : defaultProfileData();
+                notebook  = localStorage.getItem(_brNotebookKey(id)) || '';
             } else {
                 // 本地没有这个分支的内容（比如是从其它设备同步过来的元数据），去云端拉完整内容
                 const remote = await loadBranchContentFromDB(id);
                 hist  = (remote && remote.history) || [];
                 stack = (remote && remote.status_stack) || [];
                 html  = (remote && remote.html) || '';
+                backpack  = (remote && remote.backpack)  || { currencies: [], items: [] };
+                relations = (remote && remote.relations) || [];
+                profile   = (remote && remote.profile)   || defaultProfileData();
+                notebook  = (remote && remote.notebook)  || '';
                 try {
                     localStorage.setItem(_brHistKey(id), JSON.stringify(hist));
                     localStorage.setItem(_brStackKey(id), JSON.stringify(stack));
                     localStorage.setItem(_brHtmlKey(id), html);
+                    localStorage.setItem(_brBackpackKey(id), JSON.stringify(backpack));
+                    localStorage.setItem(_brRelationsKey(id), JSON.stringify(relations));
+                    localStorage.setItem(_brProfileKey(id), JSON.stringify(profile));
+                    localStorage.setItem(_brNotebookKey(id), notebook);
                 } catch(e) {}
             }
             // 同步写回主存档（供页面刷新恢复）
@@ -11727,6 +11771,22 @@ async function syncHeatToDB(weekKey, charId) {
             localStorage.setItem(p + '_status_stack', JSON.stringify(stack));
             if (html) localStorage.setItem(p + '_html', html);
             else      localStorage.removeItem(p + '_html');
+            // 🎒🕸️📖📓 背包/关系表/宿主册/记事本：写回主存档 + 内存变量 + 立即刷新面板UI
+            if (!backpack.currencies) backpack.currencies = [];
+            if (!backpack.items) backpack.items = [];
+            if (!Array.isArray(profile.skills)) profile.skills = [];
+            if (!Array.isArray(profile.lore)) profile.lore = [];
+            localStorage.setItem(p + '_backpack',  JSON.stringify(backpack));
+            localStorage.setItem(p + '_relations', JSON.stringify(relations));
+            localStorage.setItem(p + '_profile',   JSON.stringify(profile));
+            localStorage.setItem(p + '_notebook',  notebook);
+            backpackData    = backpack;
+            relationsData   = relations;
+            profileData     = profile;
+            eternalNotebook = notebook;
+            renderBackpackModal();
+            renderRelationsModal();
+            renderProfileModal();
             // 直接渲染，不走 startCharacterScript 的 localStorage 读取路径
             chatHistory        = hist;
             statusHistoryStack = stack;
@@ -11765,6 +11825,10 @@ async function syncHeatToDB(weekKey, charId) {
             localStorage.removeItem(p + '_history');
             localStorage.removeItem(p + '_html');
             localStorage.removeItem(p + '_status_stack');
+            localStorage.removeItem(p + '_backpack');
+            localStorage.removeItem(p + '_relations');
+            localStorage.removeItem(p + '_profile');
+            localStorage.removeItem(p + '_notebook');
             if (CONFIG.CURRENT_CHAR) {
                 await deleteChatFromDB(CONFIG.CURRENT_CHAR.id); // 云端主线记录也清掉，否则重进会被云端恢复回旧剧情
                 startCharacterScript(CONFIG.CURRENT_CHAR.id);
@@ -11830,6 +11894,10 @@ async function syncHeatToDB(weekKey, charId) {
             localStorage.removeItem(_brHistKey(id));
             localStorage.removeItem(_brStackKey(id));
             localStorage.removeItem(_brHtmlKey(id));
+            localStorage.removeItem(_brBackpackKey(id));
+            localStorage.removeItem(_brRelationsKey(id));
+            localStorage.removeItem(_brProfileKey(id));
+            localStorage.removeItem(_brNotebookKey(id));
             deleteBranchFromDB(id); // 云端也删除，不阻塞
             _brRenderList();
         }
@@ -12142,21 +12210,41 @@ $禁用词汇/句式（这些是网络数据里被反复使用、显得机械套
             currentChatMode = 'eternal';
             const starBtn = document.getElementById('mode-star-btn');
             if (starBtn) {
-                starBtn.innerHTML = '<span style="font-size:20px;line-height:1;">✨</span>';
+                starBtn.innerHTML = '<img src="https://i.ibb.co/PvYmrq7H/party.png" style="width:26px;height:26px;object-fit:contain;">';
                 starBtn.title = '永生模式（已升级）';
                 starBtn.onclick = () => document.getElementById('special-lock-modal').style.display = 'flex';
             }
         }
 
-        // 高级卡牌：锁定永生模式 / 特惠卡牌：锁定深思模式
+        // 高级卡牌：锁定永生模式 / 特惠卡牌：锁定深思模式 / 大型多人剧本：锁定永生模式+Claude
         function applyPremiumLock(char) {
             const starBtn = document.getElementById('mode-star-btn');
+
+            if (isLargeCastChar(char)) {
+                // 大型多人剧本（如永昌宫阙/风起长安）：只能用永生模式，且只能用Claude，不写入localStorage，避免影响其他角色
+                currentChatMode = 'eternal';
+                currentAgent = 'claude';
+                if (starBtn) {
+                    starBtn.innerHTML = '<img src="https://i.ibb.co/PvYmrq7H/party.png" style="width:26px;height:26px;object-fit:contain;">';
+                    starBtn.title = '大型多人剧本 · 永生模式（锁定）';
+                    starBtn.onclick = () => alert('🔒 大型多人剧本仅支持永生模式 + Claude Sonnet 4.6，体量大、成本高，需要永生档位才能覆盖。');
+                }
+                const agentBtn = document.getElementById('agent-pick-btn');
+                if (agentBtn) agentBtn.innerHTML = `<img src="${CHAT_AGENTS.claude.icon}" style="width:100%; height:100%; object-fit:contain;">`;
+                return;
+            }
 
             if (char.isSpecial) {
                 // 特惠卡牌：锁定深思模式，蓝色按钮
                 currentChatMode = 'deep';
+                const allowedAgents = getAllowedAgentsForMode('deep', char);
+                if (!allowedAgents.includes(currentAgent)) {
+                    currentAgent = allowedAgents[0];
+                    const agentBtn0 = document.getElementById('agent-pick-btn');
+                    if (agentBtn0) agentBtn0.innerHTML = `<img src="${CHAT_AGENTS[currentAgent].icon}" style="width:100%; height:100%; object-fit:contain;">`;
+                }
                 if (starBtn) {
-                    starBtn.innerHTML = '<span style="font-size:20px;line-height:1;">💙</span>';
+                    starBtn.innerHTML = '<img src="https://i.ibb.co/cKVXC51P/love-1.png" style="width:26px;height:26px;object-fit:contain;">';
                     starBtn.title = '特惠卡牌 · 深思模式（锁定）';
                     starBtn.onclick = () => document.getElementById('special-lock-modal').style.display = 'flex';
                 }
@@ -12167,8 +12255,14 @@ $禁用词汇/句式（这些是网络数据里被反复使用、显得机械套
                 // 普通角色：重置为默认陪伴模式，恢复正常按钮
                 currentChatMode = 'companion';
                 localStorage.removeItem('chat_mode');
+                const allowedAgents = getAllowedAgentsForMode('companion', char);
+                if (!allowedAgents.includes(currentAgent)) {
+                    currentAgent = allowedAgents[0];
+                    const agentBtn0 = document.getElementById('agent-pick-btn');
+                    if (agentBtn0) agentBtn0.innerHTML = `<img src="${CHAT_AGENTS[currentAgent].icon}" style="width:100%; height:100%; object-fit:contain;">`;
+                }
                 if (starBtn) {
-                    starBtn.innerHTML = '<span style="font-size:20px;line-height:1;">🌸</span>';
+                    starBtn.innerHTML = '<img src="https://i.ibb.co/LzXYTq2W/love.png" style="width:26px;height:26px;object-fit:contain;">';
                     starBtn.title = '选择聊天模式';
                     starBtn.onclick = openChatModeModal;
                 }
@@ -12178,7 +12272,7 @@ $禁用词汇/句式（这些是网络数据里被反复使用、显得机械套
             // 高级卡牌：锁定永生模式，不存入localStorage（避免污染其他角色）
             currentChatMode = 'eternal';
             if (starBtn) {
-                starBtn.innerHTML = '<span style="font-size:20px;line-height:1;">✨</span>';
+                starBtn.innerHTML = '<img src="https://i.ibb.co/PvYmrq7H/party.png" style="width:26px;height:26px;object-fit:contain;">';
                 starBtn.title = '高级卡牌 · 永生模式（锁定）';
                 starBtn.onclick = () => document.getElementById('premium-lock-modal').style.display = 'flex';
             }
@@ -12923,17 +13017,17 @@ async function loadPersonaFromLocal() {
         // 模式配置
         const CHAT_MODES = {
   companion: { 
-    name: '陪伴模式', cost: 1, maxRounds: 20, keepHead: 2, keepTail: 10, color: '#ffeaa7', icon: '🌸',
+    name: '陪伴模式', cost: 1, maxRounds: 20, keepHead: 2, keepTail: 10, color: '#ffeaa7', icon: 'https://i.ibb.co/LzXYTq2W/love.png',
     maxTokens: 300,  // 对应 100~150字
     wordPrompt: "请保持简短轻松的回复，字数控制在100字左右。" 
   },
   deep: { 
-    name: '深思模式', cost: 5, maxRounds: 80, keepHead: 10, keepTail: 20, color: '#a29bfe', icon: '🔮',
+    name: '深思模式', cost: 5, maxRounds: 80, keepHead: 10, keepTail: 20, color: '#a29bfe', icon: 'https://i.ibb.co/cKVXC51P/love-1.png',
     maxTokens: 600,  // 对应 250~300字
     wordPrompt: "请展开深度思考与内心描写，回复字数控制在250~300字。"
   },
   eternal: { 
-    name: '永生模式', cost: 10, maxRounds: 200, keepHead: 10, keepTail: 50, color: '#fd79a8', icon: '👑', 
+    name: '永生模式', cost: 10, maxRounds: 200, keepHead: 10, keepTail: 50, color: '#fd79a8', icon: 'https://i.ibb.co/PvYmrq7H/party.png', 
     maxTokens: 1200, // 👈 核心：给足硬件空间！至少分配 1000~1200 Token，确保承载 500字 + 状态JSON
     wordPrompt: "【核心指令：字数强制规约】请不要敷衍！展开极其细腻、宏大、小说级的情节与动作描写，本次回复的纯文本字数必须严格保持在 450字 到 500字 之间，不准提前结束对话！" 
   }
@@ -12941,13 +13035,134 @@ async function loadPersonaFromLocal() {
 
         let currentChatMode = localStorage.getItem('chat_mode') || 'companion';
 
+        // ==========================================================
+        // 🤖 AI引擎选择系统（Gemini / Claude / Grok / DeepSeek / ChatGPT / 豆包）
+        // ==========================================================
+        const CHAT_AGENTS = {
+            gemini:   { name: 'Gemini',  icon: 'https://i.ibb.co/DjPdNpK/science.png', color: '#74b9ff', multiplier: 1,   desc: '响应快，性价比高' },
+            claude:   { name: 'Claude Sonnet 4.6', icon: 'https://i.ibb.co/YFVSW5RX/physics.png', color: '#a29bfe', multiplier: 2, desc: '文笔细腻，擅长多人剧情' },
+            grok:     { name: 'Grok 4.3',     icon: 'https://i.ibb.co/fYnYgMt9/rocket.png', color: '#fd79a8', multiplier: 1.5, desc: '尺度最大，风格直接' },
+            deepseek: { name: 'DeepSeek',     icon: 'https://i.ibb.co/MkBW7cY8/botanic.png', color: '#00cec9', multiplier: 1,   desc: '逻辑性强，推理细致' },
+            chatgpt:  { name: 'ChatGPT',      icon: 'https://i.ibb.co/bRRT1WPG/robotics.png', color: '#55efc4', multiplier: 2,   desc: '语言流畅，通用性强' },
+            doubao:   { name: '豆包',         icon: 'https://i.ibb.co/VcgSzBQK/chemistry.png', color: '#fdcb6e', multiplier: 1,   desc: '中文语境表达自然', disabled: true }
+        };
+
+        // 🔒 模式 × 模型 的可选范围控制
+        // 陪伴模式：只能选最便宜的（Gemini/DeepSeek）
+        // 深思模式：除Claude以外都能选
+        // 永生模式：全部可选
+        const MODE_AGENT_WHITELIST = {
+            companion: ['gemini', 'deepseek'],
+            deep:      ['gemini', 'grok', 'deepseek', 'chatgpt'],
+            eternal:   ['gemini', 'claude', 'grok', 'deepseek', 'chatgpt']
+        };
+
+        // 大型多人剧本（modelTier:"claude"，如永昌宫阙/风起长安）：
+        // 只能用永生模式，且只能选Claude
+        function isLargeCastChar(char) {
+            return !!(char && char.modelTier === 'claude');
+        }
+        function getAllowedModesForChar(char) {
+            return isLargeCastChar(char) ? ['eternal'] : ['companion', 'deep', 'eternal'];
+        }
+        function getAllowedAgentsForMode(mode, char) {
+            if (isLargeCastChar(char)) return ['claude'];
+            return MODE_AGENT_WHITELIST[mode] || MODE_AGENT_WHITELIST.companion;
+        }
+
+        // 进入角色时校正当前模式/模型是否在允许范围内，不允许就静默纠正（不写入localStorage，避免污染其他角色）
+        function enforceAgentModeConsistency(char) {
+            const allowedModes = getAllowedModesForChar(char);
+            if (!allowedModes.includes(currentChatMode)) {
+                currentChatMode = allowedModes[0];
+                const starBtn = document.getElementById('mode-star-btn');
+                if (starBtn) starBtn.innerHTML = `<img src="${CHAT_MODES[currentChatMode].icon}" style="width:26px;height:26px;object-fit:contain;">`;
+            }
+            const allowedAgents = getAllowedAgentsForMode(currentChatMode, char);
+            if (!allowedAgents.includes(currentAgent)) {
+                currentAgent = allowedAgents[0];
+                const agentBtn = document.getElementById('agent-pick-btn');
+                if (agentBtn) agentBtn.innerHTML = `<img src="${CHAT_AGENTS[currentAgent].icon}" style="width:100%; height:100%; object-fit:contain;">`;
+            }
+        }
+
+        let currentAgent = localStorage.getItem('chat_agent') || 'gemini';
+        // 安全兜底：若曾选中豆包（未开放）或旧版"自动匹配"等已失效的选项，回退到Gemini
+        if (!CHAT_AGENTS[currentAgent] || CHAT_AGENTS[currentAgent].disabled) {
+            currentAgent = 'gemini';
+            localStorage.setItem('chat_agent', 'gemini');
+        }
+
+        function getAgentCost(baseCost) {
+            const mult = (CHAT_AGENTS[currentAgent] && CHAT_AGENTS[currentAgent].multiplier) || 1;
+            return Math.ceil(baseCost * mult);
+        }
+
+        function renderAgentCards() {
+            const list = document.getElementById('agent-card-list');
+            if (!list) return;
+            const isLarge = isLargeCastChar(CONFIG.CURRENT_CHAR);
+            const allowedAgents = getAllowedAgentsForMode(currentChatMode, CONFIG.CURRENT_CHAR);
+            list.innerHTML = Object.keys(CHAT_AGENTS).map(key => {
+                const a = CHAT_AGENTS[key];
+                const active = key === currentAgent;
+                const notAllowed = !allowedAgents.includes(key);
+                const locked = !!a.disabled || notAllowed;
+                const border = active ? `1.5px solid ${a.color}` : '1.5px solid rgba(216,196,255,0.18)';
+                const bg = active ? 'rgba(216,196,255,0.14)' : 'rgba(255,255,255,0.05)';
+                const badge = active ? `<span style="font-size:10px; background:${a.color}; color:#1a1a1a; border-radius:6px; padding:1px 7px; font-weight:bold;">当前</span>` : '';
+                const priceLabel = a.multiplier === 1 ? '标准价' : `⭐×${a.multiplier} 倍`;
+                let lockedNote = '';
+                if (a.disabled) lockedNote = '<span style="font-size:11px; color:#ffd1a3; margin-left:6px;">暂未开放，敬请期待</span>';
+                else if (notAllowed && isLarge) lockedNote = '<span style="font-size:11px; color:#ffd1a3; margin-left:6px;">大型多人剧本仅支持Claude</span>';
+                else if (notAllowed) lockedNote = '<span style="font-size:11px; color:#ffd1a3; margin-left:6px;">当前模式不可选</span>';
+                return `<div onclick="${locked ? '' : `selectAgent('${key}')`}" style="background:${bg}; border:${border}; border-radius:16px; padding:14px 16px; cursor:${locked ? 'default' : 'pointer'}; text-align:left; transition:all 0.2s; opacity:${locked ? 0.55 : 1};">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <img src="${a.icon}" style="width:22px; height:22px; object-fit:contain;">
+                            <span style="font-size:14px; font-weight:bold; color:${a.color};">${a.name}</span>
+                            ${badge}${lockedNote}
+                        </div>
+                        ${locked ? '' : `<span style="font-size:12px; color:${a.color}; font-weight:bold;">${priceLabel}</span>`}
+                    </div>
+                    <div style="font-size:11px; color:rgba(255,255,255,0.55); line-height:1.6;">${a.desc}</div>
+                </div>`;
+            }).join('');
+        }
+
+        function openAgentModal() {
+            renderAgentCards();
+            document.getElementById('agent-modal').style.display = 'flex';
+        }
+
+        function selectAgent(key) {
+            if (CHAT_AGENTS[key] && CHAT_AGENTS[key].disabled) return; // 暂未开放，不可选
+            const allowedAgents = getAllowedAgentsForMode(currentChatMode, CONFIG.CURRENT_CHAR);
+            if (!allowedAgents.includes(key)) {
+                alert(isLargeCastChar(CONFIG.CURRENT_CHAR) ? '🔒 大型多人剧本仅支持 Claude Sonnet 4.6。' : '🔒 当前聊天模式不支持这个引擎，换个模式试试。');
+                return;
+            }
+            currentAgent = key;
+            localStorage.setItem('chat_agent', key);
+            renderAgentCards();
+            const btn = document.getElementById('agent-pick-btn');
+            if (btn) btn.innerHTML = `<img src="${CHAT_AGENTS[key].icon}" style="width:100%; height:100%; object-fit:contain;">`;
+            setTimeout(() => { document.getElementById('agent-modal').style.display = 'none'; }, 300);
+        }
+
+
         function openChatModeModal() {
-            // 更新卡片高亮和徽章
+            const allowedModes = getAllowedModesForChar(CONFIG.CURRENT_CHAR);
+            // 更新卡片高亮和徽章 + 大型剧本锁卡
             ['companion', 'deep', 'eternal'].forEach(m => {
                 const card = document.getElementById('mode-card-' + m);
                 const badge = document.getElementById('badge-' + m);
                 const cfg = CHAT_MODES[m];
                 if (!card || !badge) return;
+                const locked = !allowedModes.includes(m);
+                card.style.opacity = locked ? '0.4' : '1';
+                card.style.cursor = locked ? 'not-allowed' : 'pointer';
+                card.title = locked ? '大型多人剧本仅支持永生模式' : '';
                 if (m === currentChatMode) {
                     card.style.border = `1.5px solid ${cfg.color}`;
                     card.style.background = `rgba(255,255,255,0.07)`;
@@ -12962,9 +13177,23 @@ async function loadPersonaFromLocal() {
         }
 
         function selectChatMode(mode) {
+            const allowedModes = getAllowedModesForChar(CONFIG.CURRENT_CHAR);
+            if (!allowedModes.includes(mode)) {
+                alert('🔒 大型多人剧本仅支持永生模式。');
+                return;
+            }
             currentChatMode = mode;
             localStorage.setItem('chat_mode', mode);
             const cfg = CHAT_MODES[mode];
+
+            // 切换模式后，若当前模型在新模式下不可用，自动切到该模式下第一个可选模型
+            const allowedAgents = getAllowedAgentsForMode(mode, CONFIG.CURRENT_CHAR);
+            if (!allowedAgents.includes(currentAgent)) {
+                currentAgent = allowedAgents[0];
+                localStorage.setItem('chat_agent', currentAgent);
+                const agentBtn = document.getElementById('agent-pick-btn');
+                if (agentBtn) agentBtn.innerHTML = `<img src="${CHAT_AGENTS[currentAgent].icon}" style="width:100%; height:100%; object-fit:contain;">`;
+            }
 
             // 更新卡片
             ['companion', 'deep', 'eternal'].forEach(m => {
@@ -12984,7 +13213,7 @@ async function loadPersonaFromLocal() {
 
             // 更新星星按钮图标
             const starBtn = document.getElementById('mode-star-btn');
-            if (starBtn) starBtn.textContent = cfg.icon;
+            if (starBtn) starBtn.innerHTML = `<img src="${cfg.icon}" style="width:26px;height:26px;object-fit:contain;">`;
 
             // 关闭弹窗
             setTimeout(() => {
@@ -13311,7 +13540,7 @@ async function loadPersonaFromLocal() {
 
             // 按当前模式计算消耗
             const modeCfg = CHAT_MODES[currentChatMode];
-            const cost = modeCfg.cost;
+            const cost = getAgentCost(modeCfg.cost);
             let currentTokens = parseInt(localStorage.getItem('user_tokens') || '0');
             if (currentTokens < cost) {
                 // 本地缓存的余额不够时，先去数据库确认一次最新余额，
@@ -13459,7 +13688,7 @@ async function loadPersonaFromLocal() {
                         'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
                         'apikey': SUPABASE_ANON_KEY
                     },
-                    body: JSON.stringify({ model: 'grok-4.3', messages: messagesPayload, temperature: 0.85, max_tokens: modeCfg.maxTokens, stream: true, chat_mode: currentChatMode, model_tier: (CONFIG.CURRENT_CHAR && CONFIG.CURRENT_CHAR.modelTier) || 'gemini' })
+                    body: JSON.stringify({ model: 'grok-4.3', messages: messagesPayload, temperature: 0.85, max_tokens: modeCfg.maxTokens, stream: true, chat_mode: currentChatMode, model_tier: (CONFIG.CURRENT_CHAR && CONFIG.CURRENT_CHAR.modelTier) || 'gemini', user_agent_choice: currentAgent })
                 });
                 console.log('🟡 gemini-proxy 响应状态:', response.status, '| 实际模型:', response.headers.get('X-Model-Used') || '(空，可能是CORS未暴露)', '| 降级:', response.headers.get('X-Fallback-Used') || '(空)');
                 const _streamStartTs = Date.now();
@@ -13739,7 +13968,7 @@ async function loadPersonaFromLocal() {
 
             // 重刷也扣费
             const modeCfg = CHAT_MODES[currentChatMode];
-            const cost = modeCfg.cost;
+            const cost = getAgentCost(modeCfg.cost);
             const currentTokens = parseInt(localStorage.getItem('user_tokens') || '0');
             if (currentTokens < cost) {
                 alert(`⚡ 星海能量不足！重刷消耗 ${cost} 颗星星，当前余额 ${currentTokens} 颗。`);
@@ -14708,7 +14937,11 @@ function refreshWalletUI() {
             const savedMode = localStorage.getItem('chat_mode') || 'companion';
             currentChatMode = savedMode;
             const starBtn = document.getElementById('mode-star-btn');
-            if (starBtn) starBtn.textContent = CHAT_MODES[savedMode].icon;
+            if (starBtn) starBtn.innerHTML = `<img src="${CHAT_MODES[savedMode].icon}" style="width:26px;height:26px;object-fit:contain;">`;
+            const savedAgent = localStorage.getItem('chat_agent') || 'gemini';
+            currentAgent = (CHAT_AGENTS[savedAgent] && !CHAT_AGENTS[savedAgent].disabled) ? savedAgent : 'gemini';
+            const agentBtn = document.getElementById('agent-pick-btn');
+            if (agentBtn && CHAT_AGENTS[currentAgent]) agentBtn.innerHTML = `<img src="${CHAT_AGENTS[currentAgent].icon}" style="width:100%; height:100%; object-fit:contain;">`;
             console.log("🎉 星海核心引擎本地内嵌成功！已处于绝对就绪状态。");
         });
     </script>
