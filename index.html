@@ -12087,13 +12087,13 @@ $禁用词汇/句式（这些是网络数据里被反复使用、显得机械套
                     <img src="${char.avatar}" style="width:52px; height:52px; border-radius:12px; object-fit:cover; flex-shrink:0; border:1px solid rgba(255,255,255,0.15);">
                     <div style="min-width:0;">
                         <div style="font-size:13px; font-weight:600; color:#ffeaa7; margin-bottom:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${char.name}</div>
-                        <div style="font-size:11px; color:rgba(255,255,255,0.65); line-height:1.6;">${char.chatIntro || char.intro}</div>
+                        <div id="char-intro-text" style="font-size:11px; color:rgba(255,255,255,0.65); line-height:1.6;">${char.chatIntro || char.intro}</div>
                     </div>
                 </div>
                 <div class="msg-row bot-row">
                     <img src="${char.avatar}" class="avatar">
                     <div class="msg-wrapper">
-                        <div class="msg">${char.initialText}</div>
+                        <div id="char-initial-msg" class="msg">${char.initialText}</div>
                         ${generateStatusCardHtml(initStatus, initDanmaku)}
                     </div>
                 </div>`;
@@ -12152,6 +12152,20 @@ $禁用词汇/句式（这些是网络数据里被反复使用、显得机械套
                     document.getElementById('chatBox').innerHTML = initialHtml;
                 }
             }
+            // 🔧 修复"改了角色的开场白/简介，但旧设备/旧缓存仍显示老版本"的问题：
+            // 本地缓存(_html)和云端存档里保存的是当时聊天框的整段HTML快照，其中开场卡片
+            // 文案是写死的旧文本。哪怕后台 CHARACTER_DATABASE 里的 chatIntro/initialText
+            // 已经改了，恢复缓存时也只会原样把旧文案吐出来。
+            // 这里在恢复完缓存之后，无条件用 char 当前最新的 chatIntro/initialText 覆盖一遍
+            // 开场卡片和开场白消息这两个节点，但完全不动后面真实聊天记录的DOM，
+            // 不会影响"串台"那个bug修复（依旧靠 _sessionToken/_myToken 那套校验）。
+            if (localHtml || restoredFromCloud) {
+                const introTextEl = document.getElementById('char-intro-text');
+                if (introTextEl) introTextEl.innerHTML = char.chatIntro || char.intro;
+                const initialMsgEl = document.getElementById('char-initial-msg');
+                if (initialMsgEl) initialMsgEl.innerHTML = char.initialText;
+            }
+
             const chatBox = document.getElementById('chatBox');
             if (localHtml || restoredFromCloud) {
                 // 历史记录：滚到底部继续聊
