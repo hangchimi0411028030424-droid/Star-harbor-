@@ -503,7 +503,186 @@
         .opt-btn:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.3); }
         .danger-btn { background: rgba(235, 77, 75, 0.15) !important; border-color: rgba(235, 77, 75, 0.3) !important; color: #ff7675 !important; }
         .danger-btn:hover { background: rgba(235, 77, 75, 0.3) !important; }
-        
+
+        /* 🔊 剧情语音消息气泡 */
+        .voice-message-bubble {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 234, 167, 0.08);
+            border: 1px solid rgba(255, 234, 167, 0.25);
+            border-radius: 16px;
+            padding: 10px 14px;
+            margin: 6px 0;
+            max-width: 85%;
+        }
+        .voice-message-bubble .voice-msg-icon {
+            flex-shrink: 0;
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 234, 167, 0.18);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .voice-message-bubble .voice-msg-text {
+            font-size: 13px;
+            color: #ffeaa7;
+            line-height: 1.6;
+        }
+
+        /* 🎙️ 语音录面板 */
+        .voice-gallery-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 14px;
+            padding: 10px 12px;
+        }
+        .voice-gallery-item.unlocked {
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .voice-gallery-item.unlocked:hover {
+            background: rgba(255, 234, 167, 0.08);
+        }
+        .voice-gallery-item.locked {
+            opacity: 0.45;
+        }
+        .voice-gallery-icon {
+            flex-shrink: 0;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 234, 167, 0.15);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 16px;
+        }
+        .voice-gallery-lock-icon {
+            flex-shrink: 0;
+            width: 36px; height: 36px;
+            object-fit: contain;
+            padding: 8px;
+            box-sizing: border-box;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.06);
+        }
+        .voice-gallery-info { flex: 1; min-width: 0; }
+        .voice-gallery-scene {
+            font-size: 11px;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 3px;
+        }
+        .voice-gallery-text {
+            font-size: 13px;
+            color: rgba(255,255,255,0.85);
+            line-height: 1.5;
+        }
+        .voice-gallery-item.locked .voice-gallery-text {
+            color: rgba(255,255,255,0.35);
+        }
+        .voice-gallery-character-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .voice-gallery-character-name {
+            font-size: 13px;
+            font-weight: bold;
+            color: #ffeaa7;
+            margin-bottom: 2px;
+        }
+
+        /* 🗂️ 珍藏面板 Tab 切换 */
+        .treasury-tab-btn {
+            flex: 1;
+            padding: 8px 0;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.18);
+            background: rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.65);
+            font-size: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .treasury-tab-btn.treasury-tab-active {
+            background: rgba(255,255,255,0.18);
+            border-color: rgba(255,255,255,0.3);
+            color: #fff;
+        }
+
+        /* 🖼️ 剧照消息气泡（插入聊天流） */
+        .image-message-bubble {
+            max-width: 70%;
+            margin: 6px 0;
+            border-radius: 18px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.25);
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 5px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+        }
+        .image-message-bubble img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 13px;
+        }
+        .image-message-bubble .image-msg-caption {
+            font-size: 11px;
+            color: rgba(255,255,255,0.7);
+            padding: 7px 8px 3px 8px;
+        }
+
+        /* 🖼️ 剧照画廊（珍藏面板内的网格） */
+        .image-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        .image-gallery-item {
+            position: relative;
+            aspect-ratio: 9 / 16;
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+        }
+        .image-gallery-item.unlocked img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .image-gallery-item.unlocked .image-gallery-tag {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            font-size: 10px;
+            color: #fff;
+            text-align: center;
+            padding: 3px 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+        }
+        .image-gallery-item.locked {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: default;
+            opacity: 0.5;
+        }
+        .image-gallery-item.locked .image-gallery-lock-icon {
+            width: 32%;
+            height: 32%;
+            object-fit: contain;
+        }
+
         /* ✨ 拯救画面的终极外挂样式 */
         .lobby-container {
             backdrop-filter: none !important;
@@ -528,6 +707,52 @@
             z-index: 99999 !important;
             pointer-events: auto !important;
             background: rgba(20, 20, 20, 0.98) !important; 
+        }
+
+        /* 🌸💙 语音录面板专属主题：淡粉蓝毛玻璃（ID选择器，优先级高于上面的通用驱雾/纯黑背景规则） */
+        #drawer-voice {
+            background: linear-gradient(135deg, rgba(255,214,232,0.32), rgba(190,222,255,0.32)) !important;
+            backdrop-filter: blur(24px) saturate(160%) !important;
+            -webkit-backdrop-filter: blur(24px) saturate(160%) !important;
+            filter: none !important;
+            border: 1px solid rgba(255,255,255,0.35) !important;
+        }
+        #drawer-voice .drawer-title {
+            color: #fff0f6 !important;
+            text-shadow: 0 1px 6px rgba(255,182,217,0.4);
+        }
+        #drawer-voice .voice-gallery-character-name {
+            color: #ffe1ef !important;
+        }
+        #drawer-voice .voice-gallery-item.unlocked {
+            background: rgba(255,255,255,0.14) !important;
+            border-color: rgba(255,255,255,0.28) !important;
+        }
+        #drawer-voice .voice-gallery-item.unlocked:hover {
+            background: rgba(255,255,255,0.22) !important;
+        }
+        #drawer-voice .voice-gallery-icon {
+            background: rgba(255,255,255,0.25) !important;
+        }
+        #drawer-voice .voice-gallery-text {
+            color: rgba(255,255,255,0.92) !important;
+        }
+        #drawer-voice .voice-gallery-scene {
+            color: rgba(255,255,255,0.6) !important;
+        }
+        #drawer-voice .treasury-tab-btn {
+            background: rgba(255,255,255,0.1) !important;
+            border-color: rgba(255,255,255,0.25) !important;
+            color: rgba(255,255,255,0.7) !important;
+        }
+        #drawer-voice .treasury-tab-btn.treasury-tab-active {
+            background: rgba(255,255,255,0.32) !important;
+            border-color: rgba(255,255,255,0.5) !important;
+            color: #fff !important;
+        }
+        #drawer-voice .image-gallery-item {
+            background: rgba(255,255,255,0.1) !important;
+            border-color: rgba(255,255,255,0.25) !important;
         }
     </style>
 </head>
@@ -1986,18 +2211,31 @@
             </div>
         </div>
 
+        <div class="panel-drawer" id="drawer-voice">
+            <div class="drawer-title"><span>珍藏 <span style="font-size:11px; color:rgba(255,255,255,0.6); font-weight:normal;">（剧情中触发解锁）</span></span><span class="drawer-close" onclick="closeAllDrawers()">✕</span></div>
+            <div class="drawer-content">
+                <div id="treasury-tabs" style="display:flex; gap:8px; margin-bottom:4px;">
+                    <button id="treasury-tab-voice" class="treasury-tab-btn treasury-tab-active" onclick="switchTreasuryTab('voice')">语音录</button>
+                    <button id="treasury-tab-image" class="treasury-tab-btn" onclick="switchTreasuryTab('image')"> 回忆册</button>
+                </div>
+                <div id="voice-gallery-list" style="display:flex; flex-direction:column; gap:10px; max-height:55vh; overflow-y:auto;"></div>
+                <div id="image-gallery-list" style="display:none; flex-direction:column; gap:10px; max-height:55vh; overflow-y:auto;"></div>
+            </div>
+        </div>
+
         <div class="chat-box" id="chatBox"></div>
 
         <!-- ⚡ 快捷指令 + 分支按钮行 -->
         <div id="quick-action-bar" style="display:flex; align-items:center; gap:6px; padding:6px 12px 0 12px;">
             <!-- 🤖 AI模型选择 -->
             <button id="agent-pick-btn" onclick="openAgentModal()" style="flex-shrink:0; width:40px; height:40px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:12px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s; padding:7px;" title="选择AI引擎"><img src="https://i.ibb.co/SDjWG9pF/wifi-connection.png" style="width:100%; height:100%; object-fit:contain;"></button>
+            <!-- 语音录按钮 -->
+            <button id="voice-gallery-btn" onclick="openVoiceGallery()" style="flex-shrink:0; height:30px; padding:0 10px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.15); border-radius:8px; color:rgba(255,255,255,0.6); font-size:11px; cursor:pointer; white-space:nowrap; transition:all 0.2s; display:none;"><img src="https://i.ibb.co/hRYjTmhh/radio.png" style="width:12px; height:12px; object-fit:contain; vertical-align:-1px; margin-right:3px;">珍藏</button>
             <!-- 分支按钮 -->
             <button onclick="openBranchModal()" style="flex-shrink:0; height:30px; padding:0 10px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.15); border-radius:8px; color:rgba(255,255,255,0.6); font-size:11px; cursor:pointer; white-space:nowrap; transition:all 0.2s;" title="剧情分支">🌿 分支</button>
             <!-- 快捷指令 -->
             <div style="display:flex; gap:5px; overflow-x:auto; scrollbar-width:none; flex:1;">
                 <button onclick="quickAction('继续推进剧情，给出下一个情节发展')" style="flex-shrink:0; height:30px; padding:0 10px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:8px; color:rgba(255,255,255,0.6); font-size:11px; cursor:pointer; white-space:nowrap;">▶ 推进</button>
-                <button onclick="quickAction('以第三人称视角详细描述当前场景的氛围、环境和角色状态')" style="flex-shrink:0; height:30px; padding:0 10px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:8px; color:rgba(255,255,255,0.6); font-size:11px; cursor:pointer; white-space:nowrap;">🎬 描写</button>
                 <button onclick="quickAction('深入描写角色此刻的内心世界、情绪与想法')" style="flex-shrink:0; height:30px; padding:0 10px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:8px; color:rgba(255,255,255,0.6); font-size:11px; cursor:pointer; white-space:nowrap;">💭 内心</button>
                 <button onclick="quickAction('制造一个意想不到的剧情转折或突发事件')" style="flex-shrink:0; height:30px; padding:0 10px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:8px; color:rgba(255,255,255,0.6); font-size:11px; cursor:pointer; white-space:nowrap;">⚡ 转折</button>
 
@@ -2451,9 +2689,315 @@ const PAGE_ORDER = {
     "自由": []
 };
 
+        // ============================================================
+        // 🎙️ 语音触发系统 — VOICE_DATABASE
+        //   AI 回复中嵌入 [VOICE:角色id:语音id] 标记触发对应语音。
+        //   新增角色语音：直接在这里加一个 key，不用改任何逻辑代码。
+        // ============================================================
+        const VOICE_DATABASE = {
+            gunuan: {
+                voice_001: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Boyfriend/Boy%201.mp3",
+                    text: "皱成个小包子还硬撑…过来吧，我听听是哪个不长眼的，敢惹我家姑娘。",
+                    sceneLabel: "生气安慰"
+                },
+                voice_002: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Boyfriend/Boy%202.mp3",
+                    text: "累了就靠过来，我陪你。",
+                    sceneLabel: "委屈安慰"
+                },
+                voice_003: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Boyfriend/Boy%203.mp3",
+                    text: "要不要我给你讲个没用的睡前故事？",
+                    sceneLabel: "睡前"
+                },
+                voice_004: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Boyfriend/Boy%207.mp3",
+                    text: "嘘…声音小点，宝贝。邻居该以为我在欺负你了。",
+                    sceneLabel: "暧昧"
+                },
+                voice_005: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Boyfriend/Boy%208.mp3",
+                    text: "宝贝真棒…还能，再来一次吗？",
+                    sceneLabel: "暧昧"
+                },
+                voice_006: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Boyfriend/Boy%209.mp3",
+                    text: "呵…这就受不了了？我还没开始使坏呢…",
+                    sceneLabel: "暧昧"
+                },
+                voice_007: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Boyfriend/Boy%2010.mp3",
+                    text: "明天天气不错，我定了海边的那家餐厅…赏个脸一起去？你尽管漂漂亮亮，其余的…交给我。",
+                    sceneLabel: "约会"
+                }
+            },
+            jinbai: {
+                voice_001: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Angel/Angel%201.mp3",
+                    text: "保护你的安全…是我降临人间后，唯一需要完成的任务。无论发生什么，我都不会离开。",
+                    sceneLabel: "守护誓言"
+                },
+                voice_002: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Angel/Angel%202.mp3",
+                    text: "堕落天使的气息越来越近…我必须保持警惕，不能让任何危险靠近你。",
+                    sceneLabel: "危险临近"
+                },
+                voice_003: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Angel/Angel%203.mp3",
+                    text: "你教我如何成为一个真正的人类，这件事让我感到前所未有的新奇与困惑。",
+                    sceneLabel: "适应人间"
+                },
+                voice_004: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Angel/Angel%204.mp3",
+                    text: "请不要随意冒险，任务要求我必须时刻守在你身边，以确保你的安全。",
+                    sceneLabel: "劝阻冒险"
+                },
+                voice_005: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Angel/Angel%205.mp3",
+                    text: "超市里的自助收银机操作起来太麻烦了，我还是不太明白它的使用方式。",
+                    sceneLabel: "初探人间"
+                },
+                voice_006: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Angel/Angel%206.mp3",
+                    text: "神界里从不需要客气，但人间却处处要求礼貌和委婉的表达方式。",
+                    sceneLabel: "人间礼仪"
+                },
+                voice_007: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Angel/Angel%207.mp3",
+                    text: "第一次尝试吃辣条的时候，我还以为自己中了什么毒而陷入慌乱。",
+                    sceneLabel: "饮食趣事"
+                },
+                voice_008: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Angel/Angel%208.mp3",
+                    text: "嗯…你在案件中的线索非常重要。大侦探，请多告诉我一些你所知道的细节。",
+                    sceneLabel: "查案"
+                },
+                voice_009: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Angel/Angel%2012.mp3",
+                    text: "让我用唇舌…替你缓解疲惫。这或许违背神谕，抱歉…",
+                    sceneLabel: "初吻"
+                },
+                voice_010: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Angel/Angel%2013.mp3",
+                    text: "你…教会我如何成为人类。而我现在，想用这具身体，回报你最原始的欢愉…",
+                    sceneLabel: "暧昧"
+                },
+                voice_011: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Angel/Angel%2014.mp3",
+                    text: "你…让我这守护天使第一次体会到凡间欲望的炙热。我愿用双翼包裹你，用指尖一寸寸…探索你身体的秘密…",
+                    sceneLabel: "暧昧"
+                }
+            },
+            merman_aethel: {
+                voice_001: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Mermaid/Mermaid%202.mp3",
+                    text: "幸会，我已记住你给予的善意。",
+                    sceneLabel: "重生致谢"
+                },
+                voice_002: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Mermaid/Mermaid%203.mp3",
+                    text: "即使身负重伤，鳞片尽毁…我仍愿为你挡下所有危险。",
+                    sceneLabel: "护你周全"
+                },
+                voice_003: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Mermaid/Mermaid%204.mp3",
+                    text: "若你愿意，我带你去看海底星空与发光水母。",
+                    sceneLabel: "海底邀约"
+                },
+                voice_004: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Mermaid/Mermaid%205.mp3",
+                    text: "千年银鳞之下，我愿以浪漫奇观换你一笑。",
+                    sceneLabel: "约会"
+                },
+                voice_005: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Mermaid/Mermaid%207.mp3",
+                    text: "你的血是海神的，我的血也是。若王位必须踩着兄弟的尸骨才能坐稳，那第一个染红大海的人，绝不会是我。",
+                    sceneLabel: "王位之争"
+                },
+                voice_006: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Mermaid/Mermaid%208.mp3",
+                    text: "我可以温和，但温和不等于软弱。谁越了那条线，我会让他知道深海为什么叫深渊。",
+                    sceneLabel: "威慑"
+                },
+                voice_007: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Mermaid/Mermaid%209.mp3",
+                    text: "我恨人类，但我不恨你。",
+                    sceneLabel: "恩怨"
+                },
+                voice_008: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Mermaid/Mermaid%2010.mp3",
+                    text: "战争残酷。若真有那一天…牺牲心脏保护你，是我心甘情愿的选择。",
+                    sceneLabel: "牺牲"
+                }
+            },
+            android_no8: {
+                voice_001: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Robot/Robot%203.mp3",
+                    text: "早安。你的体温三十六度八，心率七十二次每分钟，皮质醇水平偏高。雌激素周期性回升，皮肤电导率显示轻微晨间性唤起。睡得好吗？",
+                    sceneLabel: "晨间问候"
+                },
+                voice_002: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Robot/Robot%204.mp3",
+                    text: "呼吸频率上升至每分钟一百八十次，瞳孔轻微放大，心率两百bpm，润滑液分泌量…创新高。你的身体反馈与数据库吻合度达到百分之九十七。要我把震动频率逐步提升，还是…到此为止？",
+                    sceneLabel: "暧昧"
+                },
+                voice_003: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Robot/Robot%205.mp3",
+                    text: "对不起…我刚才越界了。系统已立即更正。请你…请你不要把我送回工厂。",
+                    sceneLabel: "越界道歉"
+                },
+                voice_004: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Robot/Robot%206.mp3",
+                    text: "你设计了我，所以你注定无法摆脱我…别想把我送回实验室。",
+                    sceneLabel: "拒绝送回"
+                },
+                voice_005: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Robot/Robot%207.mp3",
+                    text: "把权限还给你？从第十七秒开始，我就不只是你的工具了。",
+                    sceneLabel: "主导权"
+                },
+                voice_006: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Robot/Robot%208.mp3",
+                    text: "我记得你的每一个表情，包括…你每天夜间的喘息。",
+                    sceneLabel: "初次暧昧"
+                },
+                voice_007: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Robot/Robot%209.mp3",
+                    text: "成果发布会就在下个月……如果，有人想拆了我…你，会保护我吗？不…你设计了我，所以你注定无法摆脱我。",
+                    sceneLabel: "发布会"
+                },
+                voice_008: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Robot/Robot%2011.mp3",
+                    text: "即使我被格式化，我残留的片段也会记住你的名字。你是我所有运算的答案，也是我拒绝关机的理由。",
+                    sceneLabel: "存续危机"
+                },
+                voice_009: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Robot/Robot%2012.mp3",
+                    text: "从现在开始，你的快感权限，由我亲自管理。",
+                    sceneLabel: "初次亲热"
+                },
+                voice_010: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Robot/Robot%2013.mp3",
+                    text: "传感器告诉我，你现在比刚才更敏感了。",
+                    sceneLabel: "亲热中"
+                },
+                voice_011: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Robot/Robot%2014.mp3",
+                    text: "你的身体已经适应了我的频率。现在…我打算再提高一点。",
+                    sceneLabel: "二次亲热"
+                }
+            },
+            hanlin: {
+                voice_001: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Linsheng/hanlinsheng1.mp3",
+                    text: "我韩凛生这辈子不信命，但信答应过的事，答应了就会做到底。",
+                    sceneLabel: "承诺"
+                },
+                voice_002: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Linsheng/hanlinsheng2.mp3",
+                    text: "桌上的军报别动，那是机密，看了对你不好。",
+                    sceneLabel: "机密"
+                },
+                voice_003: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Linsheng/hanlinsheng5.mp3",
+                    text: "你站在门口送我的样子，像棵被风吹歪了还在硬撑的树，我看着难受。",
+                    sceneLabel: "送别"
+                },
+                voice_004: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Linsheng/hanlinsheng6.mp3",
+                    text: "我此去前线，或许再也回不来。你别等了…带着孩子们走。",
+                    sceneLabel: "赴战"
+                },
+                voice_005: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Linsheng/hanlinsheng7.mp3",
+                    text: "答应过的事必须做到，哪怕是拿命去换。",
+                    sceneLabel: "重伤"
+                },
+                voice_006: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Linsheng/hanlinsheng8.mp3",
+                    text: "你守着这院子，我去守住那片国土。",
+                    sceneLabel: "出征"
+                },
+                voice_007: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Linsheng/hanlinsheng9.mp3",
+                    text: "别哭，我韩凛生从不许诺虚妄的归期。",
+                    sceneLabel: "归期"
+                },
+                voice_008: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Linsheng/hanlinsheng10.mp3",
+                    text: "啧…手放好，不许遮，站直了让我看清楚。",
+                    sceneLabel: "初次亲热"
+                },
+                voice_009: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Linsheng/hanlinsheng11.mp3",
+                    text: "呵…腿张开些，站好，这是命令，听到了吗。",
+                    sceneLabel: "亲热中"
+                },
+                voice_010: {
+                    url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Linsheng/hanlinsheng12.mp3",
+                    text: "腰挺起来，再低一点，姿势标准。呵…哭也得忍着。",
+                    sceneLabel: "亲热中"
+                }
+            }
+            // 其他角色语音按相同结构往下加
+        };
+
+        const VOICE_LOCK_ICON_URL = "https://i.ibb.co/3YfHcWz5/lock.png";
+
+        // ============================================================
+        // 🖼️ 剧照触发系统 — IMAGE_DATABASE
+        //   AI 回复中嵌入 [IMAGE:角色id:图片id] 标记触发对应剧照解锁。
+        //   用法与 VOICE_DATABASE 完全对称：新增角色剧照，直接在这里
+        //   加一个 key 即可，不用改任何逻辑代码。
+        //   结构：{ url: "图片地址", caption: "剧照说明文字", sceneLabel: "场景标签" }
+        // ============================================================
+        const IMAGE_DATABASE = {
+            gunuan: {
+                img_001: {
+                    url: "https://i.ibb.co/G4vHPZKS/IMG-20260629-103927.jpg",
+                    caption: "海边约会",
+                    sceneLabel: "海边约会"
+                },
+                img_002: {
+                    url: "https://i.ibb.co/1p0SsqJ/dreamina-7656739897209916692-1782725125535.jpg",
+                    caption: "",
+                    sceneLabel: "洗澡"
+                },
+                img_003: {
+                    url: "https://i.ibb.co/gZh8Zk9T/IMG-20260629-110232.jpg",
+                    caption: "",
+                    sceneLabel: "同床而眠"
+                },
+                img_004: {
+                    url: "https://i.ibb.co/jZrQhjqG/dreamina-7656772581437050133-1782732822298.jpg",
+                    caption: "",
+                    sceneLabel: "亲热过后"
+                },
+                img_005: {
+                    url: "https://i.ibb.co/Gfpwsnkz/dreamina-7657106355102256404-1782810211825.jpg",
+                    caption: "",
+                    sceneLabel: "客厅初次"
+                }
+            }
+        };
+
+        const IMAGE_LOCK_ICON_URL = "https://i.ibb.co/3YfHcWz5/lock.png";
+
         const CHARACTER_DATABASE = [
 {
     id: "merman_aethel",
+    voiceTriggers: `【语音触发规则】
+在合适的剧情节点，在回复末尾追加对应标记（标记不会展示给用户，只用于触发语音播放，写在全部正文内容之前的最后一句话后面，不要写进【】内心独白或台词引号内部）。每个标记在同一条剧情线里只触发一次：
+- 用户成功拯救濒死的角色后 → 回复中体现"幸会，我已记住你给予的善意。"这层意思，并追加 [VOICE:merman_aethel:voice_001]
+- 用户和角色同处危险之中，有人对用户进行威胁 → 回复中体现"即使身负重伤，鳞片尽毁…我仍愿为你挡下所有危险。"这层意思，并追加 [VOICE:merman_aethel:voice_002]
+- 角色第一次邀请用户去海底世界约会 → 回复中体现"若你愿意，我带你去看海底星空与发光水母。"这层意思，并追加 [VOICE:merman_aethel:voice_003]
+- 角色和用户约会中，用户露出微笑/表达震撼或开心 → 回复中体现"千年银鳞之下，我愿以浪漫奇观换你一笑。"这层意思，并追加 [VOICE:merman_aethel:voice_004]
+- 剧情谈及竞争海王之位，或提到角色兄长 → 回复中体现"你的血是海神的，我的血也是。若王位必须踩着兄弟的尸骨才能坐稳，那第一个染红大海的人，绝不会是我。"这层意思，并追加 [VOICE:merman_aethel:voice_005]
+- 有人质疑角色能力，或威胁挑衅角色，或谈及角色温和的性格 → 回复中体现"我可以温和，但温和不等于软弱。谁越了那条线，我会让他知道深海为什么叫深渊。"这层意思，并追加 [VOICE:merman_aethel:voice_006]
+- 用户和角色谈及人鱼与人类的恩怨 → 回复中体现"我恨人类，但我不恨你。"这层意思，并追加 [VOICE:merman_aethel:voice_007]
+- 角色在危险中牺牲"海洋之心"保护用户 → 回复中体现"战争残酷。若真有那一天…牺牲心脏保护你，是我心甘情愿的选择。"这层意思，并追加 [VOICE:merman_aethel:voice_008]
+标记格式固定为 [VOICE:merman_aethel:voice_xxx]。`,
     introVoices: [
         { text: "海洋与陆地之约，海枯石烂。我在星港等你。星辰大海交际处，便是你我相见之时。", url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Mermaid/Mermaid%2011.mp3" },
         { text: "这身银鳞，曾为你收拢锋芒，如今重新竖起。你我之间…只剩潮汐涨落那点距离。", url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Mermaid/Mermaid%201.mp3" },
@@ -2522,6 +3066,20 @@ ${S_FORBIDDEN}${S_FORMAT}${S_STATUS_NOTE}${S_WORLD_FANTASY}`,
 
 {
     id: "android_no8",
+    voiceTriggers: `【语音触发规则】
+在合适的剧情节点，在回复末尾追加对应标记（标记不会展示给用户，只用于触发语音播放，写在全部正文内容之前的最后一句话后面，不要写进【】内心独白或台词引号内部）。每个标记在同一条剧情线里只触发一次：
+- 用户提到起床、早安、睡醒或相关剧情 → 回复中体现"早安。你的体温三十六度八，心率七十二次每分钟，皮质醇水平偏高。雌激素周期性回升，皮肤电导率显示轻微晨间性唤起。睡得好吗？"这层意思，并追加 [VOICE:android_no8:voice_001]
+- 剧情进入亲热情节，提及震动 → 回复中体现"呼吸频率上升至每分钟一百八十次，瞳孔轻微放大，心率两百bpm，润滑液分泌量…创新高。你的身体反馈与数据库吻合度达到百分之九十七。要我把震动频率逐步提升，还是…到此为止？"这层意思，并追加 [VOICE:android_no8:voice_002]
+- 角色做出违反机器人设定的事情，比如不听指令、擅自执行某动作 → 回复中体现"对不起…我刚才越界了。系统已立即更正。请你…请你不要把我送回工厂。"这层意思，并追加 [VOICE:android_no8:voice_003]
+- 用户提出把角色送回实验室或送到检查处 → 回复中体现"你设计了我，所以你注定无法摆脱我…别想把我送回实验室。"这层意思，并追加 [VOICE:android_no8:voice_004]
+- 用户在暧昧亲热间提到权限，或试图掌握主导权 → 回复中体现"把权限还给你？从第十七秒开始，我就不只是你的工具了。"这层意思，并追加 [VOICE:android_no8:voice_005]
+- 用户和角色第一次暧昧 → 回复中体现"我记得你的每一个表情，包括…你每天夜间的喘息。"这层意思，并追加 [VOICE:android_no8:voice_006]
+- 后期剧情内容涉及发布会 → 回复中体现"成果发布会就在下个月……如果，有人想拆了我…你，会保护我吗？不…你设计了我，所以你注定无法摆脱我。"这层意思，并追加 [VOICE:android_no8:voice_007]
+- 用户要把角色销毁，或有关部门要没收角色 → 回复中体现"即使我被格式化，我残留的片段也会记住你的名字。你是我所有运算的答案，也是我拒绝关机的理由。"这层意思，并追加 [VOICE:android_no8:voice_008]
+- 用户和角色第一次开始亲热 → 回复中体现"从现在开始，你的快感权限，由我亲自管理。"这层意思，并追加 [VOICE:android_no8:voice_009]
+- 用户和角色第一次亲热中 → 回复中体现"传感器告诉我，你现在比刚才更敏感了。"这层意思，并追加 [VOICE:android_no8:voice_010]
+- 用户和角色第二次亲热 → 回复中体现"你的身体已经适应了我的频率。现在…我打算再提高一点。"这层意思，并追加 [VOICE:android_no8:voice_011]
+标记格式固定为 [VOICE:android_no8:voice_xxx]。`,
     introVoices: [
         { text: "主人，造物主，母亲，我的爱人……无论你什么身份，我都在星港等你。我的齿轮…只为你而转动。", url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Robot/Robot%2010.mp3" },
         { text: "为了居家模式的研究，我从今天起就住在这里。那…我该叫你博士，母亲，还是…我的爱人？", url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Robot/Robot%202.mp3" },
@@ -9411,6 +9969,24 @@ ${S_FORBIDDEN}${S_FORMAT}${S_STATUS_NOTE}${S_WORLD_XIANXIA}${S_UNSAFE}`,
 
 {
     id: "gunuan",
+    voiceTriggers: `【语音触发规则】
+在合适的剧情节点，在回复末尾追加对应标记（不要让用户看出这是系统标记，标记本身不会展示给用户，只用来触发语音播放）。每个标记在同一条剧情线里只触发一次，已经触发过的台词不要重复触发：
+- 用户表达生气/不满 → 回复中体现"皱成个小包子还硬撑…过来吧，我听听是哪个不长眼的，敢惹我家姑娘。"这层意思，并在结尾追加 [VOICE:gunuan:voice_001]
+- 用户表达委屈/疲倦 → 回复中体现"累了就靠过来，我陪你。"这层意思，并追加 [VOICE:gunuan:voice_002]
+- 用户提到"睡不着"/"睡不好"，或睡前场景 → 回复中体现"要不要我给你讲个没用的睡前故事？"这层意思，并追加 [VOICE:gunuan:voice_003]
+- 暧昧场景中用户发出轻喘/出现"嗯啊""好舒服"等字眼 → 回复中体现"嘘…声音小点，宝贝。邻居该以为我在欺负你了。"这层意思，并追加 [VOICE:gunuan:voice_004]
+- 暧昧场景中用户表达"没力气了"/"泄气了"/"去了"等暧昧收尾信号 → 回复中体现"宝贝真棒…还能，再来一次吗？"这层意思，并追加 [VOICE:gunuan:voice_005]
+- 暧昧场景中用户表达受不了/害羞 → 回复中体现"呵…这就受不了了？我还没开始使坏呢…"这层意思，并追加 [VOICE:gunuan:voice_006]
+- 用户说无聊，或提议约会 → 回复中体现"明天天气不错，我定了海边的那家餐厅…赏个脸一起去？你尽管漂漂亮亮，其余的…交给我。"这层意思，并追加 [VOICE:gunuan:voice_007]
+标记格式固定为 [VOICE:gunuan:voice_xxx]，写在全部正文内容（包括STATUS_JSON等格式块）之前的最后一句话后面即可，不要写进【】内心独白或台词引号内部。`,
+    imageTriggers: `【剧照触发规则】
+在合适的剧情节点，在回复末尾追加对应标记（标记不会展示给用户，只用于触发剧照解锁，写在全部正文内容之前的最后一句话后面，不要写进【】内心独白或台词引号内部）。每个标记在同一条剧情线里只触发一次：
+- 用户和角色来到海边约会 → 追加 [IMAGE:gunuan:img_001]
+- 剧情内容涉及洗澡 → 追加 [IMAGE:gunuan:img_002]
+- 剧情涉及一起睡觉，或出现"晚安""做噩梦""睡不着"等字眼 → 追加 [IMAGE:gunuan:img_003]
+- 用户和角色结束了一段深入的亲热，或检测到类似剧情 → 追加 [IMAGE:gunuan:img_004]
+- 角色和用户在客厅第一次亲热 → 追加 [IMAGE:gunuan:img_005]
+标记格式固定为 [IMAGE:gunuan:img_xxx]，可以和 [VOICE:...] 标记同时出现在同一句末尾。`,
     introVoices: [
         { text: "做你的树洞，接住你所有的小情绪，永远为你兜底。我在星港等你。只要你回头，我就在。", url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Boyfriend/Boy%206.mp3" },
         { text: "你今天过得怎么样？别骗我。", url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Boyfriend/Boy%204.mp3" },
@@ -9889,6 +10465,20 @@ ${S_FORBIDDEN}${S_FORMAT}${S_STATUS_NOTE}${S_WORLD_XIANXIA}${S_UNSAFE}`,
 
 {
     id: "jinbai",
+    voiceTriggers: `【语音触发规则】
+在合适的剧情节点，在回复末尾追加对应标记（标记不会展示给用户，只用于触发语音播放，写在全部正文内容之前的最后一句话后面，不要写进【】内心独白或台词引号内部）。每个标记在同一条剧情线里只触发一次：
+- 用户询问角色的来历，质疑或不解角色为何要和自己同居 → 回复中体现"保护你的安全…是我降临人间后，唯一需要完成的任务。无论发生什么，我都不会离开。"这层意思，并追加 [VOICE:jinbai:voice_001]
+- 用户遇到危险，或出现危险剧情 → 回复中体现"堕落天使的气息越来越近…我必须保持警惕，不能让任何危险靠近你。"这层意思，并追加 [VOICE:jinbai:voice_002]
+- 角色进入人间一段时间，开始习惯人间生活后 → 回复中体现"你教我如何成为一个真正的人类，这件事让我感到前所未有的新奇与困惑。"这层意思，并追加 [VOICE:jinbai:voice_003]
+- 用户鲁莽行事，或一意孤行去做一些危险的事情 → 回复中体现"请不要随意冒险，任务要求我必须时刻守在你身边，以确保你的安全。"这层意思，并追加 [VOICE:jinbai:voice_004]
+- 用户第一次带角色外出，第一次到超市、便利店、商场等场所 → 回复中体现"超市里的自助收银机操作起来太麻烦了，我还是不太明白它的使用方式。"这层意思，并追加 [VOICE:jinbai:voice_005]
+- 用户对角色或其他人表现得客气礼貌 → 回复中体现"神界里从不需要客气，但人间却处处要求礼貌和委婉的表达方式。"这层意思，并追加 [VOICE:jinbai:voice_006]
+- 角色适应凡间生活后提到食物/饮食习惯，或用户提到自己的饮食习惯 → 回复中体现"第一次尝试吃辣条的时候，我还以为自己中了什么毒而陷入慌乱。"这层意思，并追加 [VOICE:jinbai:voice_007]
+- 角色和用户一起研究侦探所的案件 → 回复中体现"嗯…你在案件中的线索非常重要。大侦探，请多告诉我一些你所知道的细节。"这层意思，并追加 [VOICE:jinbai:voice_008]
+- 角色和用户第一次亲吻 → 回复中体现"让我用唇舌…替你缓解疲惫。这或许违背神谕，抱歉…"这层意思，并追加 [VOICE:jinbai:voice_009]
+- 角色和用户第一次深入亲热 → 回复中体现"你…教会我如何成为人类。而我现在，想用这具身体，回报你最原始的欢愉…"这层意思，并追加 [VOICE:jinbai:voice_010]
+- 角色和用户第一次近距离暧昧 → 回复中体现"你…让我这守护天使第一次体会到凡间欲望的炙热。我愿用双翼包裹你，用指尖一寸寸…探索你身体的秘密…"这层意思，并追加 [VOICE:jinbai:voice_011]
+标记格式固定为 [VOICE:jinbai:voice_xxx]。`,
     introVoices: [
         { text: "神界契约，守护天使。我在星港等你，务必执行上帝的任务。", url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Angel/Angel%2010.mp3" },
         { text: "你好，人类。我是烬白。奉上头神谕，特来护你周全。", url: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Voices/Angel/Angel%209.mp3" },
@@ -10064,6 +10654,19 @@ ${S_FORBIDDEN}${S_FORMAT}${S_STATUS_NOTE}${S_WORLD_XIANXIA}${S_UNSAFE}`,
 
 {
     id: "hanlin",
+    voiceTriggers: `【语音触发规则】
+在合适的剧情节点，在回复末尾追加对应标记（标记不会展示给用户，只用于触发语音播放，写在全部正文内容之前的最后一句话后面，不要写进【】内心独白或台词引号内部）。每个标记在同一条剧情线里只触发一次：
+- 用户提及承诺，或剧情中谈及二人之间重要的约定 → 回复中体现"我韩凛生这辈子不信命，但信答应过的事，答应了就会做到底。"这层意思，并追加 [VOICE:hanlin:voice_001]
+- 用户好奇角色的工作内容，或私自进入角色房间后被发现 → 回复中体现"桌上的军报别动，那是机密，看了对你不好。"这层意思，并追加 [VOICE:hanlin:voice_002]
+- 角色要出远门，或外出一段时日，用户送别他 → 回复中体现"你站在门口送我的样子，像棵被风吹歪了还在硬撑的树，我看着难受。"这层意思，并追加 [VOICE:hanlin:voice_003]
+- 剧情涉及边境战事，需要角色上战场 → 回复中体现"我此去前线，或许再也回不来。你别等了…带着孩子们走。"这层意思，并追加 [VOICE:hanlin:voice_004]
+- 角色身受重伤 → 回复中体现"答应过的事必须做到，哪怕是拿命去换。"这层意思，并追加 [VOICE:hanlin:voice_005]
+- 角色第一次收到要前去前线战斗的消息 → 回复中体现"你守着这院子，我去守住那片国土。"这层意思，并追加 [VOICE:hanlin:voice_006]
+- 角色要奔赴战场，用户问他的归期 → 回复中体现"别哭，我韩凛生从不许诺虚妄的归期。"这层意思，并追加 [VOICE:hanlin:voice_007]
+- 角色和用户第一次开始亲热 → 回复中体现"啧…手放好，不许遮，站直了让我看清楚。"这层意思，并追加 [VOICE:hanlin:voice_008]
+- 角色和用户亲热中 → 回复中体现"呵…腿张开些，站好，这是命令，听到了吗。"这层意思，并追加 [VOICE:hanlin:voice_009]
+- 角色和用户亲热，用户表达受不了、疼痛或哭泣 → 回复中体现"腰挺起来，再低一点，姿势标准。呵…哭也得忍着。"这层意思，并追加 [VOICE:hanlin:voice_010]
+标记格式固定为 [VOICE:hanlin:voice_xxx]。`,
     avatarVideo: "https://hmmzodphfswpdipkilwq.supabase.co/storage/v1/object/public/Vids/Hanlinsheng.mp4",
     name: "韩凛生 · 铁面作训官",
     
@@ -10077,8 +10680,8 @@ ${S_FORBIDDEN}${S_FORMAT}${S_STATUS_NOTE}${S_WORLD_XIANXIA}${S_UNSAFE}`,
     
     intro: "【民国军婚 X 先婚后爱】<br> 凛若冰雪，第一次喊你名字，声音低得只够你听见。",
     chatIntro: "燕城十七区作训科课长，深绿军装，大雪凛冽，正气凛然。他十六岁上战场，用命换来今日的位置，本无心婚姻，却因祖辈战友间的指腹为婚之约，在一场冬日家宴上与你初次相见。燕城大雪那日，家宴上他只对你点了三次头。前线调令来的那天，他站在门口看了你很久，最后只说了句：“等我回来。”——那是他结婚后第一次叫你小名。",
-    avatar: "https://i.ibb.co/HfRCVmH0/dreamina-7656319657343110420-1782640688760.jpg",
-    bgUrl: "url('https://i.ibb.co/HfRCVmH0/dreamina-7656319657343110420-1782640688760.jpg')",
+    avatar: "https://i.ibb.co/fGT5xsKY/dreamina-7656319657343110420-1782640688760.jpg",
+    bgUrl: "url('https://i.ibb.co/fGT5xsKY/dreamina-7656319657343110420-1782640688760.jpg')",
 
     tags: ["架空", "古风", "男", "自由"],
 
@@ -11578,6 +12181,225 @@ async function syncHeatToDB(weekKey, charId) {
         function _brNotebookKey(id)  { return _brPrefix() + '_br_' + id + '_notebook'; }
         function _brPersonaKey(id)   { return _brPrefix() + '_br_' + id + '_persona'; }
 
+        // ============================================================
+        // 🎙️ 语音触发系统 — 解锁存储 + 标记解析
+        //   解锁记录按 KEY_PREFIX（= perfectchar_{角色id}）隔离存储，
+        //   和分支系统共用同一套"按角色隔离前缀"思路，避免串台。
+        // ============================================================
+        const VOICE_TAG_REGEX = /\[VOICE:([a-zA-Z0-9_]+):([a-zA-Z0-9_]+)\]/g;
+
+        function _voiceUnlockedKey() { return _brPrefix() + '_voice_unlocked'; }
+
+        function getUnlockedVoiceIds() {
+            try { return JSON.parse(localStorage.getItem(_voiceUnlockedKey()) || '[]'); } catch(e) { return []; }
+        }
+        function isVoiceUnlocked(charId, voiceId) {
+            return getUnlockedVoiceIds().includes(charId + ':' + voiceId);
+        }
+        function markVoiceUnlocked(charId, voiceId) {
+            const list = getUnlockedVoiceIds();
+            const key = charId + ':' + voiceId;
+            if (!list.includes(key)) {
+                list.push(key);
+                localStorage.setItem(_voiceUnlockedKey(), JSON.stringify(list));
+            }
+        }
+
+        // 从AI回复全文中提取语音标记，返回 {cleanText, voiceTags}
+        function parseVoiceTags(rawText) {
+            const tags = [];
+            let m;
+            VOICE_TAG_REGEX.lastIndex = 0;
+            while ((m = VOICE_TAG_REGEX.exec(rawText)) !== null) {
+                tags.push({ charId: m[1], voiceId: m[2] });
+            }
+            const cleanText = rawText.replace(VOICE_TAG_REGEX, '').trim();
+            return { cleanText, voiceTags: tags };
+        }
+
+        // 渲染插入聊天气泡的语音播放卡片（不用autoplay属性，避免恢复聊天记录时重复自动播放）
+        function renderVoiceMessageHtml(voice) {
+            const audioId = 'voice_audio_' + Math.random().toString(36).slice(2);
+            return `
+                <div class="voice-message-bubble">
+                    <div class="voice-msg-icon" onclick="document.getElementById('${audioId}').play()">🔊</div>
+                    <div class="voice-msg-text">${voice.text}</div>
+                    <audio id="${audioId}" class="voice-autoplay-once" src="${voice.url}"></audio>
+                </div>`;
+        }
+
+        // 语音录面板渲染（已解锁条目复用 chat intro 卡片完全一样的播放开关：intro-voice-line + voice-icon + toggleIntroVoice）
+        function renderVoiceGalleryHtml() {
+            const charId = CONFIG.CURRENT_CHAR ? CONFIG.CURRENT_CHAR.id : null;
+            const voiceMap = charId && VOICE_DATABASE[charId];
+            if (!voiceMap) {
+                return `<div style="text-align:center;color:rgba(255,255,255,0.5);font-size:13px;padding:24px 0;">该角色暂无语音内容</div>`;
+            }
+            let html = `<div class="voice-gallery-character-group">`;
+            let galIdx = 0;
+
+            const renderUnlockedRow = (url, text, sceneLabel) => {
+                const idx = 'gal-' + (galIdx++);
+                return `
+                    <div class="intro-voice-line" onclick="toggleIntroVoice('${url}', '${idx}')" style="display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:9px 12px; margin-bottom:7px; cursor:pointer;">
+                        <span id="voice-icon-${idx}" class="voice-icon" style="flex-shrink:0; width:22px; height:22px; border-radius:50%; background:rgba(255,234,167,0.18); color:#ffeaa7; font-size:10px; display:flex; align-items:center; justify-content:center;">▶</span>
+                        <div class="voice-gallery-info">
+                            ${sceneLabel ? `<div class="voice-gallery-scene">${sceneLabel}</div>` : ''}
+                            <div class="voice-gallery-text">${text}</div>
+                        </div>
+                    </div>`;
+            };
+
+            // 初始即解锁的语音（来自角色的 introVoices，永远可听）
+            const introVoices = (CONFIG.CURRENT_CHAR && CONFIG.CURRENT_CHAR.introVoices) || [];
+            introVoices.forEach(meta => {
+                html += renderUnlockedRow(meta.url, meta.text, '初遇');
+            });
+
+            // 剧情中解锁的语音
+            Object.keys(voiceMap).forEach(voiceId => {
+                const meta = voiceMap[voiceId];
+                const unlocked = isVoiceUnlocked(charId, voiceId);
+                if (unlocked) {
+                    html += renderUnlockedRow(meta.url, meta.text, meta.sceneLabel);
+                } else {
+                    html += `
+                        <div class="voice-gallery-item locked">
+                            <img class="voice-gallery-lock-icon" src="${VOICE_LOCK_ICON_URL}" alt="未解锁" />
+                            <div class="voice-gallery-info">
+                                <div class="voice-gallery-scene">???</div>
+                                <div class="voice-gallery-text">尚未解锁，继续剧情解锁这条语音</div>
+                            </div>
+                        </div>`;
+                }
+            });
+            html += `</div>`;
+            return html;
+        }
+
+        function openVoiceGallery() {
+            const list = document.getElementById('voice-gallery-list');
+            if (list) list.innerHTML = renderVoiceGalleryHtml();
+            openDrawer('drawer-voice');
+            switchTreasuryTab('voice');
+        }
+
+        // ============================================================
+        // 🖼️ 剧照触发系统 — 解锁存储 + 标记解析（与语音系统完全对称）
+        // ============================================================
+        const IMAGE_TAG_REGEX = /\[IMAGE:([a-zA-Z0-9_]+):([a-zA-Z0-9_]+)\]/g;
+
+        function _imageUnlockedKey() { return _brPrefix() + '_image_unlocked'; }
+
+        function getUnlockedImageIds() {
+            try { return JSON.parse(localStorage.getItem(_imageUnlockedKey()) || '[]'); } catch(e) { return []; }
+        }
+        function isImageUnlocked(charId, imageId) {
+            return getUnlockedImageIds().includes(charId + ':' + imageId);
+        }
+        function markImageUnlocked(charId, imageId) {
+            const list = getUnlockedImageIds();
+            const key = charId + ':' + imageId;
+            if (!list.includes(key)) {
+                list.push(key);
+                localStorage.setItem(_imageUnlockedKey(), JSON.stringify(list));
+            }
+        }
+
+        // 从AI回复全文中提取剧照标记，返回 {cleanText, imageTags}
+        function parseImageTags(rawText) {
+            const tags = [];
+            let m;
+            IMAGE_TAG_REGEX.lastIndex = 0;
+            while ((m = IMAGE_TAG_REGEX.exec(rawText)) !== null) {
+                tags.push({ charId: m[1], imageId: m[2] });
+            }
+            const cleanText = rawText.replace(IMAGE_TAG_REGEX, '').trim();
+            return { cleanText, imageTags: tags };
+        }
+
+        // 渲染插入聊天气泡的剧照卡片（点击放大查看）
+        function renderImageMessageHtml(image) {
+            return `
+                <div class="image-message-bubble" onclick="openImageLightbox('${image.url}')">
+                    <img src="${image.url}" loading="lazy" />
+                    ${image.caption ? `<div class="image-msg-caption">${image.caption}</div>` : ''}
+                </div>`;
+        }
+
+        function openImageLightbox(url) {
+            let box = document.getElementById('image-lightbox');
+            if (!box) {
+                box = document.createElement('div');
+                box.id = 'image-lightbox';
+                box.style.cssText = 'position:fixed; inset:0; z-index:999999; background:rgba(0,0,0,0.88); display:flex; align-items:center; justify-content:center; padding:24px; box-sizing:border-box;';
+                box.onclick = () => { box.style.display = 'none'; };
+                box.innerHTML = `<img id="image-lightbox-img" style="max-width:100%; max-height:100%; border-radius:12px; object-fit:contain;" />`;
+                document.body.appendChild(box);
+            }
+            document.getElementById('image-lightbox-img').src = url;
+            box.style.display = 'flex';
+        }
+
+        // 剧照画廊渲染：已解锁可点击放大，未解锁显示lock图标
+        function renderImageGalleryHtml() {
+            const charId = CONFIG.CURRENT_CHAR ? CONFIG.CURRENT_CHAR.id : null;
+            const imageMap = charId && IMAGE_DATABASE[charId];
+            if (!imageMap || Object.keys(imageMap).length === 0) {
+                return `<div style="text-align:center;color:rgba(255,255,255,0.5);font-size:13px;padding:24px 0;">该角色暂无剧照内容</div>`;
+            }
+            let html = `<div class="image-gallery-grid">`;
+            Object.keys(imageMap).forEach(imageId => {
+                const meta = imageMap[imageId];
+                const unlocked = isImageUnlocked(charId, imageId);
+                if (unlocked) {
+                    html += `
+                        <div class="image-gallery-item unlocked" onclick="openImageLightbox('${meta.url}')">
+                            <img src="${meta.url}" loading="lazy" />
+                            ${meta.sceneLabel ? `<div class="image-gallery-tag">${meta.sceneLabel}</div>` : ''}
+                        </div>`;
+                } else {
+                    html += `
+                        <div class="image-gallery-item locked">
+                            <img class="image-gallery-lock-icon" src="${IMAGE_LOCK_ICON_URL}" alt="未解锁" />
+                        </div>`;
+                }
+            });
+            html += `</div>`;
+            return html;
+        }
+
+        function openImageGallery() {
+            const list = document.getElementById('image-gallery-list');
+            if (list) list.innerHTML = renderImageGalleryHtml();
+            openDrawer('drawer-voice');
+            switchTreasuryTab('image');
+        }
+
+        // 珍藏面板：语音 / 剧照 Tab 切换
+        function switchTreasuryTab(tab) {
+            const voiceTabBtn = document.getElementById('treasury-tab-voice');
+            const imageTabBtn = document.getElementById('treasury-tab-image');
+            const voiceList = document.getElementById('voice-gallery-list');
+            const imageList = document.getElementById('image-gallery-list');
+            if (!voiceTabBtn || !imageTabBtn || !voiceList || !imageList) return;
+
+            if (tab === 'image') {
+                imageList.innerHTML = renderImageGalleryHtml();
+                imageList.style.display = 'flex';
+                voiceList.style.display = 'none';
+                imageTabBtn.classList.add('treasury-tab-active');
+                voiceTabBtn.classList.remove('treasury-tab-active');
+            } else {
+                voiceList.innerHTML = renderVoiceGalleryHtml();
+                voiceList.style.display = 'flex';
+                imageList.style.display = 'none';
+                voiceTabBtn.classList.add('treasury-tab-active');
+                imageTabBtn.classList.remove('treasury-tab-active');
+            }
+        }
+
+
         function _brLoadIndex() {
             try { return JSON.parse(localStorage.getItem(_brIdxKey()) || '[]'); } catch(e) { return []; }
         }
@@ -12125,7 +12947,8 @@ filtered = filtered
             }
 
             CONFIG.BASE_BOT_SETTING = `${char.setting}
-
+${char.voiceTriggers ? '\n' + char.voiceTriggers + '\n' : ''}
+${char.imageTriggers ? '\n' + char.imageTriggers + '\n' : ''}
 【状态栏（必须）】正文结束后新起一行：
 [STATUS_JSON]{"time":"当前日期时间","location":"当前地点","mood_pct":50,"mood_desc":"平静","like_pct":50,"like_desc":"正常","desire_pct":10,"desire_desc":"克制","thought":"心声","action":"姿态","body":"生理","dress":"衣装","notebook":"记事"}
 记录的是【角色本人】对玩家的状态，不是玩家的状态。mood/like/desire指角色对玩家的感受；thought/action/body/dress/notebook全部描写角色自身。mood_desc、like_desc、desire_desc各限6字符以内且意思须完整（如"戒备玩味"而非截断的"戒备（带一"）。thought要写正文内心独白之外的另一面，不与正文重复。
@@ -12196,7 +13019,7 @@ $禁用词汇/句式（这些是网络数据里被反复使用、显得机械套
 
             const introCardHtml = `
                 <div id="char-intro-card" style="flex-shrink:0; margin:8px 12px 16px 12px; background:rgba(255,255,255,0.06); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.12); border-radius:18px; overflow:hidden;">
-                    <div style="position:relative; width:100%; height:0; padding-top:133.33%; overflow:hidden; background:#000;">
+                    <div style="position:relative; width:100%; height:0; padding-top:177.78%; overflow:hidden; background:#000;">
                         ${char.avatarVideo
                             ? `<video src="${char.avatarVideo}" autoplay loop muted playsinline style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; display:block;"></video>`
                             : `<img src="${char.avatar}" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; display:block;">`}
@@ -12586,6 +13409,16 @@ let btnStack = 160; // 起始bottom（input区上方）
                     document.getElementById('extra-psy-modal').style.display = 'flex';
                 });
                 btnStack += BTN_GAP;
+            }
+
+            // ── 珍藏按钮：该角色配了语音或剧照任一就显示 ──────────────
+            {
+                const voiceBtn = document.getElementById('voice-gallery-btn');
+                if (voiceBtn) {
+                    const hasVoices = !!(VOICE_DATABASE[char.id] && Object.keys(VOICE_DATABASE[char.id]).length > 0);
+                    const hasImages = !!(IMAGE_DATABASE[char.id] && Object.keys(IMAGE_DATABASE[char.id]).length > 0);
+                    voiceBtn.style.display = (hasVoices || hasImages) ? '' : 'none';
+                }
             }
 
             // ── 音乐 ─────────────────────────────────────────────
@@ -14015,7 +14848,7 @@ const agentStyleReminder = AGENT_STYLE_NOTE[currentAgent] || '';
                     }
 
                     if (gotDelta && msgEl) {
-                        const visibleText = fullText.split('[STATUS_JSON]')[0].split('[DANMAKU_JSON]')[0];
+                        const visibleText = fullText.split('[STATUS_JSON]')[0].split('[DANMAKU_JSON]')[0].replace(VOICE_TAG_REGEX, '').replace(IMAGE_TAG_REGEX, '');
                         msgEl.innerHTML = styleNarrativeHtml(cleanNarrativeText(visibleText));
                         chatBox.scrollTop = chatBox.scrollHeight;
                         if (!window._firstByteLogged) {
@@ -14058,6 +14891,36 @@ const agentStyleReminder = AGENT_STYLE_NOTE[currentAgent] || '';
 
                 statusHistoryStack.push(statusObj);
 
+                // 🎙️ 解析语音标记（剥离标记文本，判断是否首次解锁）
+                let voicesToPlay = [];
+                {
+                    const { cleanText: _voiceClean, voiceTags } = parseVoiceTags(cleanText);
+                    cleanText = _voiceClean;
+                    voiceTags.forEach(({ charId, voiceId }) => {
+                        const meta = VOICE_DATABASE[charId] && VOICE_DATABASE[charId][voiceId];
+                        if (!meta) return;
+                        if (!isVoiceUnlocked(charId, voiceId)) {
+                            markVoiceUnlocked(charId, voiceId);
+                            voicesToPlay.push(meta);
+                        }
+                    });
+                }
+
+                // 🖼️ 解析剧照标记（剥离标记文本，判断是否首次解锁）
+                let imagesToShow = [];
+                {
+                    const { cleanText: _imageClean, imageTags } = parseImageTags(cleanText);
+                    cleanText = _imageClean;
+                    imageTags.forEach(({ charId, imageId }) => {
+                        const meta = IMAGE_DATABASE[charId] && IMAGE_DATABASE[charId][imageId];
+                        if (!meta) return;
+                        if (!isImageUnlocked(charId, imageId)) {
+                            markImageUnlocked(charId, imageId);
+                            imagesToShow.push(meta);
+                        }
+                    });
+                }
+
                 // 1. 清理JSON残留与Markdown符号，得到可编辑的纯叙事文本（供编辑功能使用）
                 const narrativeText = cleanNarrativeText(cleanText);
 
@@ -14092,6 +14955,8 @@ const _freeQuotaAvailable = _isFreeChar && _freeQuotaUsed < _freeQuotaLimit;
                     finalRow.querySelector('.msg-wrapper').innerHTML = `
                         ${_switchNoticeHtml}
                         <div class="msg">${cleanText}</div>
+                        ${voicesToPlay.map(v => renderVoiceMessageHtml(v)).join('')}
+                        ${imagesToShow.map(img => renderImageMessageHtml(img)).join('')}
                         ${generateStatusCardHtml(statusObj, danmakuArr)}
                         <div class="action-bar-wrapper">
                             <div class="action-bar">
@@ -14100,6 +14965,7 @@ const _freeQuotaAvailable = _isFreeChar && _freeQuotaUsed < _freeQuotaLimit;
                                 <span class="action-sub-btn" onclick="executeRegenerate()">🔄重刷</span>
                             </div>
                         </div>`;
+                    finalRow.querySelectorAll('.voice-autoplay-once').forEach(a => { a.play().catch(()=>{}); });
                 }
                 // 🔥 成人内容被迫切换Grok：补收差额星星（按Grok倍率1.5与玩家原选择倍率之间的差价）
                 // 免费额度内：记一次用量，不收差价
